@@ -2,6 +2,7 @@
 
 namespace R64\Webforms\Tests;
 
+use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
 use R64\Webforms\WebformsServiceProvider;
 
@@ -23,12 +24,7 @@ class TestCase extends Orchestra
 
     public function getEnvironmentSetUp($app)
     {
-        $app['config']->set('database.default', 'sqlite');
-        $app['config']->set('database.connections.sqlite', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'prefix' => '',
-        ]);
+        Schema::dropAllTables();
 
         include_once __DIR__.'/../database/migrations/create_webforms_tables.php.stub';
         (new \CreateWebformsTables())->up();
