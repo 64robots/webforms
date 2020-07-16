@@ -13,13 +13,9 @@ class WebformsServiceProvider extends ServiceProvider
                 __DIR__.'/../config/webforms.php' => config_path('webforms.php'),
             ], 'config');
 
-            $this->publishes([
-                __DIR__.'/../resources/views' => base_path('resources/views/vendor/webforms'),
-            ], 'views');
-
-            if (! class_exists('CreatePackageTable')) {
+            if (! class_exists('CreateWebformsTables')) {
                 $this->publishes([
-                    __DIR__ . '/../database/migrations/create_webforms_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_webforms_table.php'),
+                    __DIR__ . '/../database/migrations/create_webforms_tables.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_webforms_tables.php'),
                 ], 'migrations');
             }
         }
