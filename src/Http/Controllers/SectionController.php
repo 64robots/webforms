@@ -9,6 +9,6 @@ class SectionController
 {
     public function index()
     {
-        return new SectionCollection(Section::all());
+        return new SectionCollection(Section::orderBy('sort')->get());
     }
 }
