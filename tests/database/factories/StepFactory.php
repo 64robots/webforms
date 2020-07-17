@@ -8,7 +8,7 @@ use R64\Webforms\Models\Step;
 $factory->define(Step::class, function (Generator $faker) {
     return [
         'section_id' => factory(Section::class),
-        'name' => $faker->sentence,
+        'title' => $faker->sentence,
         'slug' => $faker->unique()->slug,
     ];
 });

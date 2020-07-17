@@ -15,6 +15,13 @@ class Step extends Model
         return $this->belongsTo(Section::class);
     }
 
+    # Getters
+
+    public function getMenuTitleAttribute($value)
+    {
+        return empty($value) ? $this->title : $value;
+    }
+
     # Section
 
     public function associateSection(Section $section)

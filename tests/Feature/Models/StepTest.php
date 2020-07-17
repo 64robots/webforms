@@ -17,16 +17,28 @@ class StepTest extends TestCase
         /** @var Step $step */
         $step = factory(Step::class)->create([
             'section_id' => $section->id,
-            'name' => 'First Step',
+            'title' => 'First Step',
             'slug' => 'first-step',
             'sort' => 1,
         ]);
 
         $this->assertDatabaseHas('steps', [
-            'name' => 'First Step',
+            'title' => 'First Step',
             'slug' => 'first-step',
             'sort' => 1,
         ]);
+    }
+
+    /** @test */
+    public function menu_title_returns_title_if_it_is_null()
+    {
+        /** @var Step $step */
+        $step = factory(Step::class)->create([
+            'title' => 'First Step',
+            'slug' => 'first-step',
+        ]);
+
+        $this->assertEquals('First Step', $step->menu_title);
     }
 
     /** @test */

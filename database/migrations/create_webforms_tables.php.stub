@@ -10,20 +10,22 @@ class CreateWebformsTables extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
             $table->unsignedInteger('sort')->nullable();
+            $table->string('slug')->unique();
+            $table->string('menu_title')->nullable();
+            $table->string('title');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
 
         Schema::create('steps', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('section_id')->constrained();
-            $table->string('name');
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
             $table->unsignedInteger('sort')->nullable();
+            $table->string('slug')->unique();
+            $table->string('menu_title')->nullable();
+            $table->string('title');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

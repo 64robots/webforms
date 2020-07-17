@@ -17,9 +17,12 @@ class SectionResource extends JsonResource
         return [
             'id' => $this->id,
             'sort' => $this->sort,
-            'name' => $this->name,
             'slug' => $this->slug,
+            'menu_title' => $this->menu_title,
+            'title' => $this->title,
             'description' => $this->description,
+            // Todo
+            // 'completed' => $this->is_completed_by_current_user,
         ];
     }
 }

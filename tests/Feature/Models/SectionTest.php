@@ -13,14 +13,26 @@ class SectionTest extends TestCase
     {
         /** @var Section $section */
         $section = factory(Section::class)->create([
-            'name' => 'First Section',
+            'title' => 'First Section',
             'slug' => 'first-section',
         ]);
 
         $this->assertDatabaseHas('sections', [
-            'name' => 'First Section',
+            'title' => 'First Section',
             'slug' => 'first-section',
         ]);
+    }
+
+    /** @test */
+    public function menu_title_returns_title_if_it_is_null()
+    {
+        /** @var Section $section */
+        $section = factory(Section::class)->create([
+            'title' => 'First Section',
+            'slug' => 'first-section',
+        ]);
+
+        $this->assertEquals('First Section', $section->menu_title);
     }
 
     /** @test */

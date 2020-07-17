@@ -15,6 +15,13 @@ class Section extends Model
         return $this->hasMany(Step::class);
     }
 
+    # Getters
+
+    public function getMenuTitleAttribute($value)
+    {
+        return empty($value) ? $this->title : $value;
+    }
+
     # Steps
 
     public function addStep(Step $step)

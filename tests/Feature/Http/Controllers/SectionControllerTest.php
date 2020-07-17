@@ -24,8 +24,9 @@ class SectionControllerTest extends TestCase
                 '*' => [
                     'id',
                     'sort',
-                    'name',
                     'slug',
+                    'menu_title',
+                    'title',
                     'description',
                 ],
             ],
