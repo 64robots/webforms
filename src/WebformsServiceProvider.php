@@ -27,7 +27,6 @@ class WebformsServiceProvider extends ServiceProvider
                 Route::get('/sections', [SectionController::class, 'index']);
             });
         });
-
     }
 
     public function register()

@@ -13,6 +13,17 @@ class CreateWebformsTables extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->unsignedInteger('sort')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('steps', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->foreignId('section_id')->constrained();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
+            $table->unsignedInteger('sort')->nullable();
             $table->timestamps();
         });
     }
