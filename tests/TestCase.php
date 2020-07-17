@@ -2,6 +2,7 @@
 
 namespace R64\Webforms\Tests;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as Orchestra;
 use R64\Webforms\WebformsServiceProvider;
@@ -13,6 +14,8 @@ class TestCase extends Orchestra
         parent::setUp();
 
         $this->withFactories(__DIR__.'/database/factories');
+
+        Route::webforms('webforms');
     }
 
     protected function getPackageProviders($app)

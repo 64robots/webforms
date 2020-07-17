@@ -2,7 +2,9 @@
 
 namespace R64\Webforms;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use R64\Webforms\Http\Controllers\SectionController;
 
 class WebformsServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,13 @@ class WebformsServiceProvider extends ServiceProvider
                 ], 'migrations');
             }
         }
+
+        Route::macro('webforms', function (string $prefix) {
+            Route::prefix($prefix)->group(function () {
+                Route::get('/sections', [SectionController::class, 'index']);
+            });
+        });
+
     }
 
     public function register()

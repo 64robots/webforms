@@ -35,8 +35,10 @@ return [
 
 ## Usage
 
-``` php
-$webforms = new R64\Webforms();
+Add that to your routes file:
+
+```php
+Route::webforms('webforms');
 ```
 
 ## Testing
