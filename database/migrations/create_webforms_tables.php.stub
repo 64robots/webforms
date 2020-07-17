@@ -28,5 +28,34 @@ class CreateWebformsTables extends Migration
             $table->text('description')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('questions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('step_id')->constrained();
+            $table->bigInteger('depends_on')->nullable();
+            $table->integer('sort');
+            $table->string('slug')->unique();
+            $table->string('group_by')->nullable();
+            $table->text('group_by_description')->nullable();
+            $table->string('label_position')->default('top');
+            $table->string('help_title')->nullable();
+            $table->text('help_body')->nullable();
+            $table->string('type');
+            $table->string('post_input_text')->nullable();
+            $table->text('title');
+            $table->text('description')->nullable();
+            $table->string('default_value')->nullable();
+            $table->json('showed_when')->nullable();
+            $table->json('options')->nullable();
+            $table->boolean('required')->default(false);
+            $table->timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('questions');
+        Schema::dropIfExists('steps');
+        Schema::dropIfExists('sections');
     }
 }
