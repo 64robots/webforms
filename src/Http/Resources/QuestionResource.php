@@ -1,0 +1,46 @@
+<?php
+
+namespace R64\Webforms\Http\Resources;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+use R64\Webforms\Helpers\Options;
+
+class QuestionResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        // Todo
+        // $currentUserAnswer = $this->current_user_answer;
+
+        return [
+            'id' => $this->id,
+            'step' => new StepResource($this->whenLoaded('step')),
+            'sort' => $this->sort,
+            'depends_on' => $this->depends_on,
+            'showed_when' => $this->showed_when,
+            'required' => $this->required,
+            'slug' => $this->slug,
+            'group_by' => $this->group_by,
+            'group_by_description' => $this->group_by_description,
+            'label_position' => $this->label_position,
+            'help_title' => $this->help_title,
+            'help_body' => $this->help_body,
+            'type' => $this->type,
+            'post_input_text' => $this->post_input_text,
+            'title' => $this->title,
+            'description' => $this->description,
+            'default_value' => $this->default_value_to_front,
+            'options' => $this->options ? Options::transform($this->options) : null,
+            // Todo
+//            'answer' =>  $currentUserAnswer
+//                ? new AnswerResource($currentUserAnswer)
+//                : null,
+        ];
+    }
+}

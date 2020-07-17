@@ -4,6 +4,7 @@ namespace R64\Webforms;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use R64\Webforms\Http\Controllers\QuestionController;
 use R64\Webforms\Http\Controllers\SectionController;
 use R64\Webforms\Http\Controllers\StepController;
 
@@ -27,6 +28,7 @@ class WebformsServiceProvider extends ServiceProvider
             Route::prefix($prefix)->group(function () {
                 Route::get('/sections', [SectionController::class, 'index']);
                 Route::get('/steps', [StepController::class, 'index']);
+                Route::get('/questions', [QuestionController::class, 'index']);
             });
         });
     }

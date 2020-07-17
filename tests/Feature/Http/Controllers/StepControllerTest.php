@@ -11,7 +11,6 @@ class StepControllerTest extends TestCase
     /** @test */
     public function it_returns_steps()
     {
-        $this->withoutExceptionHandling();
         $section = factory(Section::class)->create();
         $secondStep = factory(Step::class)->create([
             'sort' => 2,

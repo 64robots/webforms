@@ -9,6 +9,6 @@ class StepController
 {
     public function index()
     {
-        return new StepCollection(Step::orderBy('sort')->get()->load('section'));
+        return new StepCollection(Step::with('section')->orderBy('sort')->get());
     }
 }
