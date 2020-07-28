@@ -56,6 +56,7 @@ class QuestionControllerTest extends TestCase
                     'post_input_text',
                     'title',
                     'description',
+                    'error_message',
                     'default_value',
                     'min',
                     'max',
@@ -270,7 +271,10 @@ class QuestionControllerTest extends TestCase
             'post_input_text',
             'title',
             'description',
+            'error_message',
             'default_value',
+            'min',
+            'max',
             'options',
             'answer' => [
                 'id',

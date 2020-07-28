@@ -52,6 +52,7 @@ class CreateWebformsTables extends Migration
             $table->string('post_input_text')->nullable();
             $table->text('title');
             $table->text('description')->nullable();
+            $table->text('error_message')->nullable();
             $table->string('default_value')->nullable();
             $table->string('min')->nullable();
             $table->string('max')->nullable();

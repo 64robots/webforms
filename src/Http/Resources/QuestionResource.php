@@ -34,6 +34,7 @@ class QuestionResource extends JsonResource
             'post_input_text' => $this->post_input_text,
             'title' => $this->title,
             'description' => $this->description,
+            'error_message' => $this->error_message,
             'default_value' => $this->castNullValueToFront($this->default_value),
             'min' => $this->castNullValueToFront($this->min),
             'max' => $this->castNullValueToFront($this->max),
