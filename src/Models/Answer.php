@@ -9,7 +9,6 @@ class Answer extends Model
 {
     protected $casts = [
         'user_id' => 'integer',
-        'revision' => 'integer',
         'is_current' => 'boolean',
         'is_real' => 'boolean',
         'confirmed' => 'boolean',
@@ -118,13 +117,6 @@ class Answer extends Model
             return self::makeOne($data, $user);
         }
 
-        if ($answer->revision !== $user->next_answers_revision) {
-            $answer->is_current = 0;
-            $answer->update();
-
-            return self::makeOne($data, $user);
-        }
-
         $answer->text = $data['text'];
         $answer->is_real = $data['is_real'];
 
@@ -141,7 +133,6 @@ class Answer extends Model
         $answer = new self;
         $answer->user()->associate($user);
         $answer->question()->associate($question);
-        $answer->revision = $user->next_answers_revision;
         $answer->text = $data['text'];
         $answer->is_real = $data['is_real'];
         $answer->save();
@@ -153,11 +144,9 @@ class Answer extends Model
 
     public function deleteMe()
     {
-        if ($this->isPending()) {
-            $this->delete();
+        $this->delete();
 
-            $this->refreshFormStepCompletedStatus();
-        }
+        $this->refreshFormStepCompletedStatus();
     }
 
     public static function makeOneFictional($user, Question $question)
@@ -167,7 +156,6 @@ class Answer extends Model
         $answer->question()->associate($question);
         $answer->text = $question->default_value;
         $answer->is_real = false;
-        $answer->revision = $user->next_answers_revision;
 
         $answer->save();
 
@@ -198,10 +186,5 @@ class Answer extends Model
         $uncompletedStatus
             ? $this->user->markFormStepAsUncompleted($formStep)
             : $this->user->markFormStepAsCompleted($formStep);
-    }
-
-    private function isPending()
-    {
-        return $this->revision > $this->user->answers_revision;
     }
 }

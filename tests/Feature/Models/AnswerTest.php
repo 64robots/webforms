@@ -323,14 +323,11 @@ class AnswerTest extends TestCase
     }
 
     /** @test */
-    public function only_current_pending_revision_can_be_deleted()
+    public function an_answer_can_be_deleted()
     {
-        $user = factory(User::class)->create([
-            'answers_revision' => 2,
-        ]);
+        $user = factory(User::class)->create();
         $answer = factory(Answer::class)->state('text')->create([
             'user_id' => $user->id,
-            'revision' => 3,
         ]);
 
         $this->assertCount(1, $user->answers);
@@ -340,26 +337,6 @@ class AnswerTest extends TestCase
         $answer->deleteMe();
 
         $this->assertCount(0, $user->fresh()->answers);
-    }
-
-    /** @test */
-    public function current_user_answers_revision_cannot_be_deleted()
-    {
-        $user = factory(User::class)->create([
-            'answers_revision' => 2,
-        ]);
-        $answer = factory(Answer::class)->state('text')->create([
-            'user_id' => $user->id,
-            'revision' => 2,
-        ]);
-
-        $this->assertCount(1, $user->answers);
-
-        $this->actingAs($user);
-
-        $answer->deleteMe();
-
-        $this->assertCount(1, $user->fresh()->answers);
     }
 
     /** @test */

@@ -9,7 +9,6 @@ $factory->define(Answer::class, function (Generator $faker) {
     return [
         'user_id' => factory(config('webforms.user_model')),
         'question_id' => factory(Question::class),
-        'revision' => 1,
         'text' => $faker->sentence,
     ];
 });

@@ -66,24 +66,16 @@ class CreateWebformsTables extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('question_id')->constrained();
-            $table->integer('revision');
             $table->string('text')->nullable();
             $table->boolean('is_current')->default(true);
             $table->boolean('confirmed')->default(true);
             $table->boolean('is_real')->default(true);
             $table->timestamps();
         });
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('answers_revision')->default(0)->after('email');
-        });
     }
 
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('answers_revision');
-        });
         Schema::dropIfExists('answers');
         Schema::dropIfExists('questions');
         Schema::dropIfExists('form_step_user');

@@ -204,7 +204,6 @@ class QuestionControllerTest extends TestCase
         factory(Answer::class)->create([
             'user_id' => $user->id,
             'question_id' => $question->id,
-            'revision' => 1,
             'is_current' => 0,
             'text' => 'This is an answer',
             'created_at' => '2010-01-01 10:00:00',
@@ -212,7 +211,6 @@ class QuestionControllerTest extends TestCase
         $answer = factory(Answer::class)->create([
             'user_id' => $user->id,
             'question_id' => $question->id,
-            'revision' => 2,
             'is_current' => 1,
             'text' => 'This is the last answer',
             'created_at' => '2010-01-01 09:00:05',

@@ -80,9 +80,4 @@ trait HasWebForms
     {
         return $this->answers()->where('question_id', $question->id)->exists();
     }
-
-    public function getNextAnswersRevisionAttribute()
-    {
-        return $this->answers_revision + 1;
-    }
 }
