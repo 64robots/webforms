@@ -4,6 +4,7 @@ namespace R64\Webforms;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use R64\Webforms\Http\Controllers\AnswerController;
 use R64\Webforms\Http\Controllers\FormSectionController;
 use R64\Webforms\Http\Controllers\FormStepController;
 use R64\Webforms\Http\Controllers\QuestionController;
@@ -32,6 +33,7 @@ class WebformsServiceProvider extends ServiceProvider
                     Route::get('/form-steps', [FormStepController::class, 'index']);
                     Route::put('/form-steps/{formStep}', [FormStepController::class, 'update']);
                     Route::get('/questions', [QuestionController::class, 'index']);
+                    Route::post('/answers', [AnswerController::class, 'store']);
                 });
         });
     }

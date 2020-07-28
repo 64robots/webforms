@@ -16,7 +16,7 @@ return [
         'min' => 0,
         'max' => 100,
     ],
-    'answers_channel' => 'answers_channel',
+    'confirm_fields' => true,
     'fields_to_be_confirmed' => [
         QuestionTypes::EMAIL_TYPE,
         QuestionTypes::PHONE_TYPE,
