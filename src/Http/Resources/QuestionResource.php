@@ -15,12 +15,11 @@ class QuestionResource extends JsonResource
      */
     public function toArray($request)
     {
-        // Todo
-        // $currentUserAnswer = $this->current_user_answer;
+        $currentUserAnswer = $this->current_user_answer;
 
         return [
             'id' => $this->id,
-            'step' => new StepResource($this->whenLoaded('step')),
+            'form_step' => new FormStepResource($this->whenLoaded('formStep')),
             'sort' => $this->sort,
             'depends_on' => $this->depends_on,
             'showed_when' => $this->showed_when,
@@ -37,10 +36,9 @@ class QuestionResource extends JsonResource
             'description' => $this->description,
             'default_value' => $this->default_value_to_front,
             'options' => $this->options ? Options::transform($this->options) : null,
-            // Todo
-//            'answer' =>  $currentUserAnswer
-//                ? new AnswerResource($currentUserAnswer)
-//                : null,
+            'answer' => $currentUserAnswer
+                ? new AnswerResource($currentUserAnswer)
+                : null,
         ];
     }
 }

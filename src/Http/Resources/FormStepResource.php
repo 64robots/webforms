@@ -4,7 +4,7 @@ namespace R64\Webforms\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SectionResource extends JsonResource
+class FormStepResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +16,13 @@ class SectionResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'form_section' => new FormSectionResource($this->whenLoaded('formSection')),
             'sort' => $this->sort,
             'slug' => $this->slug,
             'menu_title' => $this->menu_title,
             'title' => $this->title,
             'description' => $this->description,
-            // Todo
-            // 'completed' => $this->is_completed_by_current_user,
+            'completed' => $this->is_completed_by_current_user,
         ];
     }
 }

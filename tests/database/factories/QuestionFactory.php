@@ -1,14 +1,14 @@
 <?php
 
 use \Faker\Generator;
+use R64\Webforms\Models\FormStep;
 use R64\Webforms\Models\Question;
 use R64\Webforms\Models\QuestionTypes;
-use R64\Webforms\Models\Step;
 
 /* @var Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Question::class, function (Generator $faker) {
     return [
-        'step_id' => factory(Step::class),
+        'form_step_id' => factory(FormStep::class),
         'sort' => $faker->unique()->numberBetween(1, 200),
         'slug' => $faker->unique()->slug,
         'type' => 'text',
@@ -95,5 +95,21 @@ $factory->state(Question::class, 'phone', function (Generator $faker) {
 $factory->state(Question::class, 'email', function (Generator $faker) {
     return [
         'type' => QuestionTypes::EMAIL_TYPE,
+    ];
+});
+
+// state: personal_data
+$factory->state(Question::class, 'personal_data', function (Generator $faker) {
+    return [
+        'form_step_id' => factory(FormStep::class)->create(['is_personal_data' => true])->id,
+        'type' => QuestionTypes::TEXT_TYPE,
+    ];
+});
+
+// state: not_personal_data
+$factory->state(Question::class, 'not_personal_data', function (Generator $faker) {
+    return [
+        'form_step_id' => factory(FormStep::class)->create(['is_personal_data' => false])->id,
+        'type' => QuestionTypes::TEXT_TYPE,
     ];
 });

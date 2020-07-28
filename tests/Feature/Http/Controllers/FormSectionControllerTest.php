@@ -2,22 +2,25 @@
 
 namespace R64\Webforms\Tests\Feature\Http\Controllers;
 
-use R64\Webforms\Models\Section;
+use R64\Webforms\Models\FormSection;
 use R64\Webforms\Tests\TestCase;
 
-class SectionControllerTest extends TestCase
+class FormSectionControllerTest extends TestCase
 {
-    /** @test */
+    /**
+     * @test
+     * GET '/webforms/form-sections'
+     */
     public function it_returns_sections()
     {
-        $secondSection = factory(Section::class)->create([
+        $secondFormSection = factory(FormSection::class)->create([
             'sort' => 2,
         ]);
-        $firstSection = factory(Section::class)->create([
+        $firstFormSection = factory(FormSection::class)->create([
             'sort' => 1,
         ]);
 
-        $response = $this->json('GET', '/webforms/sections')->assertOk();
+        $response = $this->json('GET', '/webforms/form-sections')->assertOk();
 
         $response->assertJsonStructure([
             'data' => [
@@ -33,7 +36,7 @@ class SectionControllerTest extends TestCase
         ]);
 
         $this->assertCount(2, $response->json('data'));
-        $this->assertEquals($firstSection->id, $response->json('data.0.id'));
-        $this->assertEquals($secondSection->id, $response->json('data.1.id'));
+        $this->assertEquals($firstFormSection->id, $response->json('data.0.id'));
+        $this->assertEquals($secondFormSection->id, $response->json('data.1.id'));
     }
 }

@@ -4,9 +4,9 @@ namespace R64\Webforms;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use R64\Webforms\Http\Controllers\FormSectionController;
+use R64\Webforms\Http\Controllers\FormStepController;
 use R64\Webforms\Http\Controllers\QuestionController;
-use R64\Webforms\Http\Controllers\SectionController;
-use R64\Webforms\Http\Controllers\StepController;
 
 class WebformsServiceProvider extends ServiceProvider
 {
@@ -14,7 +14,7 @@ class WebformsServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/webforms.php' => config_path('webforms.php'),
+                __DIR__ . '/../config/webforms.php' => config_path('webforms.php'),
             ], 'config');
 
             if (! class_exists('CreateWebformsTables')) {
@@ -25,16 +25,19 @@ class WebformsServiceProvider extends ServiceProvider
         }
 
         Route::macro('webforms', function (string $prefix) {
-            Route::prefix($prefix)->group(function () {
-                Route::get('/sections', [SectionController::class, 'index']);
-                Route::get('/steps', [StepController::class, 'index']);
-                Route::get('/questions', [QuestionController::class, 'index']);
-            });
+            Route::prefix($prefix)
+                ->middleware(['throttle:60,1', 'bindings'])
+                ->group(function () {
+                    Route::get('/form-sections', [FormSectionController::class, 'index']);
+                    Route::get('/form-steps', [FormStepController::class, 'index']);
+                    Route::put('/form-steps/{formStep}', [FormStepController::class, 'update']);
+                    Route::get('/questions', [QuestionController::class, 'index']);
+                });
         });
     }
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/webforms.php', 'webforms');
+        $this->mergeConfigFrom(__DIR__ . '/../config/webforms.php', 'webforms');
     }
 }

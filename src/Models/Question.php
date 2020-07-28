@@ -19,33 +19,32 @@ class Question extends Model
 
     # Relations
 
-    public function step()
+    public function answers()
     {
-        return $this->belongsTo(Step::class);
+        return $this->hasMany(Answer::class);
     }
 
-    // Todo
-//    public function answers()
-//    {
-//        return $this->hasMany(Answer::class);
-//    }
-//
-//    public function currentUserAnswers()
-//    {
-//        return $this->answers()->byCurrentUser();
-//    }
-//
-//    public function currentRealConfirmedUserAnswers()
-//    {
-//        return $this->answers()->byCurrentUser()->confirmed()->real();
-//    }
+    public function currentRealConfirmedUserAnswers()
+    {
+        return $this->answers()->byCurrentUser()->confirmed()->real();
+    }
+
+    public function currentUserAnswers()
+    {
+        return $this->answers()->byCurrentUser();
+    }
+
+    public function formStep()
+    {
+        return $this->belongsTo(FormStep::class);
+    }
 
     # Getters
 
-//    public function getCurrentUserAnswerAttribute()
-//    {
-//        return $this->currentUserAnswers()->current()->first();
-//    }
+    public function getCurrentUserAnswerAttribute()
+    {
+        return $this->currentUserAnswers()->current()->first();
+    }
 
     # Helpers
 

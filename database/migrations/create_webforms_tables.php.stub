@@ -8,8 +8,8 @@ class CreateWebformsTables extends Migration
 {
     public function up()
     {
-        Schema::create('sections', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('form_sections', function (Blueprint $table) {
+            $table->id();
             $table->unsignedInteger('sort')->nullable();
             $table->string('slug')->unique();
             $table->string('menu_title')->nullable();
@@ -18,20 +18,28 @@ class CreateWebformsTables extends Migration
             $table->timestamps();
         });
 
-        Schema::create('steps', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->foreignId('section_id')->constrained();
+        Schema::create('form_steps', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('form_section_id')->constrained();
             $table->unsignedInteger('sort')->nullable();
             $table->string('slug')->unique();
             $table->string('menu_title')->nullable();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->boolean('is_personal_data')->default(0);
+            $table->timestamps();
+        });
+
+        Schema::create('form_step_user', function (Blueprint $table) {
+            $table->foreignId('form_step_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
 
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('step_id')->constrained();
+            $table->foreignId('form_step_id')->constrained();
             $table->bigInteger('depends_on')->nullable();
             $table->integer('sort');
             $table->string('slug')->unique();
@@ -50,12 +58,33 @@ class CreateWebformsTables extends Migration
             $table->boolean('required')->default(false);
             $table->timestamps();
         });
+
+        Schema::create('answers', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('question_id')->constrained();
+            $table->integer('revision');
+            $table->string('text')->nullable();
+            $table->boolean('is_current')->default(true);
+            $table->boolean('confirmed')->default(true);
+            $table->boolean('is_real')->default(true);
+            $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('answers_revision')->default(0)->after('email');
+        });
     }
 
     public function down()
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('answers_revision');
+        });
+        Schema::dropIfExists('answers');
         Schema::dropIfExists('questions');
-        Schema::dropIfExists('steps');
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('form_step_user');
+        Schema::dropIfExists('form_steps');
+        Schema::dropIfExists('form_sections');
     }
 }

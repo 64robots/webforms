@@ -10,9 +10,9 @@ class QuestionController
     public function index()
     {
         return new QuestionCollection(
-            Question::with('step')
-                ->when(request('step'), function ($query) {
-                    return $query->where('step_id', request('step'));
+            Question::with('formStep')
+                ->when(request('form_step'), function ($query) {
+                    return $query->where('form_step_id', request('form_step'));
                 })
                 ->orderBy('sort')
                 ->get()
