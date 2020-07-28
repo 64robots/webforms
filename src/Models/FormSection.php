@@ -33,4 +33,15 @@ class FormSection extends Model
     {
         return $this->formSteps()->find($formStep->id)->delete();
     }
+
+    public function getIsCompletedByCurrentUserAttribute()
+    {
+        return ! auth()->user()
+            ->formSteps()
+            ->whereHas('formSection', function ($query) {
+                $query->where('id', $this->id);
+            })
+            ->wherePivot('completed', false)
+            ->exists();
+    }
 }

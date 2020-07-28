@@ -71,4 +71,26 @@ class FormSectionTest extends TestCase
         $this->assertCount(1, $formSection->formSteps);
         $this->assertEquals($anotherFormStep->id, $formSection->formSteps->sortBy('id')->first()->id);
     }
+
+    /** @test */
+    public function it_knows_about_if_current_user_had_completed_it()
+    {
+        $user = factory(User::class)->create();
+        $formSection = factory(FormSection::class)->create();
+        $formStep = factory(FormStep::class)->create([
+            'form_section_id' => $formSection->id,
+        ]);
+        $anotherFormStep = factory(FormStep::class)->create([
+            'form_section_id' => $formSection->id,
+        ]);
+        $user->addFormSteps();
+        $user->markFormStepAsCompleted($formStep);
+
+        $this->actingAs($user);
+        $this->assertFalse($formSection->refresh()->is_completed_by_current_user);
+
+        $user->markFormStepAsCompleted($anotherFormStep);
+
+        $this->assertTrue($formSection->refresh()->is_completed_by_current_user);
+    }
 }

@@ -15,40 +15,4 @@ class JsonFormRequest extends FormRequest
     {
         return null;
     }
-
-    public function isGet()
-    {
-        if ($this->method() == 'GET') {
-            return true;
-        }
-
-        return false;
-    }
-
-    protected function isPost()
-    {
-        if ($this->method() == 'POST') {
-            return true;
-        }
-
-        return false;
-    }
-
-    protected function isPut()
-    {
-        if ($this->method() == 'PUT') {
-            return true;
-        }
-
-        return false;
-    }
-
-    protected function isDelete()
-    {
-        if ($this->method() == 'DELETE') {
-            return true;
-        }
-
-        return false;
-    }
 }

@@ -3,6 +3,7 @@
 namespace R64\Webforms\Tests\Feature\Http\Controllers;
 
 use R64\Webforms\Models\FormSection;
+use R64\Webforms\Tests\Feature\Models\User;
 use R64\Webforms\Tests\TestCase;
 
 class FormSectionControllerTest extends TestCase
@@ -13,6 +14,7 @@ class FormSectionControllerTest extends TestCase
      */
     public function it_returns_sections()
     {
+        $user = factory(User::class)->create();
         $secondFormSection = factory(FormSection::class)->create([
             'sort' => 2,
         ]);
@@ -20,7 +22,9 @@ class FormSectionControllerTest extends TestCase
             'sort' => 1,
         ]);
 
-        $response = $this->json('GET', '/webforms/form-sections')->assertOk();
+        $response = $this->actingAs($user)
+            ->json('GET', '/webforms/form-sections')
+            ->assertOk();
 
         $response->assertJsonStructure([
             'data' => [
@@ -31,6 +35,7 @@ class FormSectionControllerTest extends TestCase
                     'menu_title',
                     'title',
                     'description',
+                    'completed',
                 ],
             ],
         ]);
