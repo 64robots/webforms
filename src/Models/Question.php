@@ -100,12 +100,8 @@ class Question extends Model
             $rule = 'numeric';
         }
 
-        if ($this->type === QuestionTypes::PERCENT_TYPE) {
-            $rule = 'numeric|between:' . config('webforms.percent.min') . ',' . config('webforms.percent.max');
-        }
-
-        if ($this->type === QuestionTypes::AGE_TYPE) {
-            $rule = 'numeric|between:' . config('webforms.age.min') . ',' . config('webforms.age.max');
+        if (in_array($this->type, [QuestionTypes::PERCENT_TYPE, QuestionTypes::AGE_TYPE])) {
+            $rule = 'numeric|between:' . $this->min . ',' . $this->max;
         }
 
         if ($this->type === QuestionTypes::OPTIONS_TYPE) {
@@ -121,23 +117,18 @@ class Question extends Model
         }
 
         if ($this->type === QuestionTypes::PHONE_TYPE) {
-            $rule = 'string|min:' . config('webforms.phone.min_length');
+            $rule = 'string|min:' . $this->min;
         }
 
         return $rule;
     }
 
-    public function getDefaultValueToFrontAttribute()
+    public function castNullValueToFront($value)
     {
-        if (is_null($this->default_value)) {
+        if (is_null($value)) {
             return null;
         }
 
-        return $this->castToFront($this->cast($this->default_value));
-    }
-
-    public function isPercent(): bool
-    {
-        return $this->type === QuestionTypes::PERCENT_TYPE;
+        return $this->castToFront($this->cast($value));
     }
 }

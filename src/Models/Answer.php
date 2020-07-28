@@ -20,7 +20,7 @@ class Answer extends Model
         static::creating(function (Answer $answer) {
             $question = $answer->question;
             $user = $answer->user;
-            if (config('webforms.confirm_fields')) {
+            if (collect(config('webforms.fields_to_be_confirmed'))->isNotEmpty()) {
                 $answer->confirmed = ! in_array($question->type, config('webforms.fields_to_be_confirmed'));
             }
             event(new AnswerCreated($answer, $user));
@@ -29,7 +29,7 @@ class Answer extends Model
         static::updating(function (Answer $answer) {
             $question = $answer->question;
             $user = $answer->user;
-            if (config('webforms.confirm_fields')) {
+            if (collect(config('webforms.fields_to_be_confirmed'))->isNotEmpty()) {
                 if ($answer->isDirty('text')) {
                     $answer->confirmed = ! in_array($question->type, config('webforms.fields_to_be_confirmed'));
                 }

@@ -57,6 +57,8 @@ class QuestionControllerTest extends TestCase
                     'title',
                     'description',
                     'default_value',
+                    'min',
+                    'max',
                     'options',
                     'answer',
                 ],
@@ -132,6 +134,25 @@ class QuestionControllerTest extends TestCase
             ->assertOk();
 
         $this->assertSame(65, collect($response->json('data'))->where('id', $question->id)->first()['default_value']);
+    }
+
+    /** @test */
+    public function min_max_question()
+    {
+        $user = factory(User::class)->create();
+        $question = factory(Question::class)->state('options')->create([
+            'sort' => 1,
+            'type' => QuestionTypes::AGE_TYPE,
+            'min' => '18',
+            'max' => '90',
+        ]);
+
+        $response = $this->actingAs($user)
+            ->json('GET', '/webforms/questions')
+            ->assertOk();
+
+        $this->assertSame(18, collect($response->json('data'))->where('id', $question->id)->first()['min']);
+        $this->assertSame(90, collect($response->json('data'))->where('id', $question->id)->first()['max']);
     }
 
     /**

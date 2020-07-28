@@ -48,6 +48,8 @@ $factory->state(Question::class, 'money', function (Generator $faker) {
 $factory->state(Question::class, 'age', function (Generator $faker) {
     return [
         'type' => QuestionTypes::AGE_TYPE,
+        'min' => '18',
+        'max' => '70',
     ];
 });
 
@@ -55,6 +57,8 @@ $factory->state(Question::class, 'age', function (Generator $faker) {
 $factory->state(Question::class, 'percent', function (Generator $faker) {
     return [
         'type' => QuestionTypes::PERCENT_TYPE,
+        'min' => '0',
+        'max' => '100',
     ];
 });
 
@@ -88,6 +92,7 @@ $factory->state(Question::class, 'text', function (Generator $faker) {
 $factory->state(Question::class, 'phone', function (Generator $faker) {
     return [
         'type' => QuestionTypes::PHONE_TYPE,
+        'min' => '13',
     ];
 });
 

@@ -34,7 +34,9 @@ class QuestionResource extends JsonResource
             'post_input_text' => $this->post_input_text,
             'title' => $this->title,
             'description' => $this->description,
-            'default_value' => $this->default_value_to_front,
+            'default_value' => $this->castNullValueToFront($this->default_value),
+            'min' => $this->castNullValueToFront($this->min),
+            'max' => $this->castNullValueToFront($this->max),
             'options' => $this->options ? Options::transform($this->options) : null,
             'answer' => $currentUserAnswer
                 ? new AnswerResource($currentUserAnswer)
