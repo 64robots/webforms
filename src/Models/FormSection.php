@@ -15,6 +15,11 @@ class FormSection extends Model
         return $this->hasMany(FormStep::class);
     }
 
+    public function formSectionable()
+    {
+        return $this->morphTo();
+    }
+
     # Getters
 
     public function getMenuTitleAttribute($value)

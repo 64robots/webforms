@@ -11,11 +11,15 @@ class CreateWebformsTables extends Migration
         Schema::create('form_sections', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('sort')->nullable();
+            $table->string('form_sectionable_type')->nullable();
+            $table->unsignedBigInteger('form_sectionable_id')->nullable();
             $table->string('slug')->unique();
             $table->string('menu_title')->nullable();
             $table->string('title');
             $table->text('description')->nullable();
             $table->timestamps();
+
+            $table->index(['form_sectionable_type', 'form_sectionable_id']);
         });
 
         Schema::create('form_steps', function (Blueprint $table) {

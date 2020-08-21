@@ -24,6 +24,16 @@ class FormSectionTest extends TestCase
     }
 
     /** @test */
+    public function it_can_be_associated_with_a_entity_using_form_sectionable()
+    {
+        $user = factory(User::class)->create();
+        $formSection = factory(FormSection::class)->create();
+        $user->associateFormSection($formSection);
+        $this->assertTrue($user->formSection->is($formSection));
+        $this->assertTrue($formSection->formSectionable->is($user));
+    }
+
+    /** @test */
     public function menu_title_returns_title_if_it_is_null()
     {
         /** @var FormSection $formSection */
