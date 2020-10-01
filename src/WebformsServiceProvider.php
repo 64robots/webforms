@@ -36,6 +36,18 @@ class WebformsServiceProvider extends ServiceProvider
                     Route::post('/answers', [AnswerController::class, 'store']);
                 });
         });
+
+        Route::macro('webformsAdmin', function (string $prefix) {
+            Route::prefix($prefix)
+                ->middleware(['throttle:60,1', 'bindings'])
+                ->group(function () {
+                    Route::post('/form-sections', [FormSectionController::class, 'store']);
+                    // Todo: Implement this
+                    Route::post('/form-steps', [FormStepController::class, 'store']);
+                    // Todo: Implement this
+                    Route::post('/questions', [QuestionController::class, 'store']);
+                });
+        });
     }
 
     public function register()
