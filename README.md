@@ -26,10 +26,17 @@ You can publish the config file with:
 php artisan vendor:publish --provider="R64\Webforms\WebformsServiceProvider" --tag="config"
 ```
 
-This is the contents of the published config file:
+This is the contents of the published `webforms.php` config file:
 
 ```php
 return [
+    'date_format' => 'Y-m-d',
+    'year_month_format' => 'Y-m',
+    'fields_to_be_confirmed' => [
+        QuestionTypes::EMAIL_TYPE,
+        QuestionTypes::PHONE_TYPE,
+    ],
+    'user_model' => 'App\User',
 ];
 ```
 
