@@ -1,8 +1,4 @@
-# Backend for 64 Robots webforms
-
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/64robots/webforms.svg?style=flat-square)](https://packagist.org/packages/64robots/webforms)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/64robots/webforms/run-tests?label=tests)](https://github.com/64robots/webforms/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/64robots/webforms.svg?style=flat-square)](https://packagist.org/packages/64robots/webforms)
+# webforms Docs
 
 Package to create questions and answers for a multistep-form made with :heart: from [64 Robots](https://64robots.com)
 
@@ -26,7 +22,7 @@ You can publish the config file with:
 php artisan vendor:publish --provider="R64\Webforms\WebformsServiceProvider" --tag="config"
 ```
 
-This is the contents of the published `webforms.php` config file:
+This is the contents of the published config file:
 
 ```php
 return [
@@ -42,11 +38,17 @@ return [
 
 ## Usage
 
-Add that to your routes file:
+1. Add that to your routes file:
 
 ```php
 Route::webforms('webforms');
 ```
+
+2. Add `HasWebForms` trait in your user entity.
+
+3. Create Seeders for FormSection, FormSteps and Question.
+
+More details in the [Usage Docs](docs/usage.md).
 
 ## Testing
 
@@ -69,7 +71,7 @@ If you discover any security related issues, please email mmanzano@gmail.com ins
 ## Credits
 
 - [64 Robots](https://github.com/64Robots)
-- [All Contributors](../../contributors)
+- [All Contributors](https://github.com/64Robots/webforms/contributors)
 
 ## License
 
