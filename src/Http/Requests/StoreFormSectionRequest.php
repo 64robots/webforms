@@ -40,6 +40,7 @@ class StoreFormSectionRequest extends JsonFormRequest
         $lastSort = FormSection::max('sort') ?? 0;
         $sort = ((int)$lastSort) + 1;
         $slug = Slug::make($this->title, (new FormSection())->getTable());
+
         return [
             'sort' => $this->sort ? $this->sort : $sort,
             'slug' => $this->slug ? $this->slug : $slug,
