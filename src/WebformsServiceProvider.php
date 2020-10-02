@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use R64\Webforms\Http\Controllers\AdminFormSectionController;
 use R64\Webforms\Http\Controllers\AdminFormStepController;
+use R64\Webforms\Http\Controllers\AdminQuestionController;
 use R64\Webforms\Http\Controllers\AnswerController;
 use R64\Webforms\Http\Controllers\FormSectionController;
 use R64\Webforms\Http\Controllers\FormStepController;
@@ -45,8 +46,7 @@ class WebformsServiceProvider extends ServiceProvider
                 ->group(function () {
                     Route::post('/form-sections', [AdminFormSectionController::class, 'store']);
                     Route::post('/form-steps', [AdminFormStepController::class, 'store']);
-                    // Todo: Implement this
-                    Route::post('/questions', [QuestionController::class, 'store']);
+                    Route::post('/questions', [AdminQuestionController::class, 'store']);
                 });
         });
     }

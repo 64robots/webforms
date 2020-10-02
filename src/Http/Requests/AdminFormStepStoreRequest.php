@@ -45,7 +45,7 @@ class AdminFormStepStoreRequest extends JsonFormRequest
 
         $lastSort = $formSection->formSteps()->max('sort') ?? 0;
         $sort = ((int)$lastSort) + 1;
-        $slug = Slug::make($this->title, (new FormStep())->getTable());
+        $slug = Slug::make($this->title, (new FormStep)->getTable());
 
         return [
             'form_section_id' => $this->form_section_id,
