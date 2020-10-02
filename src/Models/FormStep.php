@@ -3,6 +3,7 @@
 namespace R64\Webforms\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use R64\Webforms\Helpers\Sort;
 
 class FormStep extends Model
 {
@@ -51,6 +52,26 @@ class FormStep extends Model
         }
 
         return $userFormStep->pivot->completed;
+    }
+
+    # CRUD
+
+    public static function makeOne(array $data)
+    {
+        /** @var FormSection $formSection */
+        $formSection = FormSection::findOrFail($data['form_section_id']);
+        $formStep = new self;
+        $formStep->sort = Sort::reorderCollection($formSection->formSteps, $data['sort']);
+        $formStep->formSection()->associate($formSection);
+        $formStep->slug = $data['slug'];
+        $formStep->menu_title = $data['menu_title'] ?? null;
+        $formStep->title = $data['title'];
+        $formStep->description = $data['description'] ?? null;
+        $formStep->is_personal_data = $data['is_personal_data'] ?? 0;
+
+        $formStep->save();
+
+        return $formStep;
     }
 
     # Section

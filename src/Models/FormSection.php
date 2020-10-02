@@ -3,6 +3,7 @@
 namespace R64\Webforms\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use R64\Webforms\Helpers\Sort;
 
 class FormSection extends Model
 {
@@ -25,6 +26,22 @@ class FormSection extends Model
     public function getMenuTitleAttribute($value)
     {
         return empty($value) ? $this->title : $value;
+    }
+
+    # CRUD
+
+    public static function makeOne(array $data)
+    {
+        $formSection = new self;
+        $formSection->sort = Sort::reorder($data['sort'], $formSection->getTable());
+        $formSection->slug = $data['slug'];
+        $formSection->menu_title = $data['menu_title'] ?? null;
+        $formSection->title = $data['title'];
+        $formSection->description = $data['description'] ?? null;
+
+        $formSection->save();
+
+        return $formSection;
     }
 
     # Steps

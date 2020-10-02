@@ -19,6 +19,7 @@ class TestCase extends Orchestra
         $this->withFactories(__DIR__.'/database/factories');
 
         Route::webforms('webforms');
+        Route::webformsAdmin('webforms-admin');
     }
 
     protected function getPackageProviders($app)
