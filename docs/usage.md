@@ -10,6 +10,12 @@ Route::webforms('webforms');
 
 This make possible that you can use your own middleware maybe for make the forms only available to a group of the users. You can choice the root prefix for this group of routes changing the value of the parameter.
 
+If you want routes to create FormSections, FormSteps and Questions, add that under the appropriate middleware in your routes file:
+
+```php
+Route::webformsAdmin('webforms-admin');
+```
+
 ## 2. `HasWebForms` trait
 
 Add `HasWebForms` trait in your user entity.

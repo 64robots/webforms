@@ -42,10 +42,16 @@ return [
 
 ## Usage
 
-Add that to your routes file:
+At that moment the package doesn't work with anonymous users. Please, add that to your routes file under an auth routes:
 
 ```php
 Route::webforms('webforms');
+```
+
+If you want routes to create FormSections, FormSteps and Questions, add that under the appropriate middleware in your routes file:
+
+```php
+Route::webformsAdmin('webforms-admin');
 ```
 
 ## Testing
