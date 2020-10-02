@@ -6,7 +6,7 @@ use R64\Webforms\Models\FormSection;
 use R64\Webforms\Tests\Feature\Models\User;
 use R64\Webforms\Tests\TestCase;
 
-class FormSectionStoreControllerTest extends TestCase
+class AdminFormSectionStoreControllerTest extends TestCase
 {
     /**
      * @test
@@ -40,6 +40,12 @@ class FormSectionStoreControllerTest extends TestCase
 
         $formSection = FormSection::where('slug', 'new-form-section')->first();
         $this->assertEquals($formSection->id, $response->json('data.id'));
+        $this->assertEquals(2, $response->json('data.sort'));
+        $this->assertEquals('new-form-section', $response->json('data.slug'));
+        $this->assertEquals('New form section title for the menu', $response->json('data.menu_title'));
+        $this->assertEquals('New form section title', $response->json('data.title'));
+        $this->assertEquals('An awesome new form section', $response->json('data.description'));
+        $this->assertEquals(true, $response->json('data.completed'));
     }
 
     /**

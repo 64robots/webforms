@@ -14,4 +14,16 @@ class Sort
 
         return $sort;
     }
+
+    public static function reorderCollection($collection, $sort, $column = 'sort')
+    {
+        if ($collection->where($column, $sort)->first()) {
+            $collection->where($column, '>=', $sort)->each(function ($element) use ($column) {
+                $element->{$column} = $element->{$column} + 1;
+                $element->save();
+            });
+        }
+
+        return $sort;
+    }
 }

@@ -4,6 +4,8 @@ namespace R64\Webforms;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use R64\Webforms\Http\Controllers\AdminFormSectionController;
+use R64\Webforms\Http\Controllers\AdminFormStepController;
 use R64\Webforms\Http\Controllers\AnswerController;
 use R64\Webforms\Http\Controllers\FormSectionController;
 use R64\Webforms\Http\Controllers\FormStepController;
@@ -41,9 +43,8 @@ class WebformsServiceProvider extends ServiceProvider
             Route::prefix($prefix)
                 ->middleware(['throttle:60,1', 'bindings'])
                 ->group(function () {
-                    Route::post('/form-sections', [FormSectionController::class, 'store']);
-                    // Todo: Implement this
-                    Route::post('/form-steps', [FormStepController::class, 'store']);
+                    Route::post('/form-sections', [AdminFormSectionController::class, 'store']);
+                    Route::post('/form-steps', [AdminFormStepController::class, 'store']);
                     // Todo: Implement this
                     Route::post('/questions', [QuestionController::class, 'store']);
                 });

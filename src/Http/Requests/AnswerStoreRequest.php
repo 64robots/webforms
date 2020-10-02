@@ -5,7 +5,7 @@ namespace R64\Webforms\Http\Requests;
 use R64\Webforms\Models\Answer;
 use R64\Webforms\Models\Question;
 
-class StoreAnswerRequest extends JsonFormRequest
+class AnswerStoreRequest extends JsonFormRequest
 {
     public $question;
     public $answer;
