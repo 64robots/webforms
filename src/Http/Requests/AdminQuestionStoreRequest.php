@@ -67,7 +67,7 @@ class AdminQuestionStoreRequest extends JsonFormRequest
             'slug' => $this->slug ? $this->slug : $slug,
             'group_by' => $this->group_by,
             'group_by_description' => $this->group_by_description,
-            'label_position' => $this->label_position,
+            'label_position' => $this->label_position ? $this->label_position : 'top',
             'help_title' => $this->help_title,
             'help_body' => $this->help_body,
             'type' => $this->type ? $this->type : 'text',
@@ -80,7 +80,7 @@ class AdminQuestionStoreRequest extends JsonFormRequest
             'max' => $this->max,
             'showed_when' => $this->showed_when,
             'options' => $this->options,
-            'required' => $this->required,
+            'required' => $this->required ? $this->required : 0,
         ];
     }
 }

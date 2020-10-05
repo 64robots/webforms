@@ -18,6 +18,7 @@ class CreateWebformsTables extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->index(['form_sectionable_type', 'form_sectionable_id']);
         });
@@ -32,6 +33,7 @@ class CreateWebformsTables extends Migration
             $table->text('description')->nullable();
             $table->boolean('is_personal_data')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('form_step_user', function (Blueprint $table) {
@@ -64,6 +66,7 @@ class CreateWebformsTables extends Migration
             $table->json('options')->nullable();
             $table->boolean('required')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('answers', function (Blueprint $table) {

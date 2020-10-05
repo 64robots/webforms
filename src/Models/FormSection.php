@@ -3,10 +3,13 @@
 namespace R64\Webforms\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use R64\Webforms\Helpers\Sort;
 
 class FormSection extends Model
 {
+    use SoftDeletes;
+
     public $guarded = [];
 
     # Relations
@@ -30,18 +33,26 @@ class FormSection extends Model
 
     # CRUD
 
-    public static function makeOne(array $data)
+    public static function makeOneOrUpdate(array $data, FormSection $formSection = null)
     {
-        $formSection = new self;
+        if ($formSection === null) {
+            $formSection = new self;
+        }
+
         $formSection->sort = Sort::reorder($data['sort'], $formSection->getTable());
         $formSection->slug = $data['slug'];
-        $formSection->menu_title = $data['menu_title'] ?? null;
+        $formSection->menu_title = $data['menu_title'];
         $formSection->title = $data['title'];
-        $formSection->description = $data['description'] ?? null;
+        $formSection->description = $data['description'];
 
         $formSection->save();
 
         return $formSection;
+    }
+
+    public function deleteMe()
+    {
+        $this->delete();
     }
 
     # Steps

@@ -96,7 +96,6 @@ class AdminQuestionStoreControllerTest extends TestCase
         $this->assertEquals('right', $response->json('data.label_position'));
         $this->assertEquals('A little help usually as a modal', $response->json('data.help_title'));
         $this->assertEquals('Body of a little help usually as a modal', $response->json('data.help_body'));
-        $this->assertEquals('Body of a little help usually as a modal', $response->json('data.help_body'));
         $this->assertEquals('options', $response->json('data.type'));
         $this->assertEquals('Answer something about that', $response->json('data.post_input_text'));
         $this->assertEquals('New question title', $response->json('data.title'));
@@ -107,11 +106,33 @@ class AdminQuestionStoreControllerTest extends TestCase
         $this->assertEquals('15', $response->json('data.max'));
         $this->assertEquals([true], $response->json('data.showed_when'));
         $this->assertEquals([
-            ['value' => '5', 'label' => 'Minimum value'],
+            ['value' => 5, 'label' => 'Minimum value'],
             ['value' => 10, 'label' => 'Average value'],
             ['value' => 15, 'label' => 'Maximum value'],
         ], $response->json('data.options'));
         $this->assertEquals(1, $response->json('data.required'));
+    }
+
+    /**
+     * @test
+     * POST '/webforms-admin/questions'
+     */
+    public function it_validates_uniqueness_of_the_slug_when_it_creates_a_new_question()
+    {
+        $user = factory(User::class)->create();
+        $formStep = factory(FormStep::class)->create();
+
+        factory(Question::class)->create([
+            'slug' => 'new-question-title',
+        ]);
+
+        $this->actingAs($user)
+            ->json('POST', '/webforms-admin/questions', [
+                'form_step_id' => $formStep->id,
+                'slug' => 'new-question-title',
+            ])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('slug');
     }
 
     /**

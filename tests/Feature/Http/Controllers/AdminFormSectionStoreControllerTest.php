@@ -52,6 +52,26 @@ class AdminFormSectionStoreControllerTest extends TestCase
      * @test
      * POST '/webforms-admin/form-sections'
      */
+    public function it_validates_uniqueness_of_the_slug_when_it_creates_a_new_form_section()
+    {
+        $user = factory(User::class)->create();
+
+        factory(FormSection::class)->create([
+            'slug' => 'new-form-section-title',
+        ]);
+
+        $this->actingAs($user)
+            ->json('POST', '/webforms-admin/form-sections/', [
+                'slug' => 'new-form-section-title',
+            ])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('slug');
+    }
+
+    /**
+     * @test
+     * POST '/webforms-admin/form-sections'
+     */
     public function it_creates_a_slug_for_a_section()
     {
         $user = factory(User::class)->create();

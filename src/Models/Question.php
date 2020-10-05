@@ -3,11 +3,14 @@
 namespace R64\Webforms\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use R64\Webforms\Helpers\Sort;
 
 class Question extends Model
 {
+    use SoftDeletes;
+
     public $guarded = [];
 
     protected $casts = [
@@ -47,35 +50,43 @@ class Question extends Model
         return $this->currentUserAnswers()->current()->first();
     }
 
-    public static function makeOne(array $data)
+    public static function makeOneOrUpdate(array $data, Question $question = null)
     {
+        if ($question === null) {
+            $question = new self;
+        }
+
         /** @var FormStep $formStep */
         $formStep = FormStep::findOrFail($data['form_step_id']);
-        $question = new self;
         $question->sort = Sort::reorderCollection($formStep->questions, $data['sort']);
         $question->formStep()->associate($formStep);
-        $question->depends_on = $data['depends_on'] ?? null;
+        $question->depends_on = $data['depends_on'];
         $question->slug = $data['slug'];
-        $question->group_by = $data['group_by'] ?? null;
-        $question->group_by_description = $data['group_by_description'] ?? null;
-        $question->label_position = $data['label_position'] ?? 'top';
-        $question->help_title = $data['help_title'] ?? null;
-        $question->help_body = $data['help_body'] ?? null;
-        $question->type = $data['type'] ?? null;
-        $question->post_input_text = $data['post_input_text'] ?? null;
+        $question->group_by = $data['group_by'];
+        $question->group_by_description = $data['group_by_description'];
+        $question->label_position = $data['label_position'];
+        $question->help_title = $data['help_title'];
+        $question->help_body = $data['help_body'];
+        $question->type = $data['type'];
+        $question->post_input_text = $data['post_input_text'];
         $question->title = $data['title'];
-        $question->description = $data['description'] ?? null;
-        $question->error_message = $data['error_message'] ?? null;
-        $question->default_value = $data['default_value'] ?? null;
-        $question->min = $data['min'] ?? null;
-        $question->max = $data['max'] ?? null;
-        $question->showed_when = $data['showed_when'] ?? null;
-        $question->options = $data['options'] ?? null;
-        $question->required = $data['required'] ?? false;
+        $question->description = $data['description'];
+        $question->error_message = $data['error_message'];
+        $question->default_value = $data['default_value'];
+        $question->min = $data['min'];
+        $question->max = $data['max'];
+        $question->showed_when = $data['showed_when'];
+        $question->options = $data['options'];
+        $question->required = $data['required'];
 
         $question->save();
 
         return $question;
+    }
+
+    public function deleteMe()
+    {
+        $this->delete();
     }
 
     # Helpers

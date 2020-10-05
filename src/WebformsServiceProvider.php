@@ -45,8 +45,16 @@ class WebformsServiceProvider extends ServiceProvider
                 ->middleware(['throttle:60,1', 'bindings'])
                 ->group(function () {
                     Route::post('/form-sections', [AdminFormSectionController::class, 'store']);
+                    Route::put('/form-sections/{formSection}', [AdminFormSectionController::class, 'update']);
+                    Route::delete('/form-sections/{formSection}', [AdminFormSectionController::class, 'destroy']);
+
                     Route::post('/form-steps', [AdminFormStepController::class, 'store']);
+                    Route::put('/form-steps/{formStep}', [AdminFormStepController::class, 'update']);
+                    Route::delete('/form-steps/{formStep}', [AdminFormStepController::class, 'destroy']);
+
                     Route::post('/questions', [AdminQuestionController::class, 'store']);
+                    Route::put('/questions/{question}', [AdminQuestionController::class, 'update']);
+                    Route::delete('/questions/{question}', [AdminQuestionController::class, 'destroy']);
                 });
         });
     }
