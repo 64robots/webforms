@@ -53,7 +53,6 @@ class WebformsServiceProvider extends ServiceProvider
                     Route::delete('/form-steps/{formStep}', [AdminFormStepController::class, 'destroy']);
 
                     Route::post('/questions', [AdminQuestionController::class, 'store']);
-                    // Todo: Implement this
                     Route::put('/questions/{question}', [AdminQuestionController::class, 'update']);
                     // Todo: Implement this
                     Route::delete('/questions/{question}', [AdminQuestionController::class, 'destroy']);
