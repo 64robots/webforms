@@ -54,7 +54,6 @@ class WebformsServiceProvider extends ServiceProvider
 
                     Route::post('/questions', [AdminQuestionController::class, 'store']);
                     Route::put('/questions/{question}', [AdminQuestionController::class, 'update']);
-                    // Todo: Implement this
                     Route::delete('/questions/{question}', [AdminQuestionController::class, 'destroy']);
                 });
         });

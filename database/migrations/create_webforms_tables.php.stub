@@ -66,6 +66,7 @@ class CreateWebformsTables extends Migration
             $table->json('options')->nullable();
             $table->boolean('required')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('answers', function (Blueprint $table) {

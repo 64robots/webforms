@@ -3,11 +3,14 @@
 namespace R64\Webforms\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use R64\Webforms\Helpers\Sort;
 
 class Question extends Model
 {
+    use SoftDeletes;
+
     public $guarded = [];
 
     protected $casts = [
@@ -79,6 +82,11 @@ class Question extends Model
         $question->save();
 
         return $question;
+    }
+
+    public function deleteMe()
+    {
+        $this->delete();
     }
 
     # Helpers

@@ -22,4 +22,11 @@ class AdminQuestionController
 
         return new QuestionResource($question);
     }
+
+    public function destroy(Question $question)
+    {
+        $question->deleteMe();
+
+        return new QuestionResource($question->load('formStep'));
+    }
 }
