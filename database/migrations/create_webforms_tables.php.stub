@@ -33,6 +33,7 @@ class CreateWebformsTables extends Migration
             $table->text('description')->nullable();
             $table->boolean('is_personal_data')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('form_step_user', function (Blueprint $table) {

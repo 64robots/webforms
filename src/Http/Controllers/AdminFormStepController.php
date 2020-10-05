@@ -22,4 +22,11 @@ class AdminFormStepController
 
         return new FormStepResource($formStep);
     }
+
+    public function destroy(FormStep $formStep)
+    {
+        $formStep->deleteMe();
+
+        return new FormStepResource($formStep->load('formSection'));
+    }
 }
