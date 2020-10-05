@@ -22,4 +22,11 @@ class AdminFormSectionController
 
         return new FormSectionResource($formSection);
     }
+
+    public function destroy(FormSection $formSection)
+    {
+        $formSection->deleteMe();
+
+        return new FormSectionResource($formSection);
+    }
 }

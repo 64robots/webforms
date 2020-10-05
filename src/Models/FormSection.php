@@ -3,10 +3,13 @@
 namespace R64\Webforms\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use R64\Webforms\Helpers\Sort;
 
 class FormSection extends Model
 {
+    use SoftDeletes;
+
     public $guarded = [];
 
     # Relations
@@ -45,6 +48,11 @@ class FormSection extends Model
         $formSection->save();
 
         return $formSection;
+    }
+
+    public function deleteMe()
+    {
+        $this->delete();
     }
 
     # Steps
