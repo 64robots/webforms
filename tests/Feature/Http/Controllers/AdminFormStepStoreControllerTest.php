@@ -67,6 +67,29 @@ class AdminFormStepStoreControllerTest extends TestCase
      * @test
      * POST '/webforms-admin/form-steps'
      */
+    public function it_validates_uniqueness_of_the_slug_when_creates_a_new_form_step()
+    {
+        $user = factory(User::class)->create();
+        $formSection = factory(FormSection::class)->create();
+
+        factory(FormStep::class)->create([
+            'slug' => 'new-form-step-title',
+        ]);
+
+        $this->actingAs($user)
+            ->json('POST', '/webforms-admin/form-steps', [
+                'form_section_id' => $formSection->id,
+                'slug' => 'new-form-step-title',
+                'title' => 'New form step title',
+            ])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors('slug');
+    }
+
+    /**
+     * @test
+     * POST '/webforms-admin/form-steps'
+     */
     public function it_creates_a_slug_for_a_step()
     {
         $user = factory(User::class)->create();

@@ -52,7 +52,7 @@ class AdminFormSectionStoreControllerTest extends TestCase
      * @test
      * POST '/webforms-admin/form-sections'
      */
-    public function it_validates_uniqueness_of_the_slug_when_creates_a_new_form_section()
+    public function it_validates_uniqueness_of_the_slug_when_it_creates_a_new_form_section()
     {
         $user = factory(User::class)->create();
 
