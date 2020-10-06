@@ -39,7 +39,7 @@ class FormSectionFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_is_able_to_move_the_sort_values()
+    public function it_is_able_to_move_the_sort_values_in_the_form_sections()
     {
         $firstSection = FormSection::build('First section')->sort(1)->save();
         $secondSection = FormSection::build('Second section')->sort(2)->save();
@@ -56,7 +56,9 @@ class FormSectionFactoryTest extends TestCase
     {
         $firstSection = FormSection::build('First section')->save();
 
+        $firstSection = $firstSection->fresh();
         FormSection::updateFormSection($firstSection)->title('Second Section')->save();
+        $firstSection = $firstSection->fresh();
         $this->assertEquals(1, $firstSection->sort);
         $this->assertEquals('Second Section', $firstSection->title);
         $this->assertEquals('first-section', $firstSection->slug);
@@ -92,7 +94,7 @@ class FormSectionFactoryTest extends TestCase
     }
 
     /** @test */
-    public function it_is_able_to_update_the_sort_values()
+    public function it_is_able_to_update_the_sort_values_for_a_form_section()
     {
         $firstSection = FormSection::build('First section')->sort(1)->save();
         $secondSection = FormSection::build('Second section')->sort(2)->save();

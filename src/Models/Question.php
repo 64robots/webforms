@@ -58,7 +58,7 @@ class Question extends Model
 
         /** @var FormStep $formStep */
         $formStep = FormStep::findOrFail($data['form_step_id']);
-        $question->sort = Sort::reorderCollection($formStep->questions, $data['sort']);
+        $question->sort = Sort::reorderCollection($formStep->questions, $data['sort'], 'sort', $question->sort);
         $question->formStep()->associate($formStep);
         $question->depends_on = $data['depends_on'];
         $question->slug = $data['slug'];

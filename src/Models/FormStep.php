@@ -4,6 +4,8 @@ namespace R64\Webforms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use R64\Webforms\Factories\FormStepFactory;
+use R64\Webforms\Helpers\Slug;
 use R64\Webforms\Helpers\Sort;
 
 class FormStep extends Model
@@ -11,6 +13,10 @@ class FormStep extends Model
     use SoftDeletes;
 
     public $guarded = [];
+
+    protected $casts = [
+        'is_personal_data' => 'boolean',
+    ];
 
     # Relations
 
@@ -59,6 +65,16 @@ class FormStep extends Model
 
     # CRUD
 
+    public static function build(FormSection $formSection, string $title)
+    {
+        return FormStepFactory::build($formSection, $title);
+    }
+
+    public static function updateFormStep(FormStep $formStep)
+    {
+        return FormStepFactory::update($formStep);
+    }
+
     public static function makeOneOrUpdate(array $data, FormStep $formStep = null)
     {
         if ($formStep === null) {
@@ -67,7 +83,7 @@ class FormStep extends Model
 
         /** @var FormSection $formSection */
         $formSection = FormSection::findOrFail($data['form_section_id']);
-        $formStep->sort = Sort::reorderCollection($formSection->formSteps, $data['sort']);
+        $formStep->sort = Sort::reorderCollection($formSection->formSteps, $data['sort'], 'sort', $formStep->sort);
         $formStep->formSection()->associate($formSection);
         $formStep->slug = $data['slug'];
         $formStep->menu_title = $data['menu_title'];
@@ -136,5 +152,23 @@ class FormStep extends Model
                 return (! $sonAnswer) || ($sonAnswer->is_real === false);
             });
         });
+    }
+
+    # Helpers
+
+    public static function getLastSort($formSection)
+    {
+        if (is_numeric($formSection)) {
+            $formSection = FormSection::findOrFail($formSection);
+        }
+
+        $lastSort = $formSection->formSteps()->max('sort') ?? 0;
+
+        return ((int)$lastSort) + 1;
+    }
+
+    public static function getSlugFromTitle($title)
+    {
+        return Slug::make($title, (new self)->getTable());
     }
 }

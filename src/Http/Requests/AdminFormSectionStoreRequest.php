@@ -2,7 +2,6 @@
 
 namespace R64\Webforms\Http\Requests;
 
-use R64\Webforms\Helpers\Slug;
 use R64\Webforms\Models\FormSection;
 
 class AdminFormSectionStoreRequest extends JsonFormRequest
