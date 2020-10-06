@@ -139,6 +139,6 @@ class FormStepFactory
 
     private function getIsPersonalData()
     {
-        return $this->isPersonalData ?? 0;
+        return $this->isPersonalData ?? FormStep::getDefaultIsPersonalData();
     }
 }

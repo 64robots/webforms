@@ -47,7 +47,7 @@ class AdminFormStepStoreRequest extends JsonFormRequest
             'menu_title' => $this->menu_title,
             'title' => $this->title,
             'description' => $this->description,
-            'is_personal_data' => $this->is_personal_data ?? 0,
+            'is_personal_data' => $this->is_personal_data ?? FormStep::getDefaultIsPersonalData(),
         ];
     }
 }

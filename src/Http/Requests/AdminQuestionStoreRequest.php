@@ -2,7 +2,6 @@
 
 namespace R64\Webforms\Http\Requests;
 
-use R64\Webforms\Helpers\Slug;
 use R64\Webforms\Models\FormStep;
 use R64\Webforms\Models\Question;
 
@@ -54,23 +53,17 @@ class AdminQuestionStoreRequest extends JsonFormRequest
 
     public function validationData()
     {
-        $formStep = FormStep::findOrFail($this->form_step_id);
-
-        $lastSort = $formStep->questions()->max('sort') ?? 0;
-        $sort = ((int)$lastSort) + 1;
-        $slug = Slug::make($this->title, (new Question)->getTable());
-
         return [
             'form_step_id' => $this->form_step_id,
             'depends_on' => $this->depends_on,
-            'sort' => $this->sort ? $this->sort : $sort,
-            'slug' => $this->slug ? $this->slug : $slug,
+            'sort' => $this->sort ? $this->sort : Question::getLastSort($this->form_step_id),
+            'slug' => $this->slug ? $this->slug : Question::getSlugFromTitle($this->title),
             'group_by' => $this->group_by,
             'group_by_description' => $this->group_by_description,
-            'label_position' => $this->label_position ? $this->label_position : 'top',
+            'label_position' => $this->label_position ? $this->label_position : Question::getDefaultLabelPosition(),
             'help_title' => $this->help_title,
             'help_body' => $this->help_body,
-            'type' => $this->type ? $this->type : 'text',
+            'type' => $this->type ? $this->type : Question::getDefaultType(),
             'post_input_text' => $this->post_input_text,
             'title' => $this->title,
             'description' => $this->description,
@@ -80,7 +73,7 @@ class AdminQuestionStoreRequest extends JsonFormRequest
             'max' => $this->max,
             'showed_when' => $this->showed_when,
             'options' => $this->options,
-            'required' => $this->required ? $this->required : 0,
+            'required' => $this->required ? $this->required : Question::getDefaultRequired(),
         ];
     }
 }

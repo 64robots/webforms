@@ -171,4 +171,9 @@ class FormStep extends Model
     {
         return Slug::make($title, (new self)->getTable());
     }
+
+    public static function getDefaultIsPersonalData()
+    {
+        return 0;
+    }
 }
