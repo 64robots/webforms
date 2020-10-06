@@ -32,7 +32,7 @@ class FormStepTest extends TestCase
     }
 
     /** @test */
-    public function menu_title_returns_title_if_it_is_null()
+    public function menu_title_frontend_returns_title_if_it_is_null()
     {
         /** @var FormStep $formStep */
         $formStep = factory(FormStep::class)->create([
@@ -40,7 +40,7 @@ class FormStepTest extends TestCase
             'slug' => 'first-step',
         ]);
 
-        $this->assertEquals('First Step', $formStep->menu_title);
+        $this->assertEquals('First Step', $formStep->menu_title_frontend);
     }
 
     /** @test */

@@ -2,7 +2,6 @@
 
 namespace R64\Webforms\Http\Requests;
 
-use R64\Webforms\Helpers\Slug;
 use R64\Webforms\Models\FormSection;
 use R64\Webforms\Models\FormStep;
 
@@ -41,20 +40,14 @@ class AdminFormStepStoreRequest extends JsonFormRequest
 
     public function validationData()
     {
-        $formSection = FormSection::findOrFail($this->form_section_id);
-
-        $lastSort = $formSection->formSteps()->max('sort') ?? 0;
-        $sort = ((int)$lastSort) + 1;
-        $slug = Slug::make($this->title, (new FormStep)->getTable());
-
         return [
             'form_section_id' => $this->form_section_id,
-            'sort' => $this->sort ? $this->sort : $sort,
-            'slug' => $this->slug ? $this->slug : $slug,
+            'sort' => $this->sort ? $this->sort : FormStep::getLastSort($this->form_section_id),
+            'slug' => $this->slug ? $this->slug : FormStep::getSlugFromTitle($this->title),
             'menu_title' => $this->menu_title,
             'title' => $this->title,
             'description' => $this->description,
-            'is_personal_data' => $this->is_personal_data ?? 0,
+            'is_personal_data' => $this->is_personal_data ?? FormStep::getDefaultIsPersonalData(),
         ];
     }
 }

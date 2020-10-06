@@ -2,7 +2,6 @@
 
 namespace R64\Webforms\Http\Requests;
 
-use R64\Webforms\Helpers\Slug;
 use R64\Webforms\Models\FormSection;
 
 class AdminFormSectionStoreRequest extends JsonFormRequest
@@ -37,13 +36,9 @@ class AdminFormSectionStoreRequest extends JsonFormRequest
 
     public function validationData()
     {
-        $lastSort = FormSection::max('sort') ?? 0;
-        $sort = ((int)$lastSort) + 1;
-        $slug = Slug::make($this->title, (new FormSection)->getTable());
-
         return [
-            'sort' => $this->sort ? $this->sort : $sort,
-            'slug' => $this->slug ? $this->slug : $slug,
+            'sort' => $this->sort ? $this->sort : FormSection::getLastSort(),
+            'slug' => $this->slug ? $this->slug : FormSection::getSlugFromTitle($this->title),
             'menu_title' => $this->menu_title,
             'title' => $this->title,
             'description' => $this->description,

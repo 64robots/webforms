@@ -5,6 +5,8 @@ namespace R64\Webforms\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use R64\Webforms\Factories\QuestionFactory;
+use R64\Webforms\Helpers\Slug;
 use R64\Webforms\Helpers\Sort;
 
 class Question extends Model
@@ -38,6 +40,11 @@ class Question extends Model
         return $this->answers()->byCurrentUser();
     }
 
+    public function dependsOn()
+    {
+        return $this->belongsTo(Question::class, 'depends_on');
+    }
+
     public function formStep()
     {
         return $this->belongsTo(FormStep::class);
@@ -50,6 +57,18 @@ class Question extends Model
         return $this->currentUserAnswers()->current()->first();
     }
 
+    # CRUD
+
+    public static function build(FormStep $formStep, string $title)
+    {
+        return QuestionFactory::build($formStep, $title);
+    }
+
+    public static function updateQuestion(Question $question)
+    {
+        return QuestionFactory::update($question);
+    }
+
     public static function makeOneOrUpdate(array $data, Question $question = null)
     {
         if ($question === null) {
@@ -58,7 +77,7 @@ class Question extends Model
 
         /** @var FormStep $formStep */
         $formStep = FormStep::findOrFail($data['form_step_id']);
-        $question->sort = Sort::reorderCollection($formStep->questions, $data['sort']);
+        $question->sort = Sort::reorderCollection($formStep->questions, $data['sort'], 'sort', $question->sort);
         $question->formStep()->associate($formStep);
         $question->depends_on = $data['depends_on'];
         $question->slug = $data['slug'];
@@ -173,5 +192,36 @@ class Question extends Model
         }
 
         return $this->castToFront($this->cast($value));
+    }
+
+    public static function getLastSort($formStep)
+    {
+        if (is_numeric($formStep)) {
+            $formStep = FormStep::findOrFail($formStep);
+        }
+
+        $lastSort = $formStep->questions()->max('sort') ?? 0;
+
+        return ((int)$lastSort) + 1;
+    }
+
+    public static function getSlugFromTitle($title)
+    {
+        return Slug::make($title, (new self)->getTable());
+    }
+
+    public static function getDefaultType()
+    {
+        return QuestionTypes::TEXT_TYPE;
+    }
+
+    public static function getDefaultLabelPosition()
+    {
+        return 'top';
+    }
+
+    public static function getDefaultRequired()
+    {
+        return 0;
     }
 }

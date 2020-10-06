@@ -34,7 +34,7 @@ class FormSectionTest extends TestCase
     }
 
     /** @test */
-    public function menu_title_returns_title_if_it_is_null()
+    public function menu_title_frontend_returns_title_if_it_is_null()
     {
         /** @var FormSection $formSection */
         $formSection = factory(FormSection::class)->create([
@@ -42,7 +42,7 @@ class FormSectionTest extends TestCase
             'slug' => 'first-section',
         ]);
 
-        $this->assertEquals('First Section', $formSection->menu_title);
+        $this->assertEquals('First Section', $formSection->menu_title_frontend);
     }
 
     /** @test */
