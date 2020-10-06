@@ -4,6 +4,8 @@ namespace R64\Webforms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use R64\Webforms\Factories\FormSectionFactory;
+use R64\Webforms\Helpers\Slug;
 use R64\Webforms\Helpers\Sort;
 
 class FormSection extends Model
@@ -26,12 +28,22 @@ class FormSection extends Model
 
     # Getters
 
-    public function getMenuTitleAttribute($value)
+    public function getMenuTitleFrontendAttribute()
     {
-        return empty($value) ? $this->title : $value;
+        return empty($this->menu_title) ? $this->title : $this->menu_title;
     }
 
     # CRUD
+
+    public static function build(string $title)
+    {
+        return FormSectionFactory::build($title);
+    }
+
+    public static function updateFormSection(FormSection $formSection)
+    {
+        return FormSectionFactory::update($formSection);
+    }
 
     public static function makeOneOrUpdate(array $data, FormSection $formSection = null)
     {
@@ -39,7 +51,7 @@ class FormSection extends Model
             $formSection = new self;
         }
 
-        $formSection->sort = Sort::reorder($data['sort'], $formSection->getTable());
+        $formSection->sort = Sort::reorder($data['sort'], $formSection->getTable(), 'sort', $formSection->sort);
         $formSection->slug = $data['slug'];
         $formSection->menu_title = $data['menu_title'];
         $formSection->title = $data['title'];
@@ -76,5 +88,19 @@ class FormSection extends Model
             })
             ->wherePivot('completed', false)
             ->exists();
+    }
+
+    # Helpers
+
+    public static function getLastSort()
+    {
+        $lastSort = self::max('sort') ?? 0;
+
+        return ((int)$lastSort) + 1;
+    }
+
+    public static function getSlugFromTitle($title)
+    {
+        return Slug::make($title, (new self)->getTable());
     }
 }

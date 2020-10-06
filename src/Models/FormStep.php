@@ -41,9 +41,9 @@ class FormStep extends Model
 
     # Getters
 
-    public function getMenuTitleAttribute($value)
+    public function getMenuTitleFrontendAttribute()
     {
-        return empty($value) ? $this->title : $value;
+        return empty($this->menu_title) ? $this->title : $this->menu_title;
     }
 
     public function getIsCompletedByCurrentUserAttribute()

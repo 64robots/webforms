@@ -6,9 +6,14 @@ use Illuminate\Support\Facades\DB;
 
 class Sort
 {
-    public static function reorder($sort, $table, $column = 'sort')
+    public static function reorder($sort, $table, $column = 'sort', $ignoreSort = null)
     {
-        if (DB::table($table)->where($column, $sort)->exists()) {
+        $isSort = DB::table($table)
+            ->where(function ($query) use ($column, $sort, $ignoreSort) {
+                $query->where($column, $sort)->where($column, '!=', $ignoreSort);
+            })->exists();
+
+        if ($isSort) {
             DB::table($table)->where($column, '>=', $sort)->increment($column);
         }
 

@@ -18,7 +18,7 @@ class FormSectionResource extends JsonResource
             'id' => $this->id,
             'sort' => $this->sort,
             'slug' => $this->slug,
-            'menu_title' => $this->menu_title,
+            'menu_title' => $this->menu_title_frontend,
             'title' => $this->title,
             'description' => $this->description,
             'completed' => $this->is_completed_by_current_user,
