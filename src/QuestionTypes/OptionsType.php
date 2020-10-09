@@ -6,6 +6,8 @@ use R64\Webforms\Models\Question;
 
 class OptionsType
 {
+    public const TYPE = 'options';
+
     private $question;
 
     public function __construct(Question $question = null)

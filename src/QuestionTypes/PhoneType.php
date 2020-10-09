@@ -6,6 +6,8 @@ use R64\Webforms\Models\Question;
 
 class PhoneType
 {
+    public const TYPE = 'phone';
+
     private $question;
 
     public function __construct(Question $question = null)

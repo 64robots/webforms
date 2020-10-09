@@ -5,7 +5,7 @@ namespace R64\Webforms\Tests\Feature\Http\Controllers;
 use R64\Webforms\Models\Answer;
 use R64\Webforms\Models\FormStep;
 use R64\Webforms\Models\Question;
-use R64\Webforms\Models\QuestionTypes;
+use R64\Webforms\QuestionTypes\AgeType;
 use R64\Webforms\Tests\Feature\Models\User;
 use R64\Webforms\Tests\TestCase;
 
@@ -126,7 +126,7 @@ class QuestionControllerTest extends TestCase
         $user = factory(User::class)->create();
         $question = factory(Question::class)->state('options')->create([
             'sort' => 1,
-            'type' => QuestionTypes::AGE_TYPE,
+            'type' => AgeType::TYPE,
             'default_value' => '65',
         ]);
 
@@ -143,7 +143,7 @@ class QuestionControllerTest extends TestCase
         $user = factory(User::class)->create();
         $question = factory(Question::class)->state('options')->create([
             'sort' => 1,
-            'type' => QuestionTypes::AGE_TYPE,
+            'type' => AgeType::TYPE,
             'min' => '18',
             'max' => '90',
         ]);

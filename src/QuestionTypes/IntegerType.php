@@ -6,6 +6,8 @@ use R64\Webforms\Models\Question;
 
 class IntegerType
 {
+    public const TYPE = 'integer';
+
     private $question;
 
     public function __construct(Question $question = null)

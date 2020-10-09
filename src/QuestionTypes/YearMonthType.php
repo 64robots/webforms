@@ -7,6 +7,8 @@ use R64\Webforms\Models\Question;
 
 class YearMonthType
 {
+    public const TYPE = 'year-month';
+
     private $question;
 
     public function __construct(Question $question = null)

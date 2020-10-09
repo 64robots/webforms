@@ -7,6 +7,8 @@ use R64\Webforms\Models\Question;
 
 class DateType
 {
+    public const TYPE = 'date';
+
     private $question;
 
     public function __construct(Question $question = null)

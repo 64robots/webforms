@@ -6,6 +6,8 @@ use R64\Webforms\Models\Question;
 
 class PercentType
 {
+    public const TYPE = 'percent';
+
     private $question;
 
     public function __construct(Question $question = null)

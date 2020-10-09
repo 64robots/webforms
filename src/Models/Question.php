@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use R64\Webforms\Factories\QuestionFactory;
 use R64\Webforms\Helpers\Slug;
 use R64\Webforms\Helpers\Sort;
+use R64\Webforms\QuestionTypes\TextType;
 
 class Question extends Model
 {
@@ -160,7 +161,7 @@ class Question extends Model
 
     public static function getDefaultType()
     {
-        return QuestionTypes::TEXT_TYPE;
+        return TextType::TYPE;
     }
 
     public static function getDefaultLabelPosition()

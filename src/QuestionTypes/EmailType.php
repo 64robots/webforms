@@ -6,6 +6,8 @@ use R64\Webforms\Models\Question;
 
 class EmailType
 {
+    public const TYPE = 'email';
+
     private $question;
 
     public function __construct(Question $question = null)

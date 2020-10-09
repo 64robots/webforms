@@ -6,6 +6,8 @@ use R64\Webforms\Models\Question;
 
 class TextType
 {
+    public const TYPE = 'text';
+
     private $question;
 
     public function __construct(Question $question = null)

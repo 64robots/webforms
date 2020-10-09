@@ -6,6 +6,8 @@ use R64\Webforms\Models\Question;
 
 class MoneyType
 {
+    public const TYPE = 'money';
+
     private $question;
 
     public function __construct(Question $question = null)
