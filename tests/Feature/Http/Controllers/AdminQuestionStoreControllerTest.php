@@ -48,6 +48,7 @@ class AdminQuestionStoreControllerTest extends TestCase
      */
     public function it_creates_a_question()
     {
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
         $formStep = factory(FormStep::class)->create();
         $anotherQuestion = factory(Question::class)->create();
