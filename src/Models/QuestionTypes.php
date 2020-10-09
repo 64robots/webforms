@@ -2,17 +2,24 @@
 
 namespace R64\Webforms\Models;
 
+use Symfony\Component\Finder\Finder;
+
 class QuestionTypes
 {
-    const DATE_TYPE = 'date';
-    const YEAR_MONTH_TYPE = 'year-month';
-    const INTEGER_TYPE = 'integer';
-    const MONEY_TYPE = 'money';
-    const AGE_TYPE = 'age';
-    const PERCENT_TYPE = 'percent';
-    const BOOLEAN_TYPE = 'boolean';
-    const OPTIONS_TYPE = 'options';
-    const TEXT_TYPE = 'text';
-    const PHONE_TYPE = 'phone';
-    const EMAIL_TYPE = 'email';
+    public static function getAllQuestionTypes()
+    {
+        $finder = new Finder();
+        $finder->files()->in(__DIR__ . '/../QuestionTypes');
+
+        if ($finder->hasResults()) {
+            return collect($finder)->map(function ($file) {
+                $className = $file->getFilenameWithoutExtension();
+                $classFQDN = 'R64\Webforms\QuestionTypes\\' . $className;
+
+                return $classFQDN::TYPE;
+            })->values();
+        }
+
+        return collect();
+    }
 }

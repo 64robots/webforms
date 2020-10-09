@@ -4,6 +4,7 @@ namespace R64\Webforms\Http\Requests;
 
 use R64\Webforms\Models\FormStep;
 use R64\Webforms\Models\Question;
+use R64\Webforms\Models\QuestionTypes;
 
 class AdminQuestionStoreRequest extends JsonFormRequest
 {
@@ -37,7 +38,7 @@ class AdminQuestionStoreRequest extends JsonFormRequest
             'label_position' => 'nullable|string|in:top,left,right',
             'help_title' => 'nullable|string',
             'help_body' => 'nullable|string',
-            'type' => 'nullable|string|in:date,year-month,integer,money,age,percent,boolean,options,text,phone,email',
+            'type' => 'nullable|string|in:' . QuestionTypes::getAllQuestionTypes()->implode(','),
             'post_input_text' => 'nullable|string',
             'title' => 'required|string',
             'description' => 'nullable|string',

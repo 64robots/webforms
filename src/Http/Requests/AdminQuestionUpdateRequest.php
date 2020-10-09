@@ -5,6 +5,7 @@ namespace R64\Webforms\Http\Requests;
 use Illuminate\Validation\Rule;
 use R64\Webforms\Models\FormStep;
 use R64\Webforms\Models\Question;
+use R64\Webforms\Models\QuestionTypes;
 
 class AdminQuestionUpdateRequest extends JsonFormRequest
 {
@@ -46,7 +47,7 @@ class AdminQuestionUpdateRequest extends JsonFormRequest
             'label_position' => 'nullable|string|in:top,left,right',
             'help_title' => 'nullable|string',
             'help_body' => 'nullable|string',
-            'type' => 'nullable|string|in:date,year-month,integer,money,age,percent,boolean,options,text,phone,email',
+            'type' => 'nullable|string|in:' . QuestionTypes::getAllQuestionTypes()->implode(','),
             'post_input_text' => 'nullable|string',
             'title' => 'nullable|string',
             'description' => 'nullable|string',

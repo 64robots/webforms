@@ -4,10 +4,11 @@ namespace R64\Webforms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 use R64\Webforms\Factories\QuestionFactory;
 use R64\Webforms\Helpers\Slug;
 use R64\Webforms\Helpers\Sort;
+use R64\Webforms\QuestionTypes\TextType;
 
 class Question extends Model
 {
@@ -112,77 +113,25 @@ class Question extends Model
 
     public function cast($value)
     {
-        if (in_array($this->type, [QuestionTypes::DATE_TYPE, QuestionTypes::YEAR_MONTH_TYPE])) {
-            $value = Carbon::parse($value);
-        }
-
-        if (in_array($this->type, [QuestionTypes::INTEGER_TYPE, QuestionTypes::MONEY_TYPE, QuestionTypes::PERCENT_TYPE, QuestionTypes::AGE_TYPE])) {
-            $value = (int)$value;
-        }
-
-        if ($this->type === QuestionTypes::BOOLEAN_TYPE) {
-            if ($value === 'true') {
-                $value = 1;
-            }
-            if ($value === 'false') {
-                $value = 0;
-            }
-            $value = (bool)((int)$value);
-        }
-
-        return $value;
+        return $this->getQuestionType()->cast($value);
     }
 
     public function castToFront($value)
     {
-        if ($this->type === QuestionTypes::DATE_TYPE) {
-            return $value->toDateString();
-        }
-
-        if ($this->type === QuestionTypes::YEAR_MONTH_TYPE) {
-            return $value->format('Y-m');
-        }
-
-        return $value;
+        return $this->getQuestionType()->castToFront($value);
     }
 
     public function getValidationRules()
     {
-        $rule = 'string';
+        return $this->getQuestionType()->getValidationRules();
+    }
 
-        if ($this->type === QuestionTypes::DATE_TYPE) {
-            $rule = 'date:' . config('webforms.date_format');
-        }
+    public function getQuestionType()
+    {
+        $type = Str::studly($this->type);
+        $class = "R64\Webforms\QuestionTypes\\" . $type . "Type";
 
-        if ($this->type === QuestionTypes::YEAR_MONTH_TYPE) {
-            $rule = 'date:' . config('webforms.year_month_format');
-        }
-
-        if (in_array($this->type, [QuestionTypes::INTEGER_TYPE, QuestionTypes::MONEY_TYPE])) {
-            $rule = 'numeric';
-        }
-
-        if (in_array($this->type, [QuestionTypes::PERCENT_TYPE, QuestionTypes::AGE_TYPE])) {
-            $rule = 'numeric|between:' . $this->min . ',' . $this->max;
-        }
-
-        if ($this->type === QuestionTypes::OPTIONS_TYPE) {
-            $rule = 'in:' . implode(",", array_keys($this->options));
-        }
-
-        if ($this->type === QuestionTypes::BOOLEAN_TYPE) {
-            $rule = 'boolean';
-        }
-
-        if ($this->type === QuestionTypes::EMAIL_TYPE) {
-            $rule = 'email';
-        }
-
-        if ($this->type === QuestionTypes::PHONE_TYPE) {
-            $rule = 'string|min:' . $this->min;
-        }
-
-        return $rule;
+        return new $class($this);
     }
 
     public function castNullValueToFront($value)
@@ -212,7 +161,7 @@ class Question extends Model
 
     public static function getDefaultType()
     {
-        return QuestionTypes::TEXT_TYPE;
+        return TextType::TYPE;
     }
 
     public static function getDefaultLabelPosition()

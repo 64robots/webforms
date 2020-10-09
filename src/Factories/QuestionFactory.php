@@ -2,8 +2,10 @@
 
 namespace R64\Webforms\Factories;
 
+use R64\Webforms\Exceptions\FieldTypeNotFound;
 use R64\Webforms\Models\FormStep;
 use R64\Webforms\Models\Question;
+use R64\Webforms\Models\QuestionTypes;
 
 class QuestionFactory
 {
@@ -171,6 +173,12 @@ class QuestionFactory
 
     public function type(string $type)
     {
+        $allQuestionTypes = QuestionTypes::getAllQuestionTypes()->toArray();
+
+        if (! in_array($type, $allQuestionTypes)) {
+            throw new FieldTypeNotFound('Field Type not found');
+        }
+
         $this->type = $type;
 
         return $this;
