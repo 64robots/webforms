@@ -1,82 +1,27 @@
-# webforms Docs
+# docs
 
-Package to create questions and answers for a multistep-form made with :heart: from [64 Robots](https://64robots.com)
+## Setup
 
-## Installation
-
-You can install the package via composer:
+Install dependencies:
 
 ```bash
-composer require 64robots/webforms
+yarn install
 ```
 
-You can publish and run the migrations with:
+## Development
 
 ```bash
-php artisan vendor:publish --provider="R64\Webforms\WebformsServiceProvider" --tag="migrations"
-php artisan migrate
+yarn dev
 ```
 
-You can publish the config file with:
+## Static Generation
+
+This will create the `dist/` directory for publishing to static hosting:
+
 ```bash
-php artisan vendor:publish --provider="R64\Webforms\WebformsServiceProvider" --tag="config"
+yarn generate
 ```
 
-This is the contents of the published config file:
+To preview the static generated app, run `yarn start`
 
-```php
-return [
-    'date_format' => 'Y-m-d',
-    'year_month_format' => 'Y-m',
-    'fields_to_be_confirmed' => [
-        QuestionTypes::EMAIL_TYPE,
-        QuestionTypes::PHONE_TYPE,
-    ],
-    'user_model' => 'App\User',
-];
-```
-
-## Usage
-
-1. Add that to your routes file:
-
-```php
-Route::webforms('webforms');
-```
-
-2. Add `HasWebForms` trait in your user entity.
-
-3. Create Seeders for FormSection, FormSteps and Question.
-
-More details in the [Usage Docs](docs/usage.md).
-
-## Testing
-
-``` bash
-composer test
-```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security
-
-If you discover any security related issues, please email mmanzano@gmail.com instead of using the issue tracker.
-
-## Credits
-
-- [64 Robots](https://github.com/64Robots)
-- [All Contributors](https://github.com/64Robots/webforms/contributors)
-
-## License
-
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Acknowledgments
-
-Thanks to [Spatie](https://spatie.be/) for the [Package Skeleton Laravel](https://github.com/spatie/package-skeleton-laravel).
+For detailed explanation on how things work, checkout [nuxt/content](https://content.nuxtjs.org) and [@nuxt/content theme docs](https://content.nuxtjs.org/themes-docs).
