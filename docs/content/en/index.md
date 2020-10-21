@@ -43,17 +43,25 @@ return [
 
 ## Usage
 
-1. Add that to your routes file:
+1 - Add Routes
+
+At that moment the package doesn't work with anonymous users. Please, add that to your routes file under an auth routes:
 
 ```php
 Route::webforms('webforms');
 ```
 
-2. Add `HasWebForms` trait in your user entity.
+If you want routes to create FormSections, FormSteps and Questions, add that under the appropriate middleware in your routes file:
 
-3. Create Seeders for FormSection, FormSteps and Question.
+```php
+Route::webformsAdmin('webforms-admin');
+```
 
-More details in the [Usage Docs](docs/usage.md).
+2 - Add `HasWebForms` trait in your user entity.
+
+3 - Create FormSections, FormSteps and Questions using <nuxt-link to="/model-factories">Model Factories</nuxt-link> or the <nuxt-link to="/admin-endpoints">Admin Endpoints</nuxt-link>
+
+More details in the <nuxt-link to="/usage">Usage</nuxt-link>.
 
 ## Testing
 
@@ -63,11 +71,11 @@ composer test
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see [CHANGELOG](https://github.com/64robots/webforms/blob/master/CHANGELOG.md) for more information on what has changed recently.
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/64robots/webforms/blob/master/CONTRIBUTING.md) for details.
 
 ## Security
 
@@ -80,7 +88,7 @@ If you discover any security related issues, please email mmanzano@gmail.com ins
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/64robots/webforms/blob/master/LICENSE.md) for more information.
 
 ## Acknowledgments
 

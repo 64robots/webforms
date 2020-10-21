@@ -42,6 +42,8 @@ return [
 
 ## Usage
 
+1 - Add Routes
+
 At that moment the package doesn't work with anonymous users. Please, add that to your routes file under an auth routes:
 
 ```php
@@ -53,6 +55,10 @@ If you want routes to create FormSections, FormSteps and Questions, add that und
 ```php
 Route::webformsAdmin('webforms-admin');
 ```
+
+2 - Add `HasWebForms` trait in your user entity.
+
+3 - Create Seeders for FormSection, FormSteps and Question.
 
 ## Testing
 

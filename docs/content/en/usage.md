@@ -41,11 +41,9 @@ The trait add to the users the following methods:
 
 - `addDefaultAnswers`: It's done by the code automatically, but you can add a fictional answer to a question with a associated default value by hand.
 
-## 3. Seeders
+## 3. Create Structure
 
-Create Seeders for FormSection, FormSteps and Question.
-
-- [ ] Add examples of seeders
+Create FormSections, FormSteps and Questions using <nuxt-link to="/model-factories">Model Factories</nuxt-link> or the <nuxt-link to="/admin-endpoints">Admin Endpoints</nuxt-link>
 
 ## 4. Config
 
