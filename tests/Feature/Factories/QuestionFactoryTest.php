@@ -57,7 +57,7 @@ class QuestionFactoryTest extends TestCase
             'depends_on' => $parentQuestion->id,
         ]);
 
-        $this->assertEquals([10, 30], $question->showed_when);
+        $this->assertEquals([10, 30], $question->shown_when);
         $this->assertEquals([10, 20, 30], $question->options);
     }
 
@@ -142,7 +142,7 @@ class QuestionFactoryTest extends TestCase
             'depends_on' => $parentQuestion->id,
         ]);
 
-        $this->assertEquals([10, 30], $question->showed_when);
+        $this->assertEquals([10, 30], $question->shown_when);
         $this->assertEquals([10, 20, 30], $question->options);
     }
 
@@ -249,7 +249,7 @@ class QuestionFactoryTest extends TestCase
         Question::updateQuestion($question)->showedWhen([1, 2, 3])->save();
         $question = $question->fresh();
         $this->assertEquals(1, $question->sort);
-        $this->assertEquals([1, 2, 3], $question->showed_when);
+        $this->assertEquals([1, 2, 3], $question->shown_when);
 
         $question = $question->fresh();
         Question::updateQuestion($question)->options([10, 20, 30])->save();
@@ -279,5 +279,22 @@ class QuestionFactoryTest extends TestCase
         $this->assertEquals(1, $thirdQuestion->fresh()->sort);
         $this->assertEquals(2, $firstQuestion->fresh()->sort);
         $this->assertEquals(3, $secondQuestion->fresh()->sort);
+    }
+
+    /** @test */
+    public function it_is_able_to_update_the_sort_values_for_a_question_to_move_to_the_last_position()
+    {
+        $formSection = FormSection::build('A section')->save();
+        $formStep = FormStep::build($formSection, 'First step')->save();
+
+        $firstQuestion = Question::build($formStep, 'First question')->sort(1)->save();
+        $secondQuestion = Question::build($formStep, 'Second question')->sort(2)->save();
+        $thirdQuestion = Question::build($formStep, 'Third question')->sort(3)->save();
+
+        Question::updateQuestion($firstQuestion)->sort(3)->save();
+
+        $this->assertEquals(2, $secondQuestion->fresh()->sort);
+        $this->assertEquals(3, $firstQuestion->fresh()->sort);
+        $this->assertEquals(4, $thirdQuestion->fresh()->sort);
     }
 }

@@ -366,19 +366,19 @@ class AnswerTest extends TestCase
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [1,2,3],
+            'shown_when' => [1,2,3],
         ]);
         $anotherSonQuestion = factory(Question::class)->state('date')->create([
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [2,3],
+            'shown_when' => [2,3],
         ]);
         $thirdSonQuestionNotAnswerNeeded = factory(Question::class)->state('date')->create([
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [3],
+            'shown_when' => [3],
         ]);
 
         $this->assertFalse($user->formSteps()->find($formStep)->pivot->completed);
@@ -424,19 +424,19 @@ class AnswerTest extends TestCase
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [true],
+            'shown_when' => [true],
         ]);
         $anotherSonQuestion = factory(Question::class)->state('date')->create([
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [true],
+            'shown_when' => [true],
         ]);
         $thirdSonQuestionNotAnswerNeeded = factory(Question::class)->state('date')->create([
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [false],
+            'shown_when' => [false],
         ]);
 
         $this->assertFalse($user->formSteps()->find($formStep)->pivot->completed);
@@ -482,19 +482,19 @@ class AnswerTest extends TestCase
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [true],
+            'shown_when' => [true],
         ]);
         $anotherSonQuestion = factory(Question::class)->state('date')->create([
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [true],
+            'shown_when' => [true],
         ]);
         $thirdSonQuestionNotAnswerNeeded = factory(Question::class)->state('date')->create([
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [false],
+            'shown_when' => [false],
         ]);
 
         $this->assertFalse($user->formSteps()->find($formStep)->pivot->completed);
@@ -558,13 +558,13 @@ class AnswerTest extends TestCase
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [1,2],
+            'shown_when' => [1,2],
         ]);
         $anotherSonQuestion = factory(Question::class)->state('date')->create([
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [2],
+            'shown_when' => [2],
         ]);
 
         $this->assertFalse($user->formSteps()->find($formStep)->pivot->completed);
@@ -622,13 +622,13 @@ class AnswerTest extends TestCase
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [1,2],
+            'shown_when' => [1,2],
         ]);
         $anotherSonQuestion = factory(Question::class)->state('date')->create([
             'form_step_id' => $formStep->id,
             'required' => false,
             'depends_on' => $motherQuestion->id,
-            'showed_when' => [2],
+            'shown_when' => [2],
         ]);
 
         $this->assertFalse($user->formSteps()->find($formStep)->pivot->completed);

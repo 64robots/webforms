@@ -22,7 +22,7 @@ class AdminQuestionUpdateControllerTest extends TestCase
         ],
         'sort',
         'depends_on',
-        'showed_when',
+        'shown_when',
         'required',
         'slug',
         'group_by',
@@ -70,7 +70,7 @@ class AdminQuestionUpdateControllerTest extends TestCase
             'default_value' => '10',
             'min' => '5',
             'max' => '15',
-            'showed_when' => null,
+            'shown_when' => null,
             'options' => null,
             'required' => 0,
         ]);
@@ -94,7 +94,7 @@ class AdminQuestionUpdateControllerTest extends TestCase
                 'default_value' => '20',
                 'min' => '10',
                 'max' => '30',
-                'showed_when' => [true],
+                'shown_when' => [true],
                 'options' => [
                     '10' => 'Minimum value',
                     '20' => 'Average value',
@@ -126,7 +126,7 @@ class AdminQuestionUpdateControllerTest extends TestCase
         $this->assertEquals('20', $response->json('data.default_value'));
         $this->assertEquals('10', $response->json('data.min'));
         $this->assertEquals('30', $response->json('data.max'));
-        $this->assertEquals([true], $response->json('data.showed_when'));
+        $this->assertEquals([true], $response->json('data.shown_when'));
         $this->assertEquals([
             ['value' => 10, 'label' => 'Minimum value'],
             ['value' => 20, 'label' => 'Average value'],
@@ -162,7 +162,7 @@ class AdminQuestionUpdateControllerTest extends TestCase
             'default_value' => '10',
             'min' => '5',
             'max' => '15',
-            'showed_when' => [true],
+            'shown_when' => [true],
             'options' => [
                 '5' => 'Minimum value',
                 '10' => 'Average value',
@@ -199,7 +199,7 @@ class AdminQuestionUpdateControllerTest extends TestCase
         $this->assertEquals('10', $response->json('data.default_value'));
         $this->assertEquals('5', $response->json('data.min'));
         $this->assertEquals('15', $response->json('data.max'));
-        $this->assertEquals([true], $response->json('data.showed_when'));
+        $this->assertEquals([true], $response->json('data.shown_when'));
         $this->assertEquals([
             ['value' => 5, 'label' => 'Minimum value'],
             ['value' => 10, 'label' => 'Average value'],

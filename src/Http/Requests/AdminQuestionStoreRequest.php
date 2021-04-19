@@ -46,7 +46,7 @@ class AdminQuestionStoreRequest extends JsonFormRequest
             'default_value' => 'nullable|string',
             'min' => 'nullable|string',
             'max' => 'nullable|string',
-            'showed_when' => 'nullable|array',
+            'shown_when' => 'nullable|array',
             'options' => 'nullable|array',
             'required' => 'nullable|boolean',
         ];
@@ -72,7 +72,7 @@ class AdminQuestionStoreRequest extends JsonFormRequest
             'default_value' => $this->default_value,
             'min' => $this->min,
             'max' => $this->max,
-            'showed_when' => $this->showed_when,
+            'shown_when' => $this->shown_when,
             'options' => $this->options,
             'required' => $this->required ? $this->required : Question::getDefaultRequired(),
         ];
