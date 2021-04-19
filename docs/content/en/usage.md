@@ -25,25 +25,25 @@ Route::webformsAdmin('webforms-admin');
 
 Add `HasWebForms` trait in your user entity.
 
-We have a relationship between `FormStep` and `User`. The table name is `form_step_user`. A User only can see the steps that has assigned. `form_step_user` has a `completed` field. Answer model marks a step as completed when all the required question are filled. You don't need to worry about that.
+We have a relationship between `FormStep` and `User`. The table name is `form_step_user`. A user only can see the steps that has assigned. `form_step_user` has a `completed` field. Answer model marks a step as completed when all the required question are filled. You don't need to worry about that.
 
 The trait add to the users the following methods:
 
-- `formSteps`: Relationship to FormStep. You can use that to retrieve the associated FormStep to a user.
+- `formSteps`: Relationship to `FormStep`. You can use that to retrieve the associated form step to a user.
 
-- `addFormSteps`: This method add all the formSteps to the user. A user only can see the associated `FormSteps`. If you pass only a FormStep then you will add only that FormStep to the user. That method added the default answers to the user too. If you don't provide any FormSteps then all the present FormSteps will be added to the user.
+- `addFormSteps`: This method add all the form steps to the user. A user only can see the associated `FormSteps`. If you pass only a form step then you will add only that form step to the user. This method adds the default answers to the user too. If you don't provide any form steps then all the present form steps will be added to the user.
 
-- `markFormStepAsUncompleted`: It's done by the code automatically, but you can mark a FormStep as uncompleted by hand.
+- `markFormStepAsUncompleted`: It's done by the code automatically, but you can mark a FormStep as uncompleted using this method.
 
-- `markFormStepAsCompleted`: It's done by the code automatically, but you can mark a FormStep as Completed by hand.
+- `markFormStepAsCompleted`: It's done by the code automatically, but you can mark a FormStep as Completed using this method.
 
-- `answers`: Relationship to Answer. You can use that to retrieve the associated Answer to a user.
+- `answers`: Relationship to `Answer`. You can use that to retrieve the associated answer to a user.
 
-- `addDefaultAnswers`: It's done by the code automatically, but you can add a fictional answer to a question with a associated default value by hand.
+- `addDefaultAnswers`: It's done by the code automatically, but you can add a fictional answer to a question with an associated default value using this method.
 
 ## 3. Create Structure
 
-Create FormSections, FormSteps and Questions using <nuxt-link to="/model-factories">Model Factories</nuxt-link> or the <nuxt-link to="/admin-endpoints">Admin Endpoints</nuxt-link>
+Create `FormSections`, `FormSteps` and `Questions` using <nuxt-link to="/model-factories">Model Factories</nuxt-link> or the <nuxt-link to="/admin-endpoints">Admin Endpoints</nuxt-link>
 
 ## 4. Config
 
@@ -71,10 +71,10 @@ return [
 
 - `year_month_format` is used to validate and cast a `year-month` question type.
 
-- `user_model` is used to declare the place of the user model in your app.
+- `user_model` is used to declare the location of the user model in your app.
 
 - `fields_to_be_confirmed` mark that kind of question's answer with confirmed as false waiting for another process like a confirmation email, sms code or something like that.
 
 ## Events
 
-`AnswerCreated` is launched when the user creates an answer. If you need to make things in base to that you can use a listener. The package launches the same event when the user updates an answer. The payload of the event is the user and the answer.
+`AnswerCreated` is launched when the user creates an answer. If you need to make things in base to that then you can use a listener. The package launches the same event when the user updates an answer. The payload of the event is the user and the answer.

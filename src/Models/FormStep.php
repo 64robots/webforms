@@ -143,7 +143,7 @@ class FormStep extends Model
             $sonQuestionsShowed = Question::where('depends_on', $motherQuestion->id)
                 ->get()
                 ->filter(function ($sonQuestion) use ($motherQuestionAnswer) {
-                    return in_array($motherQuestionAnswer->text, $sonQuestion->showed_when);
+                    return in_array($motherQuestionAnswer->text, $sonQuestion->shown_when);
                 });
 
             return $sonQuestionsShowed->first(function ($sonQuestion) {

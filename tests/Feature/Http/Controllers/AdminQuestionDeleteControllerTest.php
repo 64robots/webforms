@@ -22,7 +22,7 @@ class AdminQuestionDeleteControllerTest extends TestCase
         ],
         'sort',
         'depends_on',
-        'showed_when',
+        'shown_when',
         'required',
         'slug',
         'group_by',
@@ -69,7 +69,7 @@ class AdminQuestionDeleteControllerTest extends TestCase
             'default_value' => '10',
             'min' => '5',
             'max' => '15',
-            'showed_when' => [true],
+            'shown_when' => [true],
             'options' => [
                 '5' => 'Minimum value',
                 '10' => 'Average value',
@@ -106,7 +106,7 @@ class AdminQuestionDeleteControllerTest extends TestCase
         $this->assertEquals('10', $response->json('data.default_value'));
         $this->assertEquals('5', $response->json('data.min'));
         $this->assertEquals('15', $response->json('data.max'));
-        $this->assertEquals([true], $response->json('data.showed_when'));
+        $this->assertEquals([true], $response->json('data.shown_when'));
         $this->assertEquals([
             ['value' => 5, 'label' => 'Minimum value'],
             ['value' => 10, 'label' => 'Average value'],

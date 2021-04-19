@@ -20,7 +20,7 @@ class Question extends Model
         'sort' => 'integer',
         'required' => 'boolean',
         'depends_on' => 'integer',
-        'showed_when' => 'array',
+        'shown_when' => 'array',
         'options' => 'array',
     ];
 
@@ -95,7 +95,7 @@ class Question extends Model
         $question->default_value = $data['default_value'];
         $question->min = $data['min'];
         $question->max = $data['max'];
-        $question->showed_when = $data['showed_when'];
+        $question->shown_when = $data['shown_when'];
         $question->options = $data['options'];
         $question->required = $data['required'];
 

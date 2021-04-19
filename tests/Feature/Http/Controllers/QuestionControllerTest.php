@@ -44,7 +44,7 @@ class QuestionControllerTest extends TestCase
                     ],
                     'sort',
                     'depends_on',
-                    'showed_when',
+                    'shown_when',
                     'required',
                     'slug',
                     'group_by',
@@ -103,21 +103,21 @@ class QuestionControllerTest extends TestCase
      * @test
      * GET '/webforms/questions'
      */
-    public function showed_when_question()
+    public function shown_when_question()
     {
         $user = factory(User::class)->create();
         $question = factory(Question::class)
             ->state('options')
             ->create([
                 'sort' => 1,
-                'showed_when' => [true, 1, 2, 3],
+                'shown_when' => [true, 1, 2, 3],
             ]);
 
         $response = $this->actingAs($user)
             ->json('GET', '/webforms/questions')
             ->assertOk();
 
-        $this->assertEquals([true, 1, 2, 3], collect($response->json('data'))->where('id', $question->id)->first()['showed_when']);
+        $this->assertEquals([true, 1, 2, 3], collect($response->json('data'))->where('id', $question->id)->first()['shown_when']);
     }
 
     /** @test */
@@ -257,7 +257,7 @@ class QuestionControllerTest extends TestCase
             ],
             'sort',
             'depends_on',
-            'showed_when',
+            'shown_when',
             'required',
             'slug',
             'group_by',

@@ -22,7 +22,7 @@ class QuestionResource extends JsonResource
             'form_step' => new FormStepResource($this->whenLoaded('formStep')),
             'sort' => $this->sort,
             'depends_on' => $this->depends_on,
-            'showed_when' => $this->showed_when,
+            'shown_when' => $this->shown_when,
             'required' => $this->required,
             'slug' => $this->slug,
             'group_by' => $this->group_by,

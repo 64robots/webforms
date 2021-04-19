@@ -55,7 +55,7 @@ class AdminQuestionUpdateRequest extends JsonFormRequest
             'default_value' => 'nullable|string',
             'min' => 'nullable|string',
             'max' => 'nullable|string',
-            'showed_when' => 'nullable|array',
+            'shown_when' => 'nullable|array',
             'options' => 'nullable|array',
             'required' => 'nullable|boolean',
         ];
@@ -81,7 +81,7 @@ class AdminQuestionUpdateRequest extends JsonFormRequest
             'default_value' => $this->default_value ? $this->default_value : $this->question->default_value,
             'min' => $this->min ? $this->min : $this->question->min,
             'max' => $this->max ? $this->max : $this->question->max,
-            'showed_when' => $this->showed_when ? $this->showed_when : $this->question->showed_when,
+            'shown_when' => $this->shown_when ? $this->shown_when : $this->question->shown_when,
             'options' => $this->options ? $this->options : $this->question->options,
             'required' => $this->required ? $this->required : $this->question->required,
         ];

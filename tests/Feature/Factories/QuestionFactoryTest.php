@@ -57,7 +57,7 @@ class QuestionFactoryTest extends TestCase
             'depends_on' => $parentQuestion->id,
         ]);
 
-        $this->assertEquals([10, 30], $question->showed_when);
+        $this->assertEquals([10, 30], $question->shown_when);
         $this->assertEquals([10, 20, 30], $question->options);
     }
 
@@ -142,7 +142,7 @@ class QuestionFactoryTest extends TestCase
             'depends_on' => $parentQuestion->id,
         ]);
 
-        $this->assertEquals([10, 30], $question->showed_when);
+        $this->assertEquals([10, 30], $question->shown_when);
         $this->assertEquals([10, 20, 30], $question->options);
     }
 
@@ -249,7 +249,7 @@ class QuestionFactoryTest extends TestCase
         Question::updateQuestion($question)->showedWhen([1, 2, 3])->save();
         $question = $question->fresh();
         $this->assertEquals(1, $question->sort);
-        $this->assertEquals([1, 2, 3], $question->showed_when);
+        $this->assertEquals([1, 2, 3], $question->shown_when);
 
         $question = $question->fresh();
         Question::updateQuestion($question)->options([10, 20, 30])->save();

@@ -64,7 +64,7 @@ class QuestionFactory
             ->dependsOn($question->dependsOn)
             ->min($question->min)
             ->max($question->max)
-            ->showedWhen($question->showed_when)
+            ->showedWhen($question->shown_when)
             ->options($question->options)
             ->required($question->required);
 
@@ -91,7 +91,7 @@ class QuestionFactory
             'default_value' => $this->getDefaultValue(),
             'min' => $this->getMin(),
             'max' => $this->getMax(),
-            'showed_when' => $this->getShowedWhen(),
+            'shown_when' => $this->getShowedWhen(),
             'options' => $this->getOptions(),
             'required' => $this->getRequired(),
         ];

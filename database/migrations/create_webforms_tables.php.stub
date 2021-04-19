@@ -62,7 +62,7 @@ class CreateWebformsTables extends Migration
             $table->string('default_value')->nullable();
             $table->string('min')->nullable();
             $table->string('max')->nullable();
-            $table->json('showed_when')->nullable();
+            $table->json('shown_when')->nullable();
             $table->json('options')->nullable();
             $table->boolean('required')->default(false);
             $table->timestamps();
