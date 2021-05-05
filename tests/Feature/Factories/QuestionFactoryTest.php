@@ -31,7 +31,7 @@ class QuestionFactoryTest extends TestCase
             ->defaultValue('A default value')
             ->min(10)
             ->max(30)
-            ->showedWhen([10, 30])
+            ->shownWhen([10, 30])
             ->options([10, 20, 30])
             ->required(1)
             ->save();
@@ -114,7 +114,7 @@ class QuestionFactoryTest extends TestCase
             ->defaultValue('A default value')
             ->min(10)
             ->max(30)
-            ->showedWhen([10, 30])
+            ->shownWhen([10, 30])
             ->options([10, 20, 30])
             ->required(1)
             ->save();
@@ -246,7 +246,7 @@ class QuestionFactoryTest extends TestCase
         $this->assertEquals('100', $question->max);
 
         $question = $question->fresh();
-        Question::updateQuestion($question)->showedWhen([1, 2, 3])->save();
+        Question::updateQuestion($question)->shownWhen([1, 2, 3])->save();
         $question = $question->fresh();
         $this->assertEquals(1, $question->sort);
         $this->assertEquals([1, 2, 3], $question->shown_when);

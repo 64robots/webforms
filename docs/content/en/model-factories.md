@@ -169,3 +169,84 @@ You can decide to encrypt the answers defining the step as a step that contains 
 ```
 
 ## Question
+
+### How to create a new question:
+
+You can start to build a `Question` using:
+
+```php
+    Question::build($formStep, 'A Question')->save();
+```
+
+You need a form step `$formStep` created to add a question.
+
+The slug for this question will be `a-question`. Sort will be the next one to the last in the `questions` table (for this step).
+
+### Updating a form question:
+
+You can update an existent form step using `updateFormStep`:
+
+```php
+    Question::updateQuestion($question)
+      ->title('Second Question')
+      ->save();
+```
+
+Other things you can customize are:
+
+### sort
+
+You can customize the position of the question:
+
+```php
+    Question::build($formStep, 'New question title')
+        ->sort(2)
+        ->save();
+```
+
+### slug
+
+You can customize the slug of the question:
+
+```php
+    Question::build($formStep, 'New question title')
+        ->slug('new-question-slug')
+        ->save();
+```
+
+### dependsOn
+
+You can show to the frontend that a question only appears when another question is answering with a particular value:
+
+```php
+    Question::build($formStep, 'New question title')
+        ->dependsOn($parentQuestion)
+        ->save();
+```
+
+`$parentQuestion` is the question what make that question to appear.
+
+### All together
+
+```php
+    Question::build($formStep, 'New question title')
+        ->sort(2)
+        ->slug('new-question-slug')
+        ->dependsOn($parentQuestion)
+        ->description('new question description')
+        ->groupBy('A group by text')
+        ->groupByDescription('A description for a group by text')
+        ->labelPosition('left')
+        ->helpTitle('A help title')
+        ->helpBody('A help body')
+        ->postInputText('A post input text')
+        ->errorMessage('A custom error message')
+        ->defaultValue('A default value')
+        ->min(10)
+        ->max(30)
+        ->shownWhen([10, 30])
+        ->options([10, 20, 30])
+        ->required(1)
+        ->save();
+
+```
