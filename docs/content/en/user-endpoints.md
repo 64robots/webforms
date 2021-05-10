@@ -84,5 +84,75 @@ Alternatively you can make `$formStep->markFictionalAnswersAsRealFor($user)`.
 
 ## Question
 
+### GET
+
+You can obtain the questions for a user making a `GET` request to the endpoint:
+
+`/webforms/questions`
+
+If you want only questions for a singular form step you can pass it as a query parameter:
+
+`/webforms/questions?form_step=1`
+
+It will return a list of sorted questions in a response like:
+
+```json
+{
+    "data":  [
+        {
+            "id": 2,
+            "form_step": {
+                "id":  1,
+                "sort": 1,
+                "slug": "a-form-step",
+                "menu_title": "First Form Step",
+                "title": "A Form Step",
+                "description": "This is the first form step",
+                "completed": false
+            },
+            "sort": 2,
+            "depends_on": 1,
+            "shown_when": [true],
+            "required": true,
+            "slug": "first-question",
+            "group_by": "Personal Info",
+            "group_by_description": "We need some personal information from you",
+            "label_position": "left",
+            "help_title": "Your month of birthday",
+            "help_body": "The month you were born",
+            "type": "options",
+            "post_input_text": ":season:",
+            "title": "What month do you birth",
+            "description": "Please, provide the month of your birthday",
+            "error_message": "This is an incorrect month",
+            "default_value": "june",
+            "min": null,
+            "max": null,
+            "options": [
+                {
+                    "label": "January",
+                    "value": "january"
+                },
+                {
+                    "label": "June",
+                    "value": "june"
+                },
+                {
+                    "label": "December",
+                    "value": "december"
+                }
+            ],
+            "answer": {
+                "id": 123,
+                "user_id": 10,
+                "question_id": 2,
+                "text": "june",
+                "confirmed": true
+            }
+        }
+    ]
+}
+```
+
 ## Answer
 
