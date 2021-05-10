@@ -224,7 +224,169 @@ You can show to the frontend that a question only appears when another question 
         ->save();
 ```
 
-`$parentQuestion` is the question what make that question to appear.
+`$parentQuestion` is the question what make this question to appear.
+
+### shownWhen
+
+Add the values for the parent question who make the son question to appear:
+
+```php
+    Question::build($formStep, 'New question title')
+        ->dependsOn($parentQuestion)
+        ->shownWhen([10, 30])
+        ->save();
+```
+
+Another example could be:
+
+```php
+    Question::build($formStep, 'What hobbies do you have')
+        ->dependsOn($doYouHaveHobbiesQuestion)
+        ->shownWhen([true])
+        ->save();
+```
+
+### description
+
+You can add a description for a question. Like a little text that could appear near the title.
+
+```php
+    Question::build($formStep, 'New question title')
+        ->description('new question description')
+        ->save();
+```
+
+### groupBy
+
+You could use that in the frontend to group different questions of the same step. I encourage you to use a constant in order to avoid mistakes.
+
+```php
+    Question::build($formStep, 'New question title')
+        ->groupBy('A group by text')
+        ->save();
+```
+
+### groupByDescription
+
+You could use that in the frontend to get the description of the group questions. I encourage you to use a constant is order to avoid mistakes.
+
+```php
+    Question::build($formStep, 'New question title')
+        ->groupBy('A group by text')
+        ->groupByDescription('A description for a group by text')
+        ->save();
+```
+
+### labelPosition
+
+You can tell to the frontend where do you want to put the label of the question using this property.
+
+```php
+    Question::build($formStep, 'New question title')
+        ->labelPosition('left')
+        ->save();
+```
+
+### helpTitle
+
+If you want to add a help tooltip this can be the text:
+
+```php
+    Question::build($formStep, 'New question title')
+        ->helpTitle('A help title')
+        ->save();
+```
+
+### helpBody
+
+Guess that your help tooltip has title and body. You can use that to transmit the body:
+
+```php
+    Question::build($formStep, 'New question title')
+        ->helpTitle('A help title')
+        ->helpBody('A help body')
+        ->save();
+```
+
+### postInputText
+
+You can use this property to set a text what will appear next to the input like the currency symbol.
+
+```php
+    Question::build($formStep, 'New question title')
+        ->postInputText('A post input text')
+        ->save();
+```
+
+### errorMessage
+
+You can customize the error message from the backend when the validation fails, this text will be send to the frontend.
+
+```php
+    Question::build($formStep, 'New question title')
+        ->errorMessage('A custom error message')
+        ->save();
+```
+
+### defaultValue
+
+You can define a default value for a question. This will be populated when the form steps are added to the model using `HasWebForms` trait.
+
+```php
+    Question::build($formStep, 'New question title')
+        ->errorMessage('A custom error message')
+        ->save();
+```
+
+### min
+
+You can define a min value for a number question. This will be used in the validation
+
+```php
+    Question::build($formStep, 'New question title')
+        ->min(10)
+        ->save();
+```
+
+### max
+
+You can define a max value for a number question. This will be used in the validation
+
+```php
+    Question::build($formStep, 'New question title')
+        ->max(30)
+        ->save();
+```
+### type
+
+You can choose the question's type between `age`, `boolean`, `date`, `email`, `integer`, `money`, `options`, `percent`, `phone`, `text` and `year-month`. It will be a `text` question by default.
+
+```php
+    Question::build($formStep, 'New question title')
+        ->type('integer')
+        ->save();
+```
+
+### options
+
+If it's an `options` question you can add the options for the question using this method:
+
+```php
+    Question::build($formStep, 'New question title')
+        ->type('options')
+        ->options([10, 20, 30])
+        ->save();
+```
+
+### required
+
+You can tell to the frontend that this question is required using this method. This will be used to mark the step as complete too.
+
+```php
+    Question::build($formStep, 'New question title')
+        ->required(1)
+        ->save();
+```
 
 ### All together
 
@@ -245,8 +407,8 @@ You can show to the frontend that a question only appears when another question 
         ->min(10)
         ->max(30)
         ->shownWhen([10, 30])
+        ->type('options')
         ->options([10, 20, 30])
         ->required(1)
         ->save();
-
 ```
