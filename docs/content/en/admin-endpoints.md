@@ -31,6 +31,8 @@ with the following payload:
 }
 ```
 
+The only required field is `title`.
+
 The behavior will be the same described in <nuxt-link to="/model-factories#formsection">Model Factories</nuxt-link>.
 
 The response will be the new form section resource:
@@ -119,7 +121,42 @@ with the following payload:
 
 ```json
 {
-    
+    "form_section_id": 1,
+    "sort": 1,
+    "slug": "new-form-step",
+    "menu_title": "New form step title for the menu",
+    "title": "New form step title",
+    "description": "An awesome new form step",
+    "is_personal_data": 1
+}
+```
+
+The only required fields are `form_section_id` and `title`.
+
+The behavior will be the same described in <nuxt-link to="/model-factories#formstep">Model Factories</nuxt-link>.
+
+The response will be the new form step resource:
+
+```json
+{
+    "data": {
+        "id": 1,
+        "form_section": {
+            "id": 1,
+            "sort": 1,
+            "slug": "a-form-section",
+            "menu_title": "First section",
+            "title": "A Form Section",
+            "description": "This is the first form section",
+            "completed": false
+        },
+        "sort": 1,
+        "slug": "new-form-step",
+        "menu_title": "New form step title for the menu",
+        "title": "New form step title",
+        "description": "An awesome new form step",
+        "completed": false
+    }
 }
 ```
 
@@ -133,7 +170,40 @@ with the following payload:
 
 ```json
 {
-    
+    "form_section_id": 1,
+    "sort": 1,
+    "slug": "edited-new-form-step",
+    "menu_title": "Edited new form step title for the menu",
+    "title": "Edited new form step title",
+    "description": "Editing an awesome new form step",
+    "is_personal_data": 1
+}
+```
+
+The behavior will be the same described in <nuxt-link to="/model-factories#formstep">Model Factories</nuxt-link>.
+
+The response will be the updated form step resource:
+
+```json
+{
+    "data": {
+        "id": 1,
+        "form_section": {
+            "id": 1,
+            "sort": 1,
+            "slug": "a-form-section",
+            "menu_title": "First section",
+            "title": "A Form Section",
+            "description": "This is the first form section",
+            "completed": false
+        },
+        "sort": 1,
+        "slug": "edited-new-form-step",
+        "menu_title": "Edited new form step title for the menu",
+        "title": "Edited new form step title",
+        "description": "Editing an awesome new form step",
+        "completed": false
+    }
 }
 ```
 
@@ -142,6 +212,31 @@ with the following payload:
 You can delete a form step making a `DELETE` request to:
 
 `/webforms-admin/form-steps/{formStepId}`
+
+The response will be the form step resource just deleted:
+
+```json
+{
+    "data": {
+        "id": 1,
+        "form_section": {
+            "id": 1,
+            "sort": 1,
+            "slug": "a-form-section",
+            "menu_title": "First section",
+            "title": "A Form Section",
+            "description": "This is the first form section",
+            "completed": false
+        },
+        "sort": 1,
+        "slug": "new-form-step",
+        "menu_title": "New form step title for the menu",
+        "title": "New form step title",
+        "description": "An awesome new form step",
+        "completed": false
+    }
+}
+```
 
 ## Question
 
