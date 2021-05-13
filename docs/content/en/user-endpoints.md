@@ -76,7 +76,7 @@ It will return a list of sorted form steps in a response like:
 
 A question with a default value creates a fictional answer. If you want to persist those answers as real ones you need to make a `PUT` request to this endpoint:
 
-`/webforms/form-steps`
+`/webforms/form-steps/{formStepId}`
 
 It will return the same as the `GET` request shown above.
 
