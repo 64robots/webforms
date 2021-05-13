@@ -23,15 +23,15 @@ It will return a list of sorted form sections in a response like:
 
 ```json
 {
-    "data":  [
+    "data": [
         {
-            "id":  1,
+            "id": 1,
             "sort": 1,
-            "slug": "a-form-section",                
-            "menu_title":  "First section",
-            "title":  "A Form Section",
+            "slug": "a-form-section",
+            "menu_title": "First section",
+            "title": "A Form Section",
             "description": "This is the first form section",
-            "completed":  false
+            "completed": false
         }
     ]
 }
@@ -49,17 +49,17 @@ It will return a list of sorted form steps in a response like:
 
 ```json
 {
-    "data":  [
+    "data": [
         {
             "id": 1,
             "form_section": {
-                "id":  1,
+                "id": 1,
                 "sort": 1,
                 "slug": "a-form-section",
-                "menu_title":  "First section",
-                "title":  "A Form Section",
+                "menu_title": "First section",
+                "title": "A Form Section",
                 "description": "This is the first form section",
-                "completed":  false
+                "completed": false
             },
             "sort": 1,
             "slug": "a-form-step",
@@ -98,11 +98,11 @@ It will return a list of sorted questions in a response like:
 
 ```json
 {
-    "data":  [
+    "data": [
         {
             "id": 2,
             "form_step": {
-                "id":  1,
+                "id": 1,
                 "sort": 1,
                 "slug": "a-form-step",
                 "menu_title": "First Form Step",
@@ -178,7 +178,7 @@ The response will be the question with the answer:
     "data": {
         "id": 2,
         "form_step": {
-            "id":  1,
+            "id": 1,
             "sort": 1,
             "slug": "a-form-step",
             "menu_title": "First Form Step",
