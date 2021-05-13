@@ -23,7 +23,29 @@ with the following payload:
 
 ```json
 {
-    
+    "sort": 2,
+    "slug": "new-form-section",
+    "menu_title": "New form section title for the menu",
+    "title": "New form section title",
+    "description": "An awesome new form section"
+}
+```
+
+The behavior will be the same described in <nuxt-link to="/model-factories#formsection">Model Factories</nuxt-link>.
+
+The response will be the new form section resource:
+
+```json
+{
+    "data": {
+        "id": 1,
+        "sort": 2,
+        "slug": "new-form-section",
+        "menu_title": "New form section title for the menu",
+        "title": "New form section title",
+        "description": "An awesome new form section",
+        "completed": false
+    }
 }
 ```
 
@@ -37,7 +59,29 @@ with the following payload:
 
 ```json
 {
-    
+    "sort": 1,
+    "slug": "edited-new-form-section",
+    "menu_title": "Edited new form section title for the menu",
+    "title": "Edited new form section title",
+    "description":"Editing an awesome new form section"
+}
+```
+
+The behavior will be the same described in <nuxt-link to="/model-factories#formsection">Model Factories</nuxt-link>.
+
+The response will be the updated form section resource:
+
+```json
+{
+    "data": {
+        "id": 1,
+        "sort": 1,
+        "slug": "edited-new-form-section",
+        "menu_title": "Edited new form section title for the menu",
+        "title": "Edited new form section title",
+        "description": "Editing an awesome new form section",
+        "completed": false
+    }
 }
 ```
 
@@ -46,6 +90,22 @@ with the following payload:
 You can delete a form section making a `DELETE` request to:
 
 `/webforms-admin/form-sections/{formSectionId}`
+
+The response will be the form section resource just deleted:
+
+```json
+{
+    "data": {
+        "id": 1,
+        "sort": 1,
+        "slug": "a-form-section",
+        "menu_title": "First section",
+        "title": "A Form Section",
+        "description": "This is the first form section",
+        "completed": false
+    }
+}
+```
 
 ## Form Step
 
