@@ -5,25 +5,25 @@ position: 5
 category: 'Structure'
 ---
 
-## FormSection
+## Form
 
-### How to create a new form section:
+### How to create a new form:
 
-You can start to build a `FormSection` using:
+You can start to build a `Form` using:
 
 ```php
-    FormSection::build('New Section')->save();
+    Form::build('New Form')->save();
 ```
 
-The slug for this form section will be `new-section`. Sort will be the next one to the last in the `form_sections` table.
+The slug for this form will be `new-form`. Sort will be the next one to the last in the `forms` table.
 
-### Updating a form section:
+### Updating a form:
 
-You can update an existent form section using `updateFormSection`:
+You can update an existent form using `updateForm`:
 
 ```php
-    FormSection::updateFormSection($newSection)
-        ->title('Second Section')
+    Form::updateForm($newForm)
+        ->title('Second Form')
         ->save();
 ```
 
@@ -31,52 +31,52 @@ Other things you can customize are:
 
 ### sort
 
-You can customize the position of the section:
+You can customize the position of the form:
 
 ```php
-    FormSection::build('New Section title')
+    Form::build('New Form title')
         ->sort(2)
         ->save();
 ```
 
 ### slug
 
-You can define a slug for the form section, by default it is built based in the title.
+You can define a slug for the form, by default it is built based in the title.
 
 ```php
-    FormSection::build('New Section title')
-        ->slug('new-section-slug')
+    Form::build('New Form title')
+        ->slug('new-form-slug')
         ->save();
 ```
 
 ### menuTitle
 
-You can define a menu title text for the form section(null by default):
+You can define a menu title text for the form (null by default):
 
 ```php
-    FormSection::build('New Section title')
-        ->menuTitle('new section menu title')
+    Form::build('New Form title')
+        ->menuTitle('new form menu title')
         ->save();
 ```
 
 ### description
 
-You can define a description text for the form section (null by default):
+You can define a description text for the form (null by default):
 
 ```php
-    FormSection::build('New Section title')
-        ->description('new section description')
+    Form::build('New Form title')
+        ->description('new form description')
         ->save();
 ```
 
 ### All together
 
 ```php
-    FormSection::build('New Section title')
+    Form::build('New Form title')
         ->sort(2)
-        ->slug('new-section-slug')
-        ->menuTitle('new section menu title')
-        ->description('new section description')
+        ->slug('new-form-slug')
+        ->menuTitle('new form menu title')
+        ->description('new form description')
         ->save();
 ```
 
@@ -87,10 +87,10 @@ You can define a description text for the form section (null by default):
 You can start to build a `FormStep` using:
 
 ```php
-    FormStep::build($formSection, 'First Step Title')->save();
+    FormStep::build($form, 'First Step Title')->save();
 ```
 
-You need a form section `$formSection` created to add a form step.
+You need a form `$form` created to add a form step.
 
 The slug for this form step will be `first-step-title`. Sort will be the next one to the last in the `form_steps` table.
 
@@ -99,8 +99,8 @@ The slug for this form step will be `first-step-title`. Sort will be the next on
 You can update an existent form step using `updateFormStep`:
 
 ```php
-    FormSection::updateFormStep($firstStep)
-        ->formSection($anotherFormSection)
+    Form::updateFormStep($firstStep)
+        ->form($anotherForm)
         ->save();
 ```
 
@@ -111,7 +111,7 @@ Other things you can customize are:
 You can customize the position of the form step:
 
 ```php
-    FormStep::build($formSection, 'New Step title')
+    FormStep::build($form, 'New Step title')
         ->sort(2)
         ->save();
 ```
@@ -121,7 +121,7 @@ You can customize the position of the form step:
 You can define a slug for the form step, by default it is built based in the title.
 
 ```php
-    FormStep::build($formSection, 'New Step title')
+    FormStep::build($form, 'New Step title')
         ->slug('new-step-slug')
         ->save();
 ```
@@ -131,7 +131,7 @@ You can define a slug for the form step, by default it is built based in the tit
 You can define the menu title text of the form step (null by default):
 
 ```php
-    FormStep::build($formSection, 'New Step title')
+    FormStep::build($form, 'New Step title')
         ->menuTitle('new step menu title')
         ->save();
 ```
@@ -141,7 +141,7 @@ You can define the menu title text of the form step (null by default):
 You can define the description of the form step (null by default)
 
 ```php
-    FormStep::build($formSection, 'New Step title')
+    FormStep::build($form, 'New Step title')
         ->description('new step description')
         ->save();
 ```
@@ -151,7 +151,7 @@ You can define the description of the form step (null by default)
 You can decide to encrypt the answers defining the step as a step that contains personal data, it is not encrypted by default:
 
 ```php
-    FormStep::build($formSection, 'New Step title')
+    FormStep::build($form, 'New Step title')
         ->isPersonalData(1)
         ->save();
 ```
@@ -159,7 +159,7 @@ You can decide to encrypt the answers defining the step as a step that contains 
 ### All together
 
 ```php
-    FormStep::build($formSection, 'New Step title')
+    FormStep::build($form, 'New Step title')
         ->sort(2)
         ->slug('new-step-slug')
         ->menuTitle('new step menu title')

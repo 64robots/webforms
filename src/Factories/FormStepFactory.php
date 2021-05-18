@@ -2,12 +2,12 @@
 
 namespace R64\Webforms\Factories;
 
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 use R64\Webforms\Models\FormStep;
 
 class FormStepFactory
 {
-    public $formSection;
+    public $form;
     public $title;
     public $sort;
     public $slug;
@@ -16,11 +16,11 @@ class FormStepFactory
     public $isPersonalData;
     public $formStep;
 
-    public static function build(FormSection $formSection, string $title)
+    public static function build(Form $form, string $title)
     {
         $factory = new self;
 
-        $factory->formSection($formSection);
+        $factory->form($form);
         $factory->title($title);
 
         return $factory;
@@ -32,7 +32,7 @@ class FormStepFactory
 
         $factory->formStep = $formStep;
 
-        $factory->formSection($formStep->formSection)
+        $factory->form($formStep->form)
             ->sort($formStep->sort)
             ->slug($formStep->slug)
             ->menuTitle($formStep->menu_title)
@@ -46,7 +46,7 @@ class FormStepFactory
     public function save()
     {
         $data = [
-            'form_section_id' => $this->getFormSection()->id,
+            'form_id' => $this->getForm()->id,
             'sort' => $this->getSort(),
             'slug' => $this->getSlug(),
             'menu_title' => $this->getMenuTitle(),
@@ -58,16 +58,16 @@ class FormStepFactory
         return FormStep::makeOneOrUpdate($data, $this->formStep);
     }
 
-    public function formSection(FormSection $formSection)
+    public function form(Form $form)
     {
-        $this->formSection = $formSection;
+        $this->form = $form;
 
         return $this;
     }
 
-    public function getFormSection()
+    public function getForm()
     {
-        return $this->formSection;
+        return $this->form;
     }
 
     public function sort(int $sort)
@@ -79,7 +79,7 @@ class FormStepFactory
 
     private function getSort()
     {
-        return $this->sort ? $this->sort : FormStep::getLastSort($this->formSection);
+        return $this->sort ? $this->sort : FormStep::getLastSort($this->form);
     }
 
     public function slug(string $slug)

@@ -1,6 +1,6 @@
 ---
 title: 'Admin Endpoints'
-description: 'Endpoints of the package to create/update/delete form sections, form steps, questions'
+description: 'Endpoints of the package to create/update/delete forms, form steps, questions'
 position: 7
 category: 'Structure'
 ---
@@ -11,41 +11,41 @@ For this section we will guess that you have the following in an admin routes fi
 Route::webformsAdmin('webforms-admin');
 ```
 
-## Form Section
+## Form
 
 ### POST
 
-You can create a new form section making a `POST` request to:
+You can create a new form making a `POST` request to:
 
-`/webforms-admin/form-sections`
+`/webforms-admin/forms`
 
 with the following payload:
 
 ```json
 {
     "sort": 2,
-    "slug": "new-form-section",
-    "menu_title": "New form section title for the menu",
-    "title": "New form section title",
-    "description": "An awesome new form section"
+    "slug": "new-form",
+    "menu_title": "New form title for the menu",
+    "title": "New form title",
+    "description": "An awesome new form"
 }
 ```
 
 The only required field is `title`.
 
-The behavior will be the same described in <nuxt-link to="/model-factories#formsection">Model Factories</nuxt-link>.
+The behavior will be the same described in <nuxt-link to="/model-factories#form">Model Factories</nuxt-link>.
 
-The response will be the new form section resource:
+The response will be the new form resource:
 
 ```json
 {
     "data": {
         "id": 1,
         "sort": 2,
-        "slug": "new-form-section",
-        "menu_title": "New form section title for the menu",
-        "title": "New form section title",
-        "description": "An awesome new form section",
+        "slug": "new-form",
+        "menu_title": "New form title for the menu",
+        "title": "New form title",
+        "description": "An awesome new form",
         "completed": false
     }
 }
@@ -53,35 +53,35 @@ The response will be the new form section resource:
 
 ### PUT
 
-You can update a form section making a `PUT` request to:
+You can update a form making a `PUT` request to:
 
-`/webforms-admin/form-sections/{formSectionId}`
+`/webforms-admin/forms/{formId}`
 
 with the following payload:
 
 ```json
 {
     "sort": 1,
-    "slug": "edited-new-form-section",
-    "menu_title": "Edited new form section title for the menu",
-    "title": "Edited new form section title",
-    "description":"Editing an awesome new form section"
+    "slug": "edited-new-form",
+    "menu_title": "Edited new form title for the menu",
+    "title": "Edited new form title",
+    "description":"Editing an awesome new form"
 }
 ```
 
-The behavior will be the same described in <nuxt-link to="/model-factories#formsection">Model Factories</nuxt-link>.
+The behavior will be the same described in <nuxt-link to="/model-factories#form">Model Factories</nuxt-link>.
 
-The response will be the updated form section resource:
+The response will be the updated form resource:
 
 ```json
 {
     "data": {
         "id": 1,
         "sort": 1,
-        "slug": "edited-new-form-section",
-        "menu_title": "Edited new form section title for the menu",
-        "title": "Edited new form section title",
-        "description": "Editing an awesome new form section",
+        "slug": "edited-new-form",
+        "menu_title": "Edited new form title for the menu",
+        "title": "Edited new form title",
+        "description": "Editing an awesome new form",
         "completed": false
     }
 }
@@ -89,21 +89,21 @@ The response will be the updated form section resource:
 
 #### DELETE
 
-You can delete a form section making a `DELETE` request to:
+You can delete a form making a `DELETE` request to:
 
-`/webforms-admin/form-sections/{formSectionId}`
+`/webforms-admin/forms/{formId}`
 
-The response will be the form section resource just deleted:
+The response will be the form resource just deleted:
 
 ```json
 {
     "data": {
         "id": 1,
         "sort": 1,
-        "slug": "a-form-section",
-        "menu_title": "First section",
-        "title": "A Form Section",
-        "description": "This is the first form section",
+        "slug": "a-form",
+        "menu_title": "First form",
+        "title": "A Form",
+        "description": "This is the first form",
         "completed": false
     }
 }
@@ -121,7 +121,7 @@ with the following payload:
 
 ```json
 {
-    "form_section_id": 1,
+    "form_id": 1,
     "sort": 1,
     "slug": "new-form-step",
     "menu_title": "New form step title for the menu",
@@ -131,7 +131,7 @@ with the following payload:
 }
 ```
 
-The only required fields are `form_section_id` and `title`.
+The only required fields are `form_id` and `title`.
 
 The behavior will be the same described in <nuxt-link to="/model-factories#formstep">Model Factories</nuxt-link>.
 
@@ -141,13 +141,13 @@ The response will be the new form step resource:
 {
     "data": {
         "id": 1,
-        "form_section": {
+        "form": {
             "id": 1,
             "sort": 1,
-            "slug": "a-form-section",
-            "menu_title": "First section",
-            "title": "A Form Section",
-            "description": "This is the first form section",
+            "slug": "a-form",
+            "menu_title": "First form",
+            "title": "A Form",
+            "description": "This is the first form",
             "completed": false
         },
         "sort": 1,
@@ -170,7 +170,7 @@ with the following payload:
 
 ```json
 {
-    "form_section_id": 1,
+    "form_id": 1,
     "sort": 1,
     "slug": "edited-new-form-step",
     "menu_title": "Edited new form step title for the menu",
@@ -188,13 +188,13 @@ The response will be the updated form step resource:
 {
     "data": {
         "id": 1,
-        "form_section": {
+        "form": {
             "id": 1,
             "sort": 1,
-            "slug": "a-form-section",
-            "menu_title": "First section",
-            "title": "A Form Section",
-            "description": "This is the first form section",
+            "slug": "a-form",
+            "menu_title": "First form",
+            "title": "A Form",
+            "description": "This is the first form",
             "completed": false
         },
         "sort": 1,
@@ -219,13 +219,13 @@ The response will be the form step resource just deleted:
 {
     "data": {
         "id": 1,
-        "form_section": {
+        "form": {
             "id": 1,
             "sort": 1,
-            "slug": "a-form-section",
-            "menu_title": "First section",
-            "title": "A Form Section",
-            "description": "This is the first form section",
+            "slug": "a-form",
+            "menu_title": "First form",
+            "title": "A Form",
+            "description": "This is the first form",
             "completed": false
         },
         "sort": 1,

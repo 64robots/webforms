@@ -2,7 +2,7 @@
 
 namespace R64\Webforms\Tests\Feature\Http\Controllers;
 
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 use R64\Webforms\Models\FormStep;
 use R64\Webforms\Tests\Feature\Models\User;
 use R64\Webforms\Tests\TestCase;
@@ -17,7 +17,7 @@ class AdminFormStepStoreControllerTest extends TestCase
         'title',
         'description',
         'completed',
-        'form_section' => [
+        'form' => [
             'id',
             'sort',
             'slug',
@@ -35,11 +35,11 @@ class AdminFormStepStoreControllerTest extends TestCase
     public function it_creates_a_step()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
 
         $response = $this->actingAs($user)
             ->json('POST', '/webforms-admin/form-steps', [
-                'form_section_id' => $formSection->id,
+                'form_id' => $form->id,
                 'sort' => 2,
                 'slug' => 'new-form-step',
                 'menu_title' => 'New form step title for the menu',
@@ -70,7 +70,7 @@ class AdminFormStepStoreControllerTest extends TestCase
     public function it_validates_uniqueness_of_the_slug_when_creates_a_new_form_step()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
 
         factory(FormStep::class)->create([
             'slug' => 'new-form-step-title',
@@ -78,7 +78,7 @@ class AdminFormStepStoreControllerTest extends TestCase
 
         $this->actingAs($user)
             ->json('POST', '/webforms-admin/form-steps', [
-                'form_section_id' => $formSection->id,
+                'form_id' => $form->id,
                 'slug' => 'new-form-step-title',
                 'title' => 'New form step title',
             ])
@@ -93,21 +93,21 @@ class AdminFormStepStoreControllerTest extends TestCase
     public function it_creates_a_slug_for_a_step()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
 
         factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'slug' => 'new-form-step-title',
         ]);
 
         factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'slug' => 'new-form-step-title-1',
         ]);
 
         $response = $this->actingAs($user)
             ->json('POST', '/webforms-admin/form-steps', [
-                'form_section_id' => $formSection->id,
+                'form_id' => $form->id,
                 'sort' => 3,
                 'title' => 'New form step title',
             ])
@@ -130,23 +130,23 @@ class AdminFormStepStoreControllerTest extends TestCase
     public function it_creates_a_sort_for_a_step()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
 
         factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'sort' => 1,
             'slug' => 'new-form-step-title',
         ]);
 
         factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'sort' => 2,
             'slug' => 'new-form-step-title-1',
         ]);
 
         $response = $this->actingAs($user)
             ->json('POST', '/webforms-admin/form-steps', [
-                'form_section_id' => $formSection->id,
+                'form_id' => $form->id,
                 'slug' => 'new-form-step',
                 'title' => 'New form step title',
             ])
@@ -168,23 +168,23 @@ class AdminFormStepStoreControllerTest extends TestCase
     public function sort_works_fine()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
 
         $secondStep = factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'sort' => 1,
             'slug' => 'new-form-step-title',
         ]);
 
         $thirdStep = factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'sort' => 2,
             'slug' => 'new-form-step-title-1',
         ]);
 
         $response = $this->actingAs($user)
             ->json('POST', '/webforms-admin/form-steps', [
-                'form_section_id' => $formSection->id,
+                'form_id' => $form->id,
                 'sort' => 1,
                 'slug' => 'new-form-step',
                 'title' => 'New form step title',

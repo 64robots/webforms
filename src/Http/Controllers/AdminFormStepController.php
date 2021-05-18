@@ -27,6 +27,6 @@ class AdminFormStepController
     {
         $formStep->deleteMe();
 
-        return new FormStepResource($formStep->load('formSection'));
+        return new FormStepResource($formStep->load('form'));
     }
 }

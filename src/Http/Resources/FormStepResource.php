@@ -16,7 +16,7 @@ class FormStepResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'form_section' => new FormSectionResource($this->whenLoaded('formSection')),
+            'form' => new FormResource($this->whenLoaded('form')),
             'sort' => $this->sort,
             'slug' => $this->slug,
             'menu_title' => $this->menu_title_frontend,

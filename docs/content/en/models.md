@@ -7,17 +7,17 @@ category: 'Structure'
 
 ## General structure
 
-FormSection -> FormStep -> Question -> Answer.
+Form -> FormStep -> Question -> Answer.
 
-A `FormSection` is like a big form with form steps. A form section has many form steps.
+A `Form` is like a big form with form steps. A form has many form steps.
 
-A `FormStep` belongs to a form section. A form step has many questions.
+A `FormStep` belongs to a form. A form step has many questions.
 
 A `Question` belongs to a form step. A question has answers.
 
 An `Answer` belongs to a user. An answer also belongs to a question.
 
-## FormSection
+## Form
 
 Attributes:
 
@@ -29,13 +29,13 @@ Attributes:
 
 - `slug` is a unique string.
 
-- `sort` is a numerical value. Can be used to sort these form sections.
+- `sort` is a numerical value. Can be used to sort these forms.
 
 ## FormStep
 
 Attributes:
 
-- `form_section_id` is the id of the `FormSection` it belongs to.
+- `form_id` is the id of the `Form` it belongs to.
 
 - `title`.
 
@@ -63,7 +63,7 @@ Attributes:
 
 - `sort` is a numerical value. Can be used to sort these questions.
 
-- `group_by` is used if you want to put some questions together under the same title in a step. It's like a "section" in a step. It's likely a constant string.
+- `group_by` is used if you want to put some questions together under the same title in a step. It's like a section in a step. It's likely a constant string.
 
 - `group_by_description` is used if you have some description for the group of questions. It's likely a constant string.
 

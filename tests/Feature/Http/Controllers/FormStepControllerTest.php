@@ -2,7 +2,7 @@
 
 namespace R64\Webforms\Tests\Feature\Http\Controllers;
 
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 use R64\Webforms\Models\FormStep;
 use R64\Webforms\Models\Question;
 use R64\Webforms\Tests\Feature\Models\User;
@@ -17,14 +17,14 @@ class FormStepControllerTest extends TestCase
     public function it_returns_user_form_steps()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
         $secondFormStep = factory(FormStep::class)->create([
             'sort' => 2,
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
         ]);
         $firstFormStep = factory(FormStep::class)->create([
             'sort' => 1,
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
         ]);
 
         $user->addFormSteps();
@@ -35,7 +35,7 @@ class FormStepControllerTest extends TestCase
             'data' => [
                 '*' => [
                     'id',
-                    'form_section',
+                    'form',
                     'sort',
                     'slug',
                     'menu_title',
@@ -82,7 +82,7 @@ class FormStepControllerTest extends TestCase
                 'data' => [
                     'id',
                     'sort',
-                    'form_section',
+                    'form',
                     'slug',
                     'menu_title',
                     'title',

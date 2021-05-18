@@ -3,11 +3,11 @@
 namespace R64\Webforms\Http\Requests;
 
 use Illuminate\Validation\Rule;
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 
-class AdminFormSectionUpdateRequest extends JsonFormRequest
+class AdminFormUpdateRequest extends JsonFormRequest
 {
-    private $formSection;
+    private $form;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +16,7 @@ class AdminFormSectionUpdateRequest extends JsonFormRequest
      */
     public function authorize()
     {
-        $this->formSection = $this->route('formSection');
+        $this->form = $this->route('form');
 
         return true;
     }
@@ -28,14 +28,14 @@ class AdminFormSectionUpdateRequest extends JsonFormRequest
      */
     public function rules()
     {
-        $formSectionsTable = (new FormSection)->getTable();
+        $formsTable = (new Form)->getTable();
 
         return [
             'sort' => 'nullable|integer',
             'slug' => [
                 'nullable',
                 'string',
-                Rule::unique($formSectionsTable)->ignore($this->formSection, 'slug'),
+                Rule::unique($formsTable)->ignore($this->form, 'slug'),
             ],
             'menu_title' => 'nullable|string',
             'title' => 'nullable|string',
@@ -46,11 +46,11 @@ class AdminFormSectionUpdateRequest extends JsonFormRequest
     public function validationData()
     {
         return [
-            'sort' => $this->sort ? $this->sort : $this->formSection->sort,
-            'slug' => $this->slug ? $this->slug : $this->formSection->slug,
-            'menu_title' => $this->menu_title ? $this->menu_title : $this->formSection->menu_title,
-            'title' => $this->title ? $this->title : $this->formSection->title,
-            'description' => $this->description ? $this->description : $this->formSection->description,
+            'sort' => $this->sort ? $this->sort : $this->form->sort,
+            'slug' => $this->slug ? $this->slug : $this->form->slug,
+            'menu_title' => $this->menu_title ? $this->menu_title : $this->form->menu_title,
+            'title' => $this->title ? $this->title : $this->form->title,
+            'description' => $this->description ? $this->description : $this->form->description,
         ];
     }
 }

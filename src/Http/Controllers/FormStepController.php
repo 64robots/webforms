@@ -13,7 +13,7 @@ class FormStepController
         return new FormStepCollection(
             auth()->user()
                 ->formSteps()
-                ->with('formSection')
+                ->with('form')
                 ->orderBy('sort')
                 ->get()
         );
@@ -23,6 +23,6 @@ class FormStepController
     {
         $formStep->markFictionalAnswersAsRealFor(auth()->user());
 
-        return new FormStepResource($formStep->load('formSection'));
+        return new FormStepResource($formStep->load('form'));
     }
 }

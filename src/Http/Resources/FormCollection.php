@@ -4,7 +4,7 @@ namespace R64\Webforms\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class FormSectionCollection extends ResourceCollection
+class FormCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -15,7 +15,7 @@ class FormSectionCollection extends ResourceCollection
     public function toArray($request)
     {
         return [
-            'data' => FormSectionResource::collection($this->collection),
+            'data' => FormResource::collection($this->collection),
         ];
     }
 

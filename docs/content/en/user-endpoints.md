@@ -11,15 +11,15 @@ For this section we will guess that you have the following in an auth routes fil
 Route::webforms('webforms');
 ```
 
-## Form Section
+## Form
 
 ### GET
 
-You can obtain the form sections making a `GET` request to the endpoint:
+You can obtain the forms making a `GET` request to the endpoint:
 
-`/webforms/form-sections`
+`/webforms/forms`
 
-It will return a list of sorted form sections in a response like:
+It will return a list of sorted forms in a response like:
 
 ```json
 {
@@ -27,10 +27,10 @@ It will return a list of sorted form sections in a response like:
         {
             "id": 1,
             "sort": 1,
-            "slug": "a-form-section",
-            "menu_title": "First section",
-            "title": "A Form Section",
-            "description": "This is the first form section",
+            "slug": "a-form",
+            "menu_title": "First form",
+            "title": "A Form",
+            "description": "This is the first form",
             "completed": false
         }
     ]
@@ -52,13 +52,13 @@ It will return a list of sorted form steps in a response like:
     "data": [
         {
             "id": 1,
-            "form_section": {
+            "form": {
                 "id": 1,
                 "sort": 1,
-                "slug": "a-form-section",
-                "menu_title": "First section",
-                "title": "A Form Section",
-                "description": "This is the first form section",
+                "slug": "a-form",
+                "menu_title": "First form",
+                "title": "A Form",
+                "description": "This is the first form",
                 "completed": false
             },
             "sort": 1,

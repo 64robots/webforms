@@ -4,7 +4,7 @@ namespace R64\Webforms\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FormSectionResource extends JsonResource
+class FormResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

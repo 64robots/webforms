@@ -4,11 +4,11 @@ namespace R64\Webforms\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use R64\Webforms\Factories\FormSectionFactory;
+use R64\Webforms\Factories\FormFactory;
 use R64\Webforms\Helpers\Slug;
 use R64\Webforms\Helpers\Sort;
 
-class FormSection extends Model
+class Form extends Model
 {
     use SoftDeletes;
 
@@ -21,7 +21,7 @@ class FormSection extends Model
         return $this->hasMany(FormStep::class);
     }
 
-    public function formSectionable()
+    public function formable()
     {
         return $this->morphTo();
     }
@@ -37,29 +37,29 @@ class FormSection extends Model
 
     public static function build(string $title)
     {
-        return FormSectionFactory::build($title);
+        return FormFactory::build($title);
     }
 
-    public static function updateFormSection(FormSection $formSection)
+    public static function updateForm(Form $form)
     {
-        return FormSectionFactory::update($formSection);
+        return FormFactory::update($form);
     }
 
-    public static function makeOneOrUpdate(array $data, FormSection $formSection = null)
+    public static function makeOneOrUpdate(array $data, Form $form = null)
     {
-        if ($formSection === null) {
-            $formSection = new self;
+        if ($form === null) {
+            $form = new self;
         }
 
-        $formSection->sort = Sort::reorder($data['sort'], $formSection->getTable(), 'sort', $formSection->sort);
-        $formSection->slug = $data['slug'];
-        $formSection->menu_title = $data['menu_title'];
-        $formSection->title = $data['title'];
-        $formSection->description = $data['description'];
+        $form->sort = Sort::reorder($data['sort'], $form->getTable(), 'sort', $form->sort);
+        $form->slug = $data['slug'];
+        $form->menu_title = $data['menu_title'];
+        $form->title = $data['title'];
+        $form->description = $data['description'];
 
-        $formSection->save();
+        $form->save();
 
-        return $formSection;
+        return $form;
     }
 
     public function deleteMe()
@@ -83,7 +83,7 @@ class FormSection extends Model
     {
         return ! auth()->user()
             ->formSteps()
-            ->whereHas('formSection', function ($query) {
+            ->whereHas('form', function ($query) {
                 $query->where('id', $this->id);
             })
             ->wherePivot('completed', false)
