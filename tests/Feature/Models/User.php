@@ -12,7 +12,10 @@ use R64\Webforms\Traits\HasWebForms;
 
 class User extends Model implements AuthorizableContract, AuthenticatableContract
 {
-    use HasWebForms, Formable, Authorizable, Authenticatable;
+    use HasWebForms;
+    use Formable;
+    use Authorizable;
+    use Authenticatable;
 
     protected $fillable = ['email'];
 
