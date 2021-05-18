@@ -87,7 +87,7 @@ The response will be the updated form resource:
 }
 ```
 
-#### DELETE
+### DELETE
 
 You can delete a form making a `DELETE` request to:
 
@@ -207,7 +207,7 @@ The response will be the updated form step resource:
 }
 ```
 
-#### DELETE
+### DELETE
 
 You can delete a form step making a `DELETE` request to:
 
@@ -250,7 +250,85 @@ with the following payload:
 
 ```json
 {
-    
+    "form_step_id": 1,
+    "depends_on": 1,
+    "sort": 2,
+    "slug": "new-question",
+    "group_by": "Group for questions in the same form step",
+    "group_by_description": "Group description for questions in the same form step",
+    "label_position": "right",
+    "help_title": "A little help usually as a modal",
+    "help_body": "Body of a little help usually as a modal",
+    "type": "options",
+    "post_input_text": "Answer something about that",
+    "title": "New question title",
+    "description": "An awesome new question",
+    "error_message": "Sorry, we need that value",
+    "default_value": "10",
+    "min": "5",
+    "max": "15",
+    "shown_when": [true],
+    "options": {
+        "5": "Minimum value",
+        "10": "Average value",
+        "15": "Maximum value"
+    },
+    "required": 1
+}
+```
+
+The only required fields are `form_step_id` and `title`.
+
+The behavior will be the same described in <nuxt-link to="/model-factories#question">Model Factories</nuxt-link>.
+
+The response will be the new question resource:
+
+```json
+{
+    "data": {
+        "id": 2,
+        "form_step": {
+            "id": 1,
+            "sort": 1,
+            "slug": "a-form-step",
+            "menu_title": "First Form Step",
+            "title": "A Form Step",
+            "description": "This is the first form step",
+            "completed": false
+        },
+        "sort": 2,
+        "depends_on": 1,
+        "slug": "new-question",
+        "group_by": "Group for questions in the same form step",
+        "group_by_description": "Group description for questions in the same form step",
+        "label_position": "right",
+        "help_title": "A little help usually as a modal",
+        "help_body": "Body of a little help usually as a modal",
+        "type": "options",
+        "post_input_text": "Answer something about that",
+        "title": "New question title",
+        "description": "An awesome new question",
+        "error_message": "Sorry, we need that value",
+        "default_value": "10",
+        "min": "5",
+        "max": "15",
+        "shown_when": [true],
+        "required": true,
+        "options": [
+            {
+                "label": "Minimum value",
+                "value": "5"
+            },
+            {
+                "label": "Average value",
+                "value": "10"
+            },
+            {
+                "label": "Maximum value",
+                "value": "15"
+            }
+        ]
+    }
 }
 ```
 
@@ -264,12 +342,139 @@ with the following payload:
 
 ```json
 {
-    
+    "form_step_id": 1,
+    "depends_on": 1,
+    "sort": 2,
+    "slug": "updated-question",
+    "group_by": "Group for questions in the same form step",
+    "group_by_description": "Group description for questions in the same form step",
+    "label_position": "right",
+    "help_title": "A little help usually as a modal",
+    "help_body": "Body of a little help usually as a modal",
+    "type": "options",
+    "post_input_text": "Answer something about that",
+    "title": "Updated question title",
+    "description": "An awesome updated question",
+    "error_message": "Sorry, we need that value",
+    "default_value": "10",
+    "min": "5",
+    "max": "15",
+    "shown_when": [true],
+    "options": {
+        "5": "Minimum value",
+        "10": "Average value",
+        "15": "Maximum value"
+    },
+    "required": 1
 }
 ```
 
-#### DELETE
+The behavior will be the same described in <nuxt-link to="/model-factories#question">Model Factories</nuxt-link>.
+
+The response will be the updated question resource:
+
+```json
+{
+    "data": {
+        "id": 2,
+        "form_step": {
+            "id": 1,
+            "sort": 1,
+            "slug": "a-form-step",
+            "menu_title": "First Form Step",
+            "title": "A Form Step",
+            "description": "This is the first form step",
+            "completed": false
+        },
+        "sort": 2,
+        "depends_on": 1,
+        "slug": "updated-question",
+        "group_by": "Group for questions in the same form step",
+        "group_by_description": "Group description for questions in the same form step",
+        "label_position": "right",
+        "help_title": "A little help usually as a modal",
+        "help_body": "Body of a little help usually as a modal",
+        "type": "options",
+        "post_input_text": "Answer something about that",
+        "title": "Updated question title",
+        "description": "An awesome updated question",
+        "error_message": "Sorry, we need that value",
+        "default_value": "10",
+        "min": "5",
+        "max": "15",
+        "shown_when": [true],
+        "required": true,
+        "options": [
+            {
+                "label": "Minimum value",
+                "value": "5"
+            },
+            {
+                "label": "Average value",
+                "value": "10"
+            },
+            {
+                "label": "Maximum value",
+                "value": "15"
+            }
+        ]
+    }
+}
+```
+
+### DELETE
 
 You can delete a question making a `DELETE` request to:
 
 `/webforms-admin/questions/{questionId}`
+
+The response will be the question resource just deleted:
+
+```json
+{
+    "data": {
+        "id": 2,
+        "form_step": {
+            "id": 1,
+            "sort": 1,
+            "slug": "a-form-step",
+            "menu_title": "First Form Step",
+            "title": "A Form Step",
+            "description": "This is the first form step",
+            "completed": false
+        },
+        "sort": 2,
+        "depends_on": 1,
+        "slug": "new-question",
+        "group_by": "Group for questions in the same form step",
+        "group_by_description": "Group description for questions in the same form step",
+        "label_position": "right",
+        "help_title": "A little help usually as a modal",
+        "help_body": "Body of a little help usually as a modal",
+        "type": "options",
+        "post_input_text": "Answer something about that",
+        "title": "New question title",
+        "description": "An awesome new question",
+        "error_message": "Sorry, we need that value",
+        "default_value": "10",
+        "min": "5",
+        "max": "15",
+        "shown_when": [true],
+        "required": true,
+        "options": [
+            {
+                "label": "Minimum value",
+                "value": "5"
+            },
+            {
+                "label": "Average value",
+                "value": "10"
+            },
+            {
+                "label": "Maximum value",
+                "value": "15"
+            }
+        ]
+    }
+}
+```
