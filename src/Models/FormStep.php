@@ -20,9 +20,9 @@ class FormStep extends Model
 
     # Relations
 
-    public function formSection()
+    public function form()
     {
-        return $this->belongsTo(FormSection::class);
+        return $this->belongsTo(Form::class);
     }
 
     public function questions()
@@ -65,9 +65,9 @@ class FormStep extends Model
 
     # CRUD
 
-    public static function build(FormSection $formSection, string $title)
+    public static function build(Form $form, string $title)
     {
-        return FormStepFactory::build($formSection, $title);
+        return FormStepFactory::build($form, $title);
     }
 
     public static function updateFormStep(FormStep $formStep)
@@ -81,10 +81,10 @@ class FormStep extends Model
             $formStep = new self;
         }
 
-        /** @var FormSection $formSection */
-        $formSection = FormSection::findOrFail($data['form_section_id']);
-        $formStep->sort = Sort::reorderCollection($formSection->formSteps, $data['sort'], 'sort', $formStep->sort);
-        $formStep->formSection()->associate($formSection);
+        /** @var Form $form */
+        $form = Form::findOrFail($data['form_id']);
+        $formStep->sort = Sort::reorderCollection($form->formSteps, $data['sort'], 'sort', $formStep->sort);
+        $formStep->form()->associate($form);
         $formStep->slug = $data['slug'];
         $formStep->menu_title = $data['menu_title'];
         $formStep->title = $data['title'];
@@ -101,11 +101,11 @@ class FormStep extends Model
         $this->delete();
     }
 
-    # Section
+    # Form
 
-    public function associateFormSection(FormSection $formSection)
+    public function associateForm(Form $form)
     {
-        return $this->formSection()->associate($formSection);
+        return $this->form()->associate($form);
     }
 
     # Question
@@ -156,13 +156,13 @@ class FormStep extends Model
 
     # Helpers
 
-    public static function getLastSort($formSection)
+    public static function getLastSort($form)
     {
-        if (is_numeric($formSection)) {
-            $formSection = FormSection::findOrFail($formSection);
+        if (is_numeric($form)) {
+            $form = Form::findOrFail($form);
         }
 
-        $lastSort = $formSection->formSteps()->max('sort') ?? 0;
+        $lastSort = $form->formSteps()->max('sort') ?? 0;
 
         return ((int)$lastSort) + 1;
     }

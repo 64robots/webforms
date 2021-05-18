@@ -3,7 +3,7 @@
 namespace R64\Webforms\Http\Requests;
 
 use Illuminate\Validation\Rule;
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 use R64\Webforms\Models\FormStep;
 
 class AdminFormStepUpdateRequest extends JsonFormRequest
@@ -29,11 +29,11 @@ class AdminFormStepUpdateRequest extends JsonFormRequest
      */
     public function rules()
     {
-        $formSectionsTable = (new FormSection)->getTable();
+        $formsTable = (new Form)->getTable();
         $formStepsTable = (new FormStep)->getTable();
 
         return [
-            'form_section_id' => 'nullable|exists:' . $formSectionsTable . ',id',
+            'form_id' => 'nullable|exists:' . $formsTable . ',id',
             'sort' => 'nullable|integer',
             'slug' => [
                 'nullable',
@@ -50,7 +50,7 @@ class AdminFormStepUpdateRequest extends JsonFormRequest
     public function validationData()
     {
         return [
-            'form_section_id' => $this->form_section_id ? $this->form_section_id : $this->formStep->form_section_id,
+            'form_id' => $this->form_id ? $this->form_id : $this->formStep->form_id,
             'sort' => $this->sort ? $this->sort : $this->formStep->sort,
             'slug' => $this->slug ? $this->slug : $this->formStep->slug,
             'menu_title' => $this->menu_title ? $this->menu_title : $this->formStep->menu_title,

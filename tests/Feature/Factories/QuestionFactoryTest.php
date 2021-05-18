@@ -2,7 +2,7 @@
 
 namespace R64\Webforms\Tests\Feature\Factories;
 
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 use R64\Webforms\Models\FormStep;
 use R64\Webforms\Models\Question;
 use R64\Webforms\Tests\TestCase;
@@ -12,8 +12,8 @@ class QuestionFactoryTest extends TestCase
     /** @test */
     public function it_creates_a_question_in_a_fluent_way()
     {
-        $formSection = FormSection::build('A form section')->save();
-        $formStep = FormStep::build($formSection, 'A form step')->save();
+        $form = Form::build('A form')->save();
+        $formStep = FormStep::build($form, 'A form step')->save();
         $parentQuestion = Question::build($formStep, 'Parent Question')->save();
 
         $question = Question::build($formStep, 'New question title')
@@ -31,7 +31,7 @@ class QuestionFactoryTest extends TestCase
             ->defaultValue('A default value')
             ->min(10)
             ->max(30)
-            ->showedWhen([10, 30])
+            ->shownWhen([10, 30])
             ->options([10, 20, 30])
             ->required(1)
             ->save();
@@ -64,8 +64,8 @@ class QuestionFactoryTest extends TestCase
     /** @test */
     public function it_creates_a_question_only_with_the_name_in_a_fluent_way()
     {
-        $formSection = FormSection::build('A form section')->save();
-        $formStep = FormStep::build($formSection, 'A form step')->save();
+        $form = Form::build('A form')->save();
+        $formStep = FormStep::build($form, 'A form step')->save();
 
         Question::build($formStep, 'New Question')->save();
 
@@ -79,8 +79,8 @@ class QuestionFactoryTest extends TestCase
     /** @test */
     public function it_is_able_to_move_the_sort_values_in_the_questions()
     {
-        $formSection = FormSection::build('A form section')->save();
-        $formStep = FormStep::build($formSection, 'A form step')->save();
+        $form = Form::build('A form')->save();
+        $formStep = FormStep::build($form, 'A form step')->save();
 
         $firstQuestion = Question::build($formStep, 'First question')->sort(1)->save();
         $secondQuestion = Question::build($formStep, 'Second question')->sort(2)->save();
@@ -95,8 +95,8 @@ class QuestionFactoryTest extends TestCase
     /** @test */
     public function it_can_update_only_the_title_of_a_question_in_a_fluent_way()
     {
-        $formSection = FormSection::build('A form section')->save();
-        $formStep = FormStep::build($formSection, 'A form step')->save();
+        $form = Form::build('A form')->save();
+        $formStep = FormStep::build($form, 'A form step')->save();
         $parentQuestion = Question::build($formStep, 'Parent Question')->save();
 
         $question = Question::build($formStep, 'New question title')
@@ -114,7 +114,7 @@ class QuestionFactoryTest extends TestCase
             ->defaultValue('A default value')
             ->min(10)
             ->max(30)
-            ->showedWhen([10, 30])
+            ->shownWhen([10, 30])
             ->options([10, 20, 30])
             ->required(1)
             ->save();
@@ -149,12 +149,12 @@ class QuestionFactoryTest extends TestCase
     /** @test */
     public function it_can_update_a_existent_form_step()
     {
-        $formSection = FormSection::build('A form section')->save();
-        $formStep = FormStep::build($formSection, 'A form step')->save();
+        $form = Form::build('A form')->save();
+        $formStep = FormStep::build($form, 'A form step')->save();
         $question = Question::build($formStep, 'A question')->save();
 
         $question = $question->fresh();
-        $anotherFormStep = FormStep::build($formSection, 'Another form step')->save();
+        $anotherFormStep = FormStep::build($form, 'Another form step')->save();
         Question::updateQuestion($question)->formStep($anotherFormStep)->save();
         $question = $question->fresh();
         $this->assertEquals(1, $question->sort);
@@ -246,7 +246,7 @@ class QuestionFactoryTest extends TestCase
         $this->assertEquals('100', $question->max);
 
         $question = $question->fresh();
-        Question::updateQuestion($question)->showedWhen([1, 2, 3])->save();
+        Question::updateQuestion($question)->shownWhen([1, 2, 3])->save();
         $question = $question->fresh();
         $this->assertEquals(1, $question->sort);
         $this->assertEquals([1, 2, 3], $question->shown_when);
@@ -267,8 +267,8 @@ class QuestionFactoryTest extends TestCase
     /** @test */
     public function it_is_able_to_update_the_sort_values_for_a_question()
     {
-        $formSection = FormSection::build('A section')->save();
-        $formStep = FormStep::build($formSection, 'First step')->save();
+        $form = Form::build('A form')->save();
+        $formStep = FormStep::build($form, 'First step')->save();
 
         $firstQuestion = Question::build($formStep, 'First question')->sort(1)->save();
         $secondQuestion = Question::build($formStep, 'Second question')->sort(2)->save();
@@ -284,8 +284,8 @@ class QuestionFactoryTest extends TestCase
     /** @test */
     public function it_is_able_to_update_the_sort_values_for_a_question_to_move_to_the_last_position()
     {
-        $formSection = FormSection::build('A section')->save();
-        $formStep = FormStep::build($formSection, 'First step')->save();
+        $form = Form::build('A form')->save();
+        $formStep = FormStep::build($form, 'First step')->save();
 
         $firstQuestion = Question::build($formStep, 'First question')->sort(1)->save();
         $secondQuestion = Question::build($formStep, 'Second question')->sort(2)->save();

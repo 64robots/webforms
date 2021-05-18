@@ -2,7 +2,7 @@
 
 namespace R64\Webforms\Http\Requests;
 
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 use R64\Webforms\Models\FormStep;
 
 class AdminFormStepStoreRequest extends JsonFormRequest
@@ -24,11 +24,11 @@ class AdminFormStepStoreRequest extends JsonFormRequest
      */
     public function rules()
     {
-        $formSectionsTable = (new FormSection)->getTable();
+        $formsTable = (new Form)->getTable();
         $formStepsTable = (new FormStep)->getTable();
 
         return [
-            'form_section_id' => 'required|exists:' . $formSectionsTable . ',id',
+            'form_id' => 'required|exists:' . $formsTable . ',id',
             'sort' => 'nullable|integer',
             'slug' => 'nullable|string|unique:' . $formStepsTable . ',slug',
             'menu_title' => 'nullable|string',
@@ -41,8 +41,8 @@ class AdminFormStepStoreRequest extends JsonFormRequest
     public function validationData()
     {
         return [
-            'form_section_id' => $this->form_section_id,
-            'sort' => $this->sort ? $this->sort : FormStep::getLastSort($this->form_section_id),
+            'form_id' => $this->form_id,
+            'sort' => $this->sort ? $this->sort : FormStep::getLastSort($this->form_id),
             'slug' => $this->slug ? $this->slug : FormStep::getSlugFromTitle($this->title),
             'menu_title' => $this->menu_title,
             'title' => $this->title,

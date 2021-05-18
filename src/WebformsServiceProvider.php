@@ -4,11 +4,11 @@ namespace R64\Webforms;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use R64\Webforms\Http\Controllers\AdminFormSectionController;
+use R64\Webforms\Http\Controllers\AdminFormController;
 use R64\Webforms\Http\Controllers\AdminFormStepController;
 use R64\Webforms\Http\Controllers\AdminQuestionController;
 use R64\Webforms\Http\Controllers\AnswerController;
-use R64\Webforms\Http\Controllers\FormSectionController;
+use R64\Webforms\Http\Controllers\FormController;
 use R64\Webforms\Http\Controllers\FormStepController;
 use R64\Webforms\Http\Controllers\QuestionController;
 
@@ -32,7 +32,7 @@ class WebformsServiceProvider extends ServiceProvider
             Route::prefix($prefix)
                 ->middleware(['throttle:60,1', 'bindings'])
                 ->group(function () {
-                    Route::get('/form-sections', [FormSectionController::class, 'index']);
+                    Route::get('/forms', [FormController::class, 'index']);
                     Route::get('/form-steps', [FormStepController::class, 'index']);
                     Route::put('/form-steps/{formStep}', [FormStepController::class, 'update']);
                     Route::get('/questions', [QuestionController::class, 'index']);
@@ -44,9 +44,9 @@ class WebformsServiceProvider extends ServiceProvider
             Route::prefix($prefix)
                 ->middleware(['throttle:60,1', 'bindings'])
                 ->group(function () {
-                    Route::post('/form-sections', [AdminFormSectionController::class, 'store']);
-                    Route::put('/form-sections/{formSection}', [AdminFormSectionController::class, 'update']);
-                    Route::delete('/form-sections/{formSection}', [AdminFormSectionController::class, 'destroy']);
+                    Route::post('/forms', [AdminFormController::class, 'store']);
+                    Route::put('/forms/{form}', [AdminFormController::class, 'update']);
+                    Route::delete('/forms/{form}', [AdminFormController::class, 'destroy']);
 
                     Route::post('/form-steps', [AdminFormStepController::class, 'store']);
                     Route::put('/form-steps/{formStep}', [AdminFormStepController::class, 'update']);

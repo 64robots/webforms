@@ -8,11 +8,11 @@ class CreateWebformsTables extends Migration
 {
     public function up()
     {
-        Schema::create('form_sections', function (Blueprint $table) {
+        Schema::create('forms', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('sort')->nullable();
-            $table->string('form_sectionable_type')->nullable();
-            $table->unsignedBigInteger('form_sectionable_id')->nullable();
+            $table->string('formable_type')->nullable();
+            $table->unsignedBigInteger('formable_id')->nullable();
             $table->string('slug')->unique();
             $table->string('menu_title')->nullable();
             $table->string('title');
@@ -20,12 +20,12 @@ class CreateWebformsTables extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['form_sectionable_type', 'form_sectionable_id']);
+            $table->index(['formable_type', 'formable_id']);
         });
 
         Schema::create('form_steps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('form_section_id')->constrained();
+            $table->foreignId('form_id')->constrained();
             $table->unsignedInteger('sort')->nullable();
             $table->string('slug')->unique();
             $table->string('menu_title')->nullable();
@@ -87,6 +87,6 @@ class CreateWebformsTables extends Migration
         Schema::dropIfExists('questions');
         Schema::dropIfExists('form_step_user');
         Schema::dropIfExists('form_steps');
-        Schema::dropIfExists('form_sections');
+        Schema::dropIfExists('forms');
     }
 }

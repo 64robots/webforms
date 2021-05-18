@@ -15,7 +15,7 @@ Route::webforms('webforms');
 
 This make possible that you can use your own middleware maybe for make the forms only available to a group of the users. You can choice the root prefix for this group of routes changing the value of the parameter.
 
-If you want routes to create FormSections, FormSteps and Questions, add that under the appropriate middleware in your routes file:
+If you want routes to create Forms, FormSteps and Questions, add that under the appropriate middleware in your routes file:
 
 ```php
 Route::webformsAdmin('webforms-admin');
@@ -43,7 +43,7 @@ The trait add to the users the following methods:
 
 ## 3. Create Structure
 
-Create `FormSections`, `FormSteps` and `Questions` using <nuxt-link to="/model-factories">Model Factories</nuxt-link> or the <nuxt-link to="/admin-endpoints">Admin Endpoints</nuxt-link>
+Create `Forms`, `FormSteps` and `Questions` using <nuxt-link to="/model-factories">Model Factories</nuxt-link> or the <nuxt-link to="/admin-endpoints">Admin Endpoints</nuxt-link>
 
 ## 4. Config
 

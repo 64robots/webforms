@@ -2,28 +2,28 @@
 
 namespace R64\Webforms\Tests\Feature\Http\Controllers;
 
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 use R64\Webforms\Tests\Feature\Models\User;
 use R64\Webforms\Tests\TestCase;
 
-class FormSectionControllerTest extends TestCase
+class FormControllerTest extends TestCase
 {
     /**
      * @test
-     * GET '/webforms/form-sections'
+     * GET '/webforms/forms'
      */
-    public function it_returns_sections()
+    public function it_returns_forms()
     {
         $user = factory(User::class)->create();
-        $secondFormSection = factory(FormSection::class)->create([
+        $secondForm = factory(Form::class)->create([
             'sort' => 2,
         ]);
-        $firstFormSection = factory(FormSection::class)->create([
+        $firstForm = factory(Form::class)->create([
             'sort' => 1,
         ]);
 
         $response = $this->actingAs($user)
-            ->json('GET', '/webforms/form-sections')
+            ->json('GET', '/webforms/forms')
             ->assertOk();
 
         $response->assertJsonStructure([
@@ -41,7 +41,7 @@ class FormSectionControllerTest extends TestCase
         ]);
 
         $this->assertCount(2, $response->json('data'));
-        $this->assertEquals($firstFormSection->id, $response->json('data.0.id'));
-        $this->assertEquals($secondFormSection->id, $response->json('data.1.id'));
+        $this->assertEquals($firstForm->id, $response->json('data.0.id'));
+        $this->assertEquals($secondForm->id, $response->json('data.1.id'));
     }
 }

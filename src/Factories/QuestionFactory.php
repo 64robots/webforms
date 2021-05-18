@@ -23,7 +23,7 @@ class QuestionFactory
     public $defaultValue;
     public $min;
     public $max;
-    public $showedWhen;
+    public $shownWhen;
     public $options;
     public $required;
     public $title;
@@ -64,7 +64,7 @@ class QuestionFactory
             ->dependsOn($question->dependsOn)
             ->min($question->min)
             ->max($question->max)
-            ->showedWhen($question->shown_when)
+            ->shownWhen($question->shown_when)
             ->options($question->options)
             ->required($question->required);
 
@@ -91,7 +91,7 @@ class QuestionFactory
             'default_value' => $this->getDefaultValue(),
             'min' => $this->getMin(),
             'max' => $this->getMax(),
-            'shown_when' => $this->getShowedWhen(),
+            'shown_when' => $this->getShownWhen(),
             'options' => $this->getOptions(),
             'required' => $this->getRequired(),
         ];
@@ -309,16 +309,16 @@ class QuestionFactory
         return $this->max;
     }
 
-    public function showedWhen(array $showedWhen = null)
+    public function shownWhen(array $shownWhen = null)
     {
-        $this->showedWhen = $showedWhen;
+        $this->shownWhen = $shownWhen;
 
         return $this;
     }
 
-    private function getShowedWhen()
+    private function getShownWhen()
     {
-        return $this->showedWhen;
+        return $this->shownWhen;
     }
 
     public function options(array $options = null)

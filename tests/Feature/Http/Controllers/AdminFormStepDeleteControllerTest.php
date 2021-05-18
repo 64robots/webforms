@@ -2,7 +2,7 @@
 
 namespace R64\Webforms\Tests\Feature\Http\Controllers;
 
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 use R64\Webforms\Models\FormStep;
 use R64\Webforms\Tests\Feature\Models\User;
 use R64\Webforms\Tests\TestCase;
@@ -17,7 +17,7 @@ class AdminFormStepDeleteControllerTest extends TestCase
         'title',
         'description',
         'completed',
-        'form_section' => [
+        'form' => [
             'id',
             'sort',
             'slug',
@@ -35,9 +35,9 @@ class AdminFormStepDeleteControllerTest extends TestCase
     public function it_deletes_a_step()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
         $formStep = factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'sort' => 1,
             'slug' => 'new-form-step',
             'menu_title' => 'New form step title for the menu',

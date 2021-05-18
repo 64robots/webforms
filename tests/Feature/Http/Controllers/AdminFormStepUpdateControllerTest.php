@@ -2,7 +2,7 @@
 
 namespace R64\Webforms\Tests\Feature\Http\Controllers;
 
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 use R64\Webforms\Models\FormStep;
 use R64\Webforms\Tests\Feature\Models\User;
 use R64\Webforms\Tests\TestCase;
@@ -17,7 +17,7 @@ class AdminFormStepUpdateControllerTest extends TestCase
         'title',
         'description',
         'completed',
-        'form_section' => [
+        'form' => [
             'id',
             'sort',
             'slug',
@@ -35,9 +35,9 @@ class AdminFormStepUpdateControllerTest extends TestCase
     public function it_updates_a_step()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
         $formStep = factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'sort' => 2,
             'slug' => 'new-form-step',
             'menu_title' => 'New form step title for the menu',
@@ -48,7 +48,7 @@ class AdminFormStepUpdateControllerTest extends TestCase
 
         $response = $this->actingAs($user)
             ->json('PUT', '/webforms-admin/form-steps/' . $formStep->id, [
-                'form_section_id' => $formSection->id,
+                'form_id' => $form->id,
                 'sort' => 1,
                 'slug' => 'edited-new-form-step',
                 'menu_title' => 'Edited new form step title for the menu',
@@ -78,9 +78,9 @@ class AdminFormStepUpdateControllerTest extends TestCase
     public function it_can_update_only_the_title_of_a_step()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
         $formStep = factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'sort' => 1,
             'slug' => 'new-form-step',
             'menu_title' => 'New form step title for the menu',
@@ -106,7 +106,7 @@ class AdminFormStepUpdateControllerTest extends TestCase
         $this->assertEquals('Edited new form step title', $response->json('data.title'));
         $this->assertEquals('An awesome new form step', $response->json('data.description'));
         $this->assertEquals(0, $formStep->fresh()->is_personal_data);
-        $this->assertEquals($formSection->id, $formStep->fresh()->form_section_id);
+        $this->assertEquals($form->id, $formStep->fresh()->form_id);
     }
 
     /**
@@ -116,7 +116,7 @@ class AdminFormStepUpdateControllerTest extends TestCase
     public function it_validates_uniqueness_of_the_slug_when_it_updates_a_new_form_step()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
 
         factory(FormStep::class)->create([
             'slug' => 'new-form-step-title',
@@ -138,20 +138,20 @@ class AdminFormStepUpdateControllerTest extends TestCase
      * @test
      * PUT '/webforms-admin/form-steps/{formStep}'
      */
-    public function it_can_change_the_section_for_a_step()
+    public function it_can_change_the_form_for_a_step()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
-        $anotherFormSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
+        $anotherForm = factory(Form::class)->create();
 
         $formStep = factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'slug' => 'new-form-step-title',
         ]);
 
         $response = $this->actingAs($user)
             ->json('PUT', '/webforms-admin/form-steps/' . $formStep->id, [
-                'form_section_id' => $anotherFormSection->id,
+                'form_id' => $anotherForm->id,
             ])
             ->assertStatus(200);
 
@@ -160,7 +160,7 @@ class AdminFormStepUpdateControllerTest extends TestCase
         ]);
 
         $this->assertEquals($formStep->id, $response->json('data.id'));
-        $this->assertEquals($anotherFormSection->id, $formStep->fresh()->form_section_id);
+        $this->assertEquals($anotherForm->id, $formStep->fresh()->form_id);
     }
 
     /**
@@ -170,22 +170,22 @@ class AdminFormStepUpdateControllerTest extends TestCase
     public function it_can_change_the_sort_of_a_step()
     {
         $user = factory(User::class)->create();
-        $formSection = factory(FormSection::class)->create();
+        $form = factory(Form::class)->create();
 
         $firstFormStep = factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'sort' => 1,
             'slug' => 'first-new-form-step-title',
         ]);
 
         $secondFormStep = factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'sort' => 2,
             'slug' => 'second-new-form-step-title-1',
         ]);
 
         $thirdFormStep = factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'sort' => 3,
             'slug' => 'third-new-form-step-title-1',
         ]);

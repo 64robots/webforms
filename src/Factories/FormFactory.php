@@ -2,16 +2,16 @@
 
 namespace R64\Webforms\Factories;
 
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 
-class FormSectionFactory
+class FormFactory
 {
     public $sort;
     public $slug;
     public $menuTitle;
     public $title;
     public $description;
-    public $formSection;
+    public $form;
 
     public static function build(string $title)
     {
@@ -22,17 +22,17 @@ class FormSectionFactory
         return $factory;
     }
 
-    public static function update(FormSection $formSection)
+    public static function update(Form $form)
     {
         $factory = new self;
 
-        $factory->formSection = $formSection;
+        $factory->form = $form;
 
-        $factory->sort($formSection->sort)
-            ->slug($formSection->slug)
-            ->menuTitle($formSection->menu_title)
-            ->title($formSection->title)
-            ->description($formSection->description);
+        $factory->sort($form->sort)
+            ->slug($form->slug)
+            ->menuTitle($form->menu_title)
+            ->title($form->title)
+            ->description($form->description);
 
         return $factory;
     }
@@ -47,7 +47,7 @@ class FormSectionFactory
             'description' => $this->getDescription(),
         ];
 
-        return FormSection::makeOneOrUpdate($data, $this->formSection);
+        return Form::makeOneOrUpdate($data, $this->form);
     }
 
     public function sort(int $sort)
@@ -59,7 +59,7 @@ class FormSectionFactory
 
     private function getSort()
     {
-        return $this->sort ? $this->sort : FormSection::getLastSort();
+        return $this->sort ? $this->sort : Form::getLastSort();
     }
 
     public function slug(string $slug)
@@ -71,7 +71,7 @@ class FormSectionFactory
 
     private function getSlug()
     {
-        return $this->slug ?? FormSection::getSlugFromTitle($this->title);
+        return $this->slug ?? Form::getSlugFromTitle($this->title);
     }
 
     public function menuTitle(string $menuTitle = null)

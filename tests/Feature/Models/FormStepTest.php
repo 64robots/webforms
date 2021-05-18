@@ -3,7 +3,7 @@
 namespace R64\Webforms\Tests\Feature\Models;
 
 use R64\Webforms\Models\Answer;
-use R64\Webforms\Models\FormSection;
+use R64\Webforms\Models\Form;
 use R64\Webforms\Models\FormStep;
 use R64\Webforms\Models\Question;
 use R64\Webforms\Tests\TestCase;
@@ -13,12 +13,12 @@ class FormStepTest extends TestCase
     /** @test */
     public function it_can_create_models()
     {
-        /** @var FormSection $formSection */
-        $formSection = factory(FormSection::class)->create();
+        /** @var Form $form */
+        $form = factory(Form::class)->create();
 
         /** @var FormStep $formStep */
         $formStep = factory(FormStep::class)->create([
-            'form_section_id' => $formSection->id,
+            'form_id' => $form->id,
             'title' => 'First Step',
             'slug' => 'first-step',
             'sort' => 1,
@@ -44,22 +44,22 @@ class FormStepTest extends TestCase
     }
 
     /** @test */
-    public function it_belongs_to_a_section()
+    public function it_belongs_to_a_form()
     {
-        /** @var FormSection $formSection */
-        $formSection = factory(FormSection::class)->create();
-        /** @var FormSection $anotherFormSection */
-        $anotherFormSection = factory(FormSection::class)->create();
+        /** @var Form $form */
+        $form = factory(Form::class)->create();
+        /** @var Form $anotherForm */
+        $anotherForm = factory(Form::class)->create();
         /** @var FormStep $formStep */
         $formStep = factory(FormStep::class)->make();
 
-        $formStep->associateFormSection($formSection);
+        $formStep->associateForm($form);
 
-        $this->assertEquals($formSection->id, $formStep->form_section_id);
+        $this->assertEquals($form->id, $formStep->form_id);
 
-        $formStep->associateFormSection($anotherFormSection);
+        $formStep->associateForm($anotherForm);
 
-        $this->assertEquals($anotherFormSection->id, $formStep->refresh()->form_section_id);
+        $this->assertEquals($anotherForm->id, $formStep->refresh()->form_id);
     }
 
     /** @test */
