@@ -53,6 +53,48 @@ class FormStepControllerTest extends TestCase
 
     /**
      * @test
+     * GET '/webforms/form-steps'
+     */
+    public function it_returns_user_form_steps_and_can_filter_by_form()
+    {
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+        $firstForm = factory(Form::class)->create();
+        $secondForm = factory(Form::class)->create();
+        $secondFormStep = factory(FormStep::class)->create([
+            'sort' => 2,
+            'form_id' => $secondForm->id,
+        ]);
+        $firstFormStep = factory(FormStep::class)->create([
+            'sort' => 1,
+            'form_id' => $firstForm->id,
+        ]);
+
+        $user->addFormSteps();
+
+        $response = $this->actingAs($user)->json('GET', '/webforms/form-steps?form=' . $firstForm->id)->assertOk();
+
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    'id',
+                    'form',
+                    'sort',
+                    'slug',
+                    'menu_title',
+                    'title',
+                    'description',
+                    'completed',
+                ],
+            ],
+        ]);
+
+        $this->assertCount(1, $response->json('data'));
+        $this->assertEquals($firstFormStep->id, $response->json('data.0.id'));
+    }
+
+    /**
+     * @test
      * PUT '/webforms/form-steps/{formStep}'
      */
     public function it_can_mark_fictional_answers_as_real_ones()

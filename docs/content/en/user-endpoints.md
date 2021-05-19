@@ -19,7 +19,7 @@ You can obtain the forms making a `GET` request to the endpoint:
 
 `/webforms/forms`
 
-It will return a list of sorted forms in a response like:
+It will return a list of sorted forms. You will only obtain the forms where the user have steps added in a response like:
 
 ```json
 {
@@ -71,6 +71,12 @@ It will return a list of sorted form steps in a response like:
     ]
 }
 ```
+
+You can filter it down by form using `form` query parameter like:
+
+`/webforms/form-steps?form=1`
+
+It only will show form that user can see.
 
 ### PUT
 

@@ -9,6 +9,6 @@ class FormController
 {
     public function index()
     {
-        return new FormCollection(Form::orderBy('sort')->get());
+        return new FormCollection(auth()->user()->formSteps()->with('form')->get()->pluck('form')->unique()->sortBy('sort')->values());
     }
 }

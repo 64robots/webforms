@@ -5,7 +5,7 @@ position: 1
 category: 'Introduction'
 ---
 
-Package to create questions and answers for a multistep-form made with :heart: from [64 Robots](https://64robots.com)
+Package to rapidly create custom forms. This package provides you an easy way to start the backend for an SPA Form. You could create forms, form steps and questions. Your users could respond to these forms. This package was made with :heart: from [64 Robots](https://64robots.com).
 
 ## Installation
 
@@ -30,12 +30,15 @@ php artisan vendor:publish --provider="R64\Webforms\WebformsServiceProvider" --t
 This is the contents of the published config file:
 
 ```php
+use R64\Webforms\QuestionTypes\EmailType;
+use R64\Webforms\QuestionTypes\PhoneType;
+
 return [
     'date_format' => 'Y-m-d',
     'year_month_format' => 'Y-m',
     'fields_to_be_confirmed' => [
-        QuestionTypes::EMAIL_TYPE,
-        QuestionTypes::PHONE_TYPE,
+        EmailType::TYPE,
+        PhoneType::TYPE,
     ],
     'user_model' => 'App\User',
 ];
@@ -62,6 +65,463 @@ Route::webformsAdmin('webforms-admin');
 3 - Create Forms, FormSteps and Questions using <nuxt-link to="/model-factories">Model Factories</nuxt-link> or the <nuxt-link to="/admin-endpoints">Admin Endpoints</nuxt-link>
 
 More details in the <nuxt-link to="/usage">Usage</nuxt-link>.
+
+## Example
+
+Let's start a new form to collect info about coffee in your app:
+
+We will add in `routes/api.php`:
+
+```php
+Route::webforms('webforms');
+Route::webformsAdmin('webforms-admin');
+```
+
+The next step is to add a new Form. Just create a new Seeder.
+
+```
+php artisan make:seeder CoffeeSeeder
+```
+
+Now in the Seeder file `database/seeders/CoffeeSeeder` we'll include the creation of the form, form steps and questions.
+
+Let's start with the form creation:
+
+```php
+use R64\Webforms\Models\Form;
+
+$coffeeForm = Form::build('Coffee Form')
+    ->save();
+```
+
+Once we have the `form` we'll need to add, at least, a form step:
+
+```php
+use R64\Webforms\Models\FormStep;
+
+$coffeeStep = FormStep::build($coffeeForm, 'Coffee')
+    ->save();
+```
+
+Then we can add `questions` to this step:
+
+```php
+use R64\Webforms\Models\Question;
+use R64\Webforms\QuestionTypes\OptionsType;
+
+$whatKindOfCoffeeDoYouLikeQuestion = Question::build($coffeeStep, 'What kind of coffee do you like?')
+    ->type(OptionsType::TYPE)
+    ->options([
+        'black' => 'Black', 
+        'latte' => 'Latte',
+        'capuccino' => 'Cappucino',
+        'americano' => 'Americano',
+        'red-eye' => 'Red Eye',
+        'flat-white' => 'Flat White',
+     ])
+    ->save();
+
+$whatTypeOfBeansDoYouLikeQuestion = Question::build($coffeeStep, 'What type of coffee beans do you like the most?')
+    ->type(OptionsType::TYPE)
+    ->options([
+        'arabica' => 'Arabica',
+        'robusta' => 'Robusta',
+    ])
+    ->save();
+```
+
+Add now a new step to collect some personal info. We'll encrypt that info in the database:
+
+```php
+use R64\Webforms\Models\FormStep;
+
+$personalInfoStep = FormStep::build($coffeeForm, 'Personal info')
+    ->isPersonalData(1)
+    ->save();
+```
+
+Then add the questions:
+
+```php
+use R64\Webforms\Models\Question;
+use R64\Webforms\QuestionTypes\IntegerType;
+
+$firstNameQuestion = Question::build($personalInfoStep, 'First Name')
+    ->save();
+
+$lastNameQuestion = Question::build($personalInfoStep, 'Last Name')
+    ->save();
+
+$ageQuestion = Question::build($personalInfoStep, 'Birth Year')
+    ->type(IntegerType::TYPE)
+    ->save();
+```
+
+Once we have that we can add the questions steps to users:
+
+```php
+User::all()->each->addFormSteps([$coffeeStep, $personalInfoStep]);
+```
+
+If we want to add all the formSteps to the users we can also use:
+
+```php
+User::all()->each->addFormSteps();
+```
+
+When the users ask for the forms they will get only the forms they had steps on it. We need to do an authenticated request to:
+
+`/webforms/forms`
+
+We'll get something like:
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "sort": 1,
+            "slug": "coffee-form",
+            "menu_title": null,
+            "title": "Coffee Form",
+            "description": null,
+            "completed": false
+        }
+    ]
+}
+```
+
+Let's say the form is the one with id 1. Then we can make another one to:
+
+`/webforms/form-steps?form=1`
+
+We'll obtain all the forms steps info:
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "form": {
+                "id": 1,
+                "sort": 1,
+                "slug": "coffee-form",
+                "menu_title": "",
+                "title": "Coffee Form",
+                "description": "",
+                "completed": false
+            },
+            "sort": 1,
+            "slug": "coffee",
+            "menu_title": null,
+            "title": "Coffee",
+            "description": "",
+            "completed": false
+        },
+        {
+            "id": 2,
+            "form": {
+                "id": 1,
+                "sort": 1,
+                "slug": "coffee-form",
+                "menu_title": null,
+                "title": "Coffee Form",
+                "description": null,
+                "completed": false
+            },
+            "sort": 2,
+            "slug": "personal-info",
+            "menu_title": null,
+            "title": "Personal info",
+            "description": null,
+            "completed": false
+        }
+    ]
+}
+```
+
+For each form step we need to ask for the questions using:
+
+`/webforms/questions?form_step=1`
+
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "form_step": {
+                "id": 1,
+                "sort": 1,
+                "slug": "coffee",
+                "menu_title": null,
+                "title": "Coffee",
+                "description": "",
+                "completed": false
+            },
+            "sort": 1,
+            "depends_on": null,
+            "shown_when": null,
+            "required": false,
+            "slug": "what-kind-of-coffee-do-you-like",
+            "group_by": null,
+            "group_by_description": null,
+            "label_position": "left",
+            "help_title": null,
+            "help_body": null,
+            "type": "options",
+            "post_input_text": null,
+            "title": "What kind of coffee do you like?",
+            "description": null,
+            "error_message": null,
+            "default_value": null,
+            "min": null,
+            "max": null,
+            "options": [
+                {
+                    "label": "Black",
+                    "value": "black"
+                },
+                {
+                    "label": "Latte",
+                    "value": "latte"
+                },
+                {
+                    "label": "Cappucino",
+                    "value": "capuccino"
+                },
+                {
+                    "label": "Americano",
+                    "value": "americano"
+                },
+                {
+                    "label": "Red Eye",
+                    "value": "red-eye"
+                },
+                {
+                    "label": "Flat White",
+                    "value": "flat-white"
+                }
+            ],
+            "answer": {}
+        },
+        {
+            "id": 2,
+            "form_step": {
+                "id": 1,
+                "sort": 1,
+                "slug": "coffee",
+                "menu_title": null,
+                "title": "Coffee",
+                "description": "",
+                "completed": false
+            },
+            "sort": 2,
+            "depends_on": null,
+            "shown_when": null,
+            "required": false,
+            "slug": "what-type-of-coffee-beans-do-you-like-the-most",
+            "group_by": null,
+            "group_by_description": null,
+            "label_position": "left",
+            "help_title": null,
+            "help_body": null,
+            "type": "options",
+            "post_input_text": null,
+            "title": "What type of coffee beans do you like the most?",
+            "description": null,
+            "error_message": null,
+            "default_value": null,
+            "min": null,
+            "max": null,
+            "options": [
+                {
+                    "label": "Arabica",
+                    "value": "arabica"
+                },
+                {
+                    "label": "Robusta",
+                    "value": "robusta"
+                }
+            ],
+            "answer": {}
+        }
+    ]
+}
+```
+
+We need to do the same with:
+
+`/webforms/questions?form_step=2`
+
+```json
+{
+    "data": [
+        {
+            "id": 3,
+            "form_step": {
+                "id": 2,
+                "sort": 2,
+                "slug": "personal-info",
+                "menu_title": null,
+                "title": "Personal info",
+                "description": "",
+                "completed": false
+            },
+            "sort": 3,
+            "depends_on": null,
+            "shown_when": null,
+            "required": false,
+            "slug": "first-name",
+            "group_by": null,
+            "group_by_description": null,
+            "label_position": "left",
+            "help_title": null,
+            "help_body": null,
+            "type": "text",
+            "post_input_text": null,
+            "title": "First Name",
+            "description": null,
+            "error_message": null,
+            "default_value": null,
+            "min": null,
+            "max": null,
+            "options": null,
+            "answer": {}
+        },
+        {
+            "id": 4,
+            "form_step": {
+                "id": 2,
+                "sort": 2,
+                "slug": "personal-info",
+                "menu_title": null,
+                "title": "Personal info",
+                "description": "",
+                "completed": false
+            },
+            "sort": 4,
+            "depends_on": null,
+            "shown_when": null,
+            "required": false,
+            "slug": "last-name",
+            "group_by": null,
+            "group_by_description": null,
+            "label_position": "left",
+            "help_title": null,
+            "help_body": null,
+            "type": "text",
+            "post_input_text": null,
+            "title": "Last Name",
+            "description": null,
+            "error_message": null,
+            "default_value": null,
+            "min": null,
+            "max": null,
+            "options": null,
+            "answer": {}
+        },
+        {
+            "id": 5,
+            "form_step": {
+                "id": 1,
+                "sort": 1,
+                "slug": "coffee",
+                "menu_title": null,
+                "title": "Coffee",
+                "description": "",
+                "completed": false
+            },
+            "sort": 4,
+            "depends_on": null,
+            "shown_when": null,
+            "required": false,
+            "slug": "birth-year",
+            "group_by": null,
+            "group_by_description": null,
+            "label_position": "left",
+            "help_title": null,
+            "help_body": null,
+            "type": "integer",
+            "post_input_text": null,
+            "title": "Birth Year",
+            "description": null,
+            "error_message": null,
+            "default_value": null,
+            "min": null,
+            "max": null,
+            "options": null,
+            "answer": {}
+        }
+    ]
+}
+```
+
+When a user need to send an answer to a question we will need to make a POST request to:
+
+`/webforms/answers`
+
+With the following payload:
+
+```json
+{
+    "question_id": 2,
+    "text": "arabica"
+}
+```
+
+We will receive the question but now with an answer on it:
+
+```json
+{
+    "data": {
+        "id": 2,
+        "form_step": {
+            "id": 1,
+            "sort": 1,
+            "slug": "coffee",
+            "menu_title": null,
+            "title": "Coffee",
+            "description": "",
+            "completed": false
+        },
+        "sort": 2,
+        "depends_on": null,
+        "shown_when": null,
+        "required": false,
+        "slug": "what-type-of-coffee-beans-do-you-like-the-most",
+        "group_by": null,
+        "group_by_description": null,
+        "label_position": "left",
+        "help_title": null,
+        "help_body": null,
+        "type": "options",
+        "post_input_text": null,
+        "title": "What type of coffee beans do you like the most?",
+        "description": null,
+        "error_message": null,
+        "default_value": null,
+        "min": null,
+        "max": null,
+        "options": [
+            {
+                "label": "Arabica",
+                "value": "arabica"
+            },
+            {
+                "label": "Robusta",
+                "value": "robusta"
+            }
+        ],
+        "answer": {
+            "id": 123,
+            "user_id": 10,
+            "question_id": 2,
+            "text": "arabica",
+            "confirmed": true
+        }
+    }
+}
+```
 
 ## Testing
 

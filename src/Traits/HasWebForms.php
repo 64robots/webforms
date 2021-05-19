@@ -19,18 +19,30 @@ trait HasWebForms
             ->withTimestamps();
     }
 
-    public function addFormSteps($formStep = null)
+    public function addFormSteps($formSteps = null)
     {
-        if ($formStep) {
-            $this->addDefaultAnswers();
-
-            return $this->formSteps()->syncWithoutDetaching($formStep);
+        if ($formSteps) {
+            if (is_array($formSteps)) {
+                foreach($formSteps as $formStep) {
+                    $this->addFormStep($formStep);
+                }
+                return;
+            } else {
+                return $this->addFormStep($formSteps);
+            }
         }
 
         $this->addDefaultAnswers();
         FormStep::all()->each(function ($formStep) {
             $this->formSteps()->syncWithoutDetaching($formStep);
         });
+    }
+
+    public function addFormStep($formStep = null)
+    {
+        $this->addDefaultAnswers();
+
+        return $this->formSteps()->syncWithoutDetaching($formStep);
     }
 
     public function markFormStepAsUncompleted($formStep)

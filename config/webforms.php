@@ -1,6 +1,5 @@
 <?php
 
-use R64\Webforms\Models\QuestionTypes;
 use R64\Webforms\QuestionTypes\EmailType;
 use R64\Webforms\QuestionTypes\PhoneType;
 
