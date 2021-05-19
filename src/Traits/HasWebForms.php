@@ -23,9 +23,10 @@ trait HasWebForms
     {
         if ($formSteps) {
             if (is_array($formSteps)) {
-                foreach($formSteps as $formStep) {
+                foreach ($formSteps as $formStep) {
                     $this->addFormStep($formStep);
                 }
+
                 return;
             } else {
                 return $this->addFormStep($formSteps);

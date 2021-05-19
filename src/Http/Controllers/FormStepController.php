@@ -16,7 +16,7 @@ class FormStepController
                 ->formSteps()
                 ->with('form')
                 ->when(request('form'), function ($query) {
-                    $query->whereHas('form', fn($query) => $query->where((new Form)->getTable() . '.id', request('form')));
+                    $query->whereHas('form', fn ($query) => $query->where((new Form)->getTable() . '.id', request('form')));
                 })
                 ->orderBy('sort')
                 ->get()
