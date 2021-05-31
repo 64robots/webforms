@@ -216,7 +216,7 @@ You can customize the slug of the question:
 
 ### dependsOn
 
-You can show to the frontend that a question only appears when another question is answering with a particular value:
+You should show that question to the frontend only when parent question is answered with a particular value:
 
 ```php
     Question::build($formStep, 'New question title')
@@ -224,7 +224,7 @@ You can show to the frontend that a question only appears when another question 
         ->save();
 ```
 
-`$parentQuestion` is the question what make this question to appear.
+`$parentQuestion` is the question that makes this question appear.
 
 ### shownWhen
 

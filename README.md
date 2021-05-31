@@ -48,7 +48,7 @@ return [
 
 1 - Add Routes
 
-At that moment the package doesn't work with anonymous users. Please, add that to your routes file under an auth routes:
+At the moment, the package doesn't work with anonymous users. Please, add that to your routes file under an auth routes:
 
 ```php
 Route::webforms('webforms');
@@ -72,6 +72,11 @@ We will add in `routes/api.php`:
 
 ```php
 Route::webforms('webforms');
+```
+
+We will also add in `routes/api_admin.php`:
+
+```php
 Route::webformsAdmin('webforms-admin');
 ```
 

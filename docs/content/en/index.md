@@ -23,11 +23,12 @@ php artisan migrate
 ```
 
 You can publish the config file with:
+
 ```bash
 php artisan vendor:publish --provider="R64\Webforms\WebformsServiceProvider" --tag="config"
 ```
 
-This is the contents of the published config file:
+This is the content of the published config file:
 
 ```php
 use R64\Webforms\QuestionTypes\EmailType;
@@ -48,7 +49,7 @@ return [
 
 1 - Add Routes
 
-At that moment the package doesn't work with anonymous users. Please, add that to your routes file under an auth routes:
+At the moment, the package doesn't work with anonymous users. Please, add that to your routes file under an auth routes:
 
 ```php
 Route::webforms('webforms');
@@ -64,7 +65,7 @@ Route::webformsAdmin('webforms-admin');
 
 3 - Create Forms, FormSteps and Questions using <nuxt-link to="/model-factories">Model Factories</nuxt-link> or the <nuxt-link to="/admin-endpoints">Admin Endpoints</nuxt-link>
 
-More details in the <nuxt-link to="/usage">Usage</nuxt-link>.
+More details in <nuxt-link to="/usage">Usage</nuxt-link>.
 
 ## Example
 
@@ -74,6 +75,11 @@ We will add in `routes/api.php`:
 
 ```php
 Route::webforms('webforms');
+```
+
+We will also add in `routes/api_admin.php`:
+
+```php
 Route::webformsAdmin('webforms-admin');
 ```
 
