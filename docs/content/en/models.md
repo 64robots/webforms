@@ -9,7 +9,7 @@ category: 'Structure'
 
 Form -> FormStep -> Question -> Answer.
 
-A `Form` is like a big form with form steps. A form has many form steps.
+A `Form` has many form steps.
 
 A `FormStep` belongs to a form. A form step has many questions.
 
@@ -67,7 +67,7 @@ Attributes:
 
 - `group_by_description` is used if you have some description for the group of questions. It's likely a constant string.
 
-- `label_position` is can be used to move the label to the `left`, `right` or `top`.
+- `label_position` can be used to move the label to the `left`, `right` or `top`.
 
 - `help_title` is used to show some extra info about this question to the user.
 
@@ -83,13 +83,13 @@ Attributes:
 
 - `error_message` is the text that we'll send to the front. If it's null then you will get a default one.
 
-- `default_value` is used when the question has a default_value that is needed to populate before user answers this question.
+- `default_value` is used when the question has a default value that is needed to populate before user answers this question.
 
-- `min` is used when an integer field is validated.
+- `min` is used when an integer field is being validated.
 
 - `max` is used when an integer field is being validated
 
-- `options` is used when the question is of type options. It's a json field. Then you should add, if you are working with the DB facade, as `json_encode(['slug' => 'title', 'slug2' => 'title2'], true)`;
+- `options` is used when the question is of the type `options`. It's a json field. Then you should add, if you are working with the DB facade, as `json_encode(['key' => 'title', 'key-2' => 'title 2'], true)`. If you are working with the model itself you can use `['key' => 'title', 'key-2' => 'title 2']`.
 
 - `required` is used when you want to mark the question as required.
 
@@ -105,6 +105,6 @@ Attributes:
 
 - `confirmed` is a boolean that you can use if you want to confirm an answer in other way like an email, cellphone. Fields that need to be confirmed are defined in the config key `fields_to_be_confirmed` settled as `email`, and `phone` by default.
 
-- `is_real` is used to mark an answer as created from the `default_value` defined in the question. Then it's not an answer provided by the user.
+- `is_real`. It's false when the answer is created using the `default_value` defined in the question so that it's not an answer provided by the user. At the moment the user confirms the answer this is settled to true.
 
 - `is_current` when a user answers a question the package stores the answer and mark it with `is_current` as true. The package marks the previous ones with `is_current` as false.

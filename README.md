@@ -5,7 +5,7 @@
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/64robots/webforms/run-tests?label=tests)](https://github.com/64robots/webforms/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/64robots/webforms.svg?style=flat-square)](https://packagist.org/packages/64robots/webforms)
 
-Package to rapidly create custom forms. This package provides you an easy way to start the backend for an SPA Form. You could create forms, form steps and questions. Your users could respond to these forms. This package was made with :heart: from [64 Robots](https://64robots.com).
+Package to rapidly create custom forms. This package provides you an easy way to start the backend for an SPA Form. You could create forms, form steps and questions. Your users could respond to these forms. Made by [64 Robots](https://64robots.com).
 
 ## Installation
 
@@ -48,7 +48,7 @@ return [
 
 1 - Add Routes
 
-At the moment, the package doesn't work with anonymous users. Please, add that to your routes file under an auth routes:
+At the moment, the package doesn't work with anonymous users. Please, add that to your routes file under an auth middleware:
 
 ```php
 Route::webforms('webforms');
@@ -160,7 +160,7 @@ $ageQuestion = Question::build($personalInfoStep, 'Birth Year')
     ->save();
 ```
 
-Once we have that we can add the questions steps to users:
+Once we have that, we can add the questions steps to users:
 
 ```php
 User::all()->each->addFormSteps([$coffeeStep, $personalInfoStep]);
@@ -352,7 +352,7 @@ For each form step we need to ask for the questions using:
 }
 ```
 
-We need to do the same with:
+We need to do the same with the personal info step:
 
 `/webforms/questions?form_step=2`
 
@@ -459,7 +459,7 @@ We need to do the same with:
 }
 ```
 
-When a user need to send an answer to a question we will need to make a POST request to:
+When a user needs to send an answer to a question, we will need to make a POST request to:
 
 `/webforms/answers`
 
