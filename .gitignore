@@ -11,3 +11,4 @@ package-lock.json
 .DS_Store
 Thumbs.db
 .php-cs-fixer.cache
+phpunit.xml

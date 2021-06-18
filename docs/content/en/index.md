@@ -531,6 +531,29 @@ We will receive the question but now with an answer on it:
 
 ## Testing
 
+Copy `phpunit.xml.dist` to `phpunit.xml`
+
+```bash
+cp phpunit.xml.dist phpunit.xml
+```
+
+Adapt or change the values in the next portion of code to your preferences:
+
+```xml
+    <php>
+        <env name="DB_CONNECTION" value="mysql"/>
+        <env name="DB_USERNAME" value="root"/>
+        <env name="DB_PASSWORD" value=""/>
+        <env name="DB_DATABASE" value="r64_webforms"/>
+        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_PORT" value="3306"/>
+    </php>
+```
+
+Create the database, in this case `r64_webforms`.
+
+Execute:
+
 ``` bash
 composer test
 ```
