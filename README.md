@@ -3,7 +3,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/64robots/webforms.svg?style=flat-square)](https://packagist.org/packages/64robots/webforms)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/64robots/64robots/run-tests?label=tests)
+![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/64robots/webforms/run-tests?label=tests)
 [![Total Downloads](https://img.shields.io/packagist/dt/64robots/webforms.svg?style=flat-square)](https://packagist.org/packages/64robots/webforms)
 
 Package to rapidly create custom forms. This package provides you an easy way to start the backend for an SPA Form. You could create forms, form steps and questions. Your users could respond to these forms. Made by [64 Robots](https://64robots.com).
