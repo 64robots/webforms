@@ -30,7 +30,7 @@ class WebformsServiceProvider extends ServiceProvider
 
         Route::macro('webforms', function (string $prefix) {
             Route::prefix($prefix)
-                ->middleware(['throttle:60,1', 'bindings'])
+                ->middleware(['throttle:60,1', \Illuminate\Routing\Middleware\SubstituteBindings::class])
                 ->group(function () {
                     Route::get('/forms', [FormController::class, 'index']);
                     Route::get('/form-steps', [FormStepController::class, 'index']);
@@ -42,7 +42,7 @@ class WebformsServiceProvider extends ServiceProvider
 
         Route::macro('webformsAdmin', function (string $prefix) {
             Route::prefix($prefix)
-                ->middleware(['throttle:60,1', 'bindings'])
+                ->middleware(['throttle:60,1', \Illuminate\Routing\Middleware\SubstituteBindings::class])
                 ->group(function () {
                     Route::post('/forms', [AdminFormController::class, 'store']);
                     Route::put('/forms/{form}', [AdminFormController::class, 'update']);
