@@ -1,10 +1,10 @@
 {
-  "title": "Webforms package",
+  "title": "Webforms package documentation",
   "url": "https://webforms.64robots.com",
   "logo": {
     "light": "/logo-light.svg",
     "dark": "/logo-dark.svg"
   },
-  "github": "64robots/webforms/tree/master/docs",
-  "twitter": "@64Robots"
+  "github": "64robots/webforms",
+  "twitter": "64Robots"
 }

@@ -10,5 +10,5 @@ return [
         EmailType::TYPE,
         PhoneType::TYPE,
     ],
-    'user_model' => 'App\User',
+    'user_model' => 'App\Models\User',
 ];
